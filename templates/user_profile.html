@@ -1,0 +1,196 @@
+{% extends "base_index.html" %}
+{% block content %}
+  <style>
+    .bowl {
+      width : 100%;
+      padding : 1.5em 1em;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1.5em;
+    }
+    .profile-bowl {
+      background :  var(--base-blue-2);
+      border-radius: .5em;
+      width : 100%;
+      padding : 1.25em 1em;
+      
+      display: grid;
+      grid-template-columns: .25fr auto;
+      place-items: start center;
+      grid-gap: 1em;
+    }
+    .profile-img {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1em;
+    }
+    .profile-img-cont {
+      background : var(--base-bg-light);
+      border : .25em solid var(--base-blue);
+      border-radius: 50%;
+      width : 4rem;
+      height : 4rem;
+      font-size: 1rem;
+      color : var(--base-bg-mid);
+      text-transform: uppercase;
+      position: relative;
+      font-weight: 1000;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    .profile-info {
+      width : 100%;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 1em;
+      place-items: center;
+    }
+    .profile-upper-info {
+      width : 100%;
+      overflow-x: scroll;
+      
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      place-items: start;
+      grid-gap: .5em;
+    }
+    .profile-name {
+      grid-column : 1/3;
+      
+      width : 100%;
+      padding : 0 .25em;
+      color : var(--base-bg-light);
+      white-space: nowrap;
+      text-transform: lowercase;
+      text-align: left;
+      font-weight: 900;
+      font-size: 1.25rem;
+    }
+    .profile-tag {
+      width : 100%;
+      border : .1em solid var(--t3);
+      color : var(--t2);
+      font-size: 1em;
+      padding : .25em .75em;
+      border-radius: 100em;
+      font-weight: 600;
+      text-align: center;
+    }
+    .dms-count {
+      width : 100%;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .4em;
+    }    
+    .profile-lower-info {
+      width : 100%;
+      padding : .25em 0 .25em .25em;
+      
+      position: relative;
+    }
+    .profile-lower-info p {
+      width : 100%;
+      color : var(--t1);
+      font-size: 1em;
+      line-height: 1.5em;
+      font-weight: 500;
+    }
+    .bi-quote {
+      position: absolute;
+      top : -.25em;
+      left : -.85em;
+      font-size: 1.5em;
+      color : var(--t3);
+    }
+    .edit-bowl {
+      width : 100%;
+      
+      display: grid;
+      grid-template-columns: 1fr .2fr;
+      place-items: center;
+      grid-gap: .5em;
+    }
+    .edit-bowl a {
+      transition: .25s;
+    }
+    .edit-bowl a:hover {
+      color : var(--base-blue);
+      border-color: var(--base-blue);
+    }
+    .edit-profile-cont {
+      width : 100%;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    .edit-profile-cont button {
+      border-width: .125rem;
+      background :var(--base-bg-light);
+    }
+    .settings-cont {
+      width : 100%;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    .settings-cont a {
+      font-size: 1.25em;
+      color : var(--base-text-mid);
+      background : var(--base-bg-light);
+      border : .1em solid var(--base-bg-dark);
+      border-radius: 10em;
+      padding : .4em .6em;
+    }
+  </style>
+  <div class="bowl stiff">
+    <div class="profile-bowl">
+      <div class="profile-img">
+        <div class="profile-img-cont">
+          <h1>{{ user.profile.veil }}</h1>
+        </div>
+      </div>
+      <div class="profile-info">
+        <div class="profile-upper-info">
+          <div class="profile-name">
+            <p>{{ user.first_name }}</p>
+          </div>
+          <div class="profile-tag">
+            <p>@{{ user.username }}</p>
+          </div>
+          <div class="profile-tag dms-count">
+            <i class="bi-chat-text"></i>
+            <p>{{ user.profile.dms_count }}</p>
+          </div>
+        </div>
+        <div class="profile-lower-info">
+          <i class="bi-quote"></i>
+          <p>{{ user.profile.bio }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="edit-bowl">
+      <div class="edit-profile-cont">
+        <button class="veil-button" onclick="window.location = '/edit-profile/' ">
+          <div class="veil-button-icon-cont"><i class="bi-pencil-square"></i></div>
+          <h3>edit profile</h3>
+        </button>
+      </div>
+      <div class="settings-cont">
+        <a href="/settings/"><i class="bi-gear"></i></a>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

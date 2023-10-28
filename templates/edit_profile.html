@@ -1,0 +1,68 @@
+{% extends "base_index.html" %}
+{% block content %}
+  {% include "second_header.html" %}
+  
+  <style>
+    .edit-bowl {
+      width : 100%;
+      padding : 2em;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: .75em;
+    }
+    .edit-cont {
+      width : 100%;
+      padding : 1em 0 ;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: 1.25em;
+    }
+    .edit-box {
+      width : 100%;
+    }
+    .edit-box p {
+      font-size: .9rem;
+      margin-bottom: .2rem;
+      color : var(--base-text-light);
+    }
+    .register-cont {
+      width : 100%;
+      padding : 0 .5em ;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center end;
+    }
+    .register-cont p {
+      color : var(--base-red);
+      font-size: .85em;
+    }
+  </style>
+  <div class="edit-bowl stiff">
+    <form class="edit-cont" action="" method="POST"> {% csrf_token %}
+      <div class="edit-box">
+        <p>veil-emoji</p>
+        <input type="text" class="veil-input" name="veil" id="veil" value="{{ user.profile.veil }}" maxlength="2" minlength="1" required/>
+      </div>
+      <div class="edit-box">
+        <p>name</p>
+        <input type="text" class="veil-input" name="name" id="name" value="{{ user.first_name }}" required/>
+      </div>
+      <div class="edit-box">
+        <p>bio</p>
+        <textarea name="bio" class="veil-input" id="bio" rows="2" cols="40" placeholder="Type your bio here... " required>{{ user.profile.bio }}</textarea>
+      </div>
+      <div class="register-cont">
+        <p class="error">{{ error }}</p>
+      </div>
+      <button type="submit" class="save-edit-btn veil-button">Save</button>
+    </form>
+  </div>
+  <script>
+    secondHeader("edit profile","/user/");
+  </script>
+{% endblock %}

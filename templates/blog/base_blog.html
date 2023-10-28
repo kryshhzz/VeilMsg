@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block base_content %}
+    {% if request.user.is_authenticated %}
+        <div class="gap"></div>
+        {% include "second_header.html" %}
+        <script>
+            secondHeader("profile","/home/")
+        </script>
+    {% else %}
+        {% include "base_header.html" %}
+    {% endif %}
+
+    <style>
+        .blog-wrapper {
+            width: 100%;
+            padding: 3em 1em 1em 1em ;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center start;
+            grid-gap: 2em;
+        }
+        .blog-hero {
+            width : 100%;
+            background: #d2fc01;
+            background : lvar(--base-blue);
+            padding : 3em 2em ;
+            border-radius: 1em;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center;
+            grid-gap: 1.5em;
+        }
+        .bread-crumbs {
+            width: 100%;
+            color : var(--base-bg-dark);
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 1em;
+        }
+        .bread-crumbs .crumb {
+            font-size: .9em;
+        }
+        .bread-crumbs a {
+            color : inherit ;
+        }
+        h1 {
+            font-weight: 1000;
+            font-size: min(max(32px, 4vw), 47px);
+            line-height: 1.25em;
+            color : var(--base-bg-dark);
+        }
+        .blog-bowl {
+            width : 100%;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center;
+            grid-gap: 1.5em;
+        }
+        .blog-cont {
+            width : 100%;
+            padding : 1em;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center start;
+            grid-gap: 1.5em;
+        }
+        .blog-cont p {
+            color : var(--base-text-mid);
+            line-height : 1.75em;
+        }
+        .blog-cont h2 {
+            font-weight: 900;
+            color : var(--base-text-dark);
+        }
+        .blog-cont h3 {
+            font-weight: 500;
+            color : var(--base-text-dark);
+        }
+        .blog-cont a {
+            color : #0066ff;
+        }
+
+    </style>
+    <div class="blog-wrapper">
+        {% block blog_content %}
+        {% endblock %}
+    </div>
+    <div class="footer-bowl">
+        <div class="footer-cont veil-container landing-stiff">
+            <div class="footer-top">
+                <a href="/privacy-policy">Privacy policy</a>
+            </div>
+            <div class="footer-bottom">
+                <a href="https://instagram.com/veil.msg" target="_blank"><i class="bi-instagram"></i></a>
+                <a href="https://twitter.com/veil_msg" target="_blank"><i class="bi-twitter"></i></a>
+                <a href="mailto:veil.msg@proton.me" target="_blank"><i class="bi-envelope-fill"></i></a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

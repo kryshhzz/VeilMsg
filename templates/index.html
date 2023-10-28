@@ -1,0 +1,215 @@
+{% extends "base_index.html" %}
+{% block content %}
+
+  <style>
+    .index-bowl {
+      width : 100%;
+      padding : 2em 1.5em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center ;
+      grid-gap: 1em;
+    }
+    .index-greeting {
+      width : 100%;
+      color : var(--base-text-dark);
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: end;
+      gap : 1em;
+    }
+    .index-greeting h3 {
+      font-size: 1.5rem;
+      font-weight: 1000;
+    }
+    .index-greeting .veil-emoji {
+      background : var(--base-bg-dark);
+      border-radius: 50% 50% 50% 20%;
+      width : 2rem;
+      height : 2rem;
+      font-size: .5rem;
+      color : var(--base-text-mid);
+      text-transform: uppercase;
+      position: relative;
+      font-weight: 1000;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    .index-link-bowl, .index-stories-bowl {
+      width : 100%;
+      background : var(--black);
+      border-radius: 1em;
+      padding : 1.75em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: 1.75em;
+    }
+    .index-link-bowl p {
+      width : 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .index-link-info, .index-stories-info {
+      width : 100%;
+      color : var(--t2);
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: .5em;
+    }
+    .index-link-info h3, .index-stories-info h3 {
+      width : 100%;
+      font-weight: 1000;
+      color : var(--base-bg-light);
+    }
+    .index-link-info p, .index-stories-info p {
+      font-weight: 500;
+    }
+    .index-link-share {
+      width : 100%;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .5em;
+    }
+    .index-notifs-bowl{
+        width : 100%;
+        background : var(--base-bg-light);
+        padding : 2em 0 0 0;
+
+        display : grid;
+        grid-template-columns : 1fr;
+        place-items : center;
+        grid-gap : 1em;
+    }
+    .index-notifs-cont {
+        width : 100%;
+        background : var(--base-bg-dark);
+        padding : 1em;
+        border-radius : .5em;
+        color : var(--base-text-mid);
+        line-height : 1.75em;
+    }
+    .index-stories-share {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: .5em;
+    }
+    .index-link-share button , .index-stories-share button {
+      width : 100%;
+      background: var(--t4);
+      border-radius: 10em;
+      font-size: 1rem;
+      padding : .5em 1em;
+      font-family: inherit;
+      border : none;
+      outline: none;
+      color : var(--t1);
+      font-weight: 800;
+    }
+    .index-link-share button:hover, .index-stories-share button:hover {
+      animation: .2s btnClick;
+    }
+    .index-stories-bowl {
+      background: var(--base-blue);
+    }
+    .index-stories-info h3 {
+      color : var(--base-text-dark);
+    }
+    .index-stories-info p {
+      color : var(--base-text-dark);
+    }
+    .index-stories-share button {
+      background: var(--black);
+    }
+  </style>
+  <div class="index-bowl stiff">
+    <div class="index-greeting">
+      <h3>Hello {{ user.first_name }}</h3>
+      <div class="veil-emoji"><h1>{{ user.profile.veil }}</h1></div>
+    </div>
+    <div class="index-link-bowl">
+      <div class="index-link-info">
+        <h3>your veil link</h3>
+        <p>https://veilmsg.pythonanywhere.com/user/{{ user.username }}/</p>
+      </div>
+      <div class="index-link-share">
+        <button onclick="twitterShare()"><i class="bi-twitter"></i></i></button>
+        <button onclick="fbShare()"><i class="bi-facebook"></i></i></button>
+        <button onclick="shareLink()"><i class="bi-share-fill"></i></i></button>
+        <button onclick="copyLink()"><i class="bi-clipboard"></i></button>
+      </div>
+    </div>
+    <div class='index-notifs-bowl stiff'>
+        {% if user.profile.tier == 1 %}
+            <div class='index-notifs-cont'>
+                <p>This guest account will be deleted in {{ time_diff }} !</p>
+            </div>
+            <div class='index-notifs-cont'>
+                <p>username : {{ user.username }} <br> password : {{ user.last_name }}</p>
+            </div>
+        {% endif %}
+    </div>
+    <!---
+    <div class="index-stories-bowl">
+      <div class="index-stories-info">
+        <h3>add veil to your story</h3>
+        <p>add veil-link to your instagram or snapchat story and let your friends pop you anonymously</p>
+      </div>
+      <div class="index-stories-share">
+        <button onclick="shareStory()">add to story</button>
+      </div>
+    </div>
+    -->
+  </div>
+  <script>
+    var myUrl = "https://"+window.location.hostname+"{% url 'profileView' user.username %}";
+    var shareTitle = "Share your questions & confessions with me secretly. Click now 👇";
+
+    function copyLink(){
+      navigator.clipboard.writeText(myUrl);
+      alertDm("Your URL is copied !");
+    }
+
+    function twitterShare(){
+        window.open(
+            "https://twitter.com/intent/tweet?url="+myUrl+"&text="+shareTitle+"&hashtags=veil,anonymous", "_blank"
+        );
+    }
+
+    function fbShare(){
+        window.open(
+            "http://www.facebook.com/sharer.php?s=100&p[title]="+shareTitle+"&p[url]="+myUrl+"&p[summary]="+shareTitle, "_blank"
+        );
+
+    }
+
+    function shareLink(){
+      navigator.share({
+        title: shareTitle,
+        text: shareTitle,
+        url: myUrl,
+      })
+      .then(() => console.log('Successful share! 🎉'))
+      .catch(err => console.error(err));
+    }
+
+    function shareStory(){
+      var storyMainUrl ="/static/veil-main-img.png"
+      copyLink();
+      shareImage(storyMainUrl,"dm.png");
+    }
+  </script>
+{% endblock %}

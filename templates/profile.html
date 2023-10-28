@@ -1,0 +1,550 @@
+{% extends "base.html" %}
+{% block base_content %}
+
+  {% if request.user.is_authenticated and request.user == user %}
+    {% include "header.html" %}
+  {% elif request.user.is_authenticated %}
+    <div class="gap"></div>
+    {% include "second_header.html" %}
+    <script>
+        secondHeader("profile","/home/")
+    </script>
+  {% else %}
+    {% include "base_header.html" %}
+  {% endif %}
+
+  <style>
+    .bowl {
+      width : 100%;
+      padding : 1.5em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1em;
+    }
+    .profile-bowl {
+      background :  var(--black);
+      border-radius: 1.5em;
+      width : 100%;
+      padding : 3em 2em 2em 2em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start center;
+
+      position: relative;
+    }
+    .profile-img {
+      width : 100%;
+
+      position: absolute;
+      top : 0;
+      left : 50%;
+      transform: translate(-50%,-50%);
+      z-index: 100;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    .profile-img-cont {
+      background : var(--black);
+      border-radius: 50%;
+      width : 4.75rem;
+      height : 4.75rem;
+      font-size: 1.25rem;
+      color : var(--base-bg-mid);
+      text-transform: uppercase;
+      position: relative;
+      font-weight: 1000;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    .profile-info {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 1em;
+      place-items: center;
+    }
+    .profile-upper-info {
+      width : 100%;
+      overflow-x: scroll;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap : 1em;
+    }
+    .profile-upper-info::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profile-name {
+      padding : 0 .25em;
+      color : var(--base-bg-light);
+      white-space: nowrap;
+      text-transform: lowercase;
+      text-align: left;
+      font-weight: 900;
+      font-size: 1.25rem;
+    }
+    .profile-name i {
+        font-size: .8em;
+        margin : 0 0 0 .5em;
+    }
+    .profile-name .tier-3 {
+        color : #00aaff;
+    }
+    .profile-name .tier-2 {
+        color : var(--base-text-light);
+    }
+    .dms-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .3em;
+
+      background : var(--base-text-mid);
+      padding : .25em .5em;
+      border-radius: 10em;
+      color : var(--t1);
+    }
+    .dms-count:hover {
+      animation : .2s btnClick;
+    }
+    .profile-mid-info {
+      width : 100%;
+      color : var(--t2);
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .profile-lower-info {
+      width : 100%;
+      padding : .25em 0 ;
+    }
+    .profile-lower-info p {
+      width : 100%;
+      color : var(--t1);
+      font-size: 1em;
+      line-height: 1.5em;
+      font-weight: 500;
+    }
+    .bi-quote {
+      position: absolute;
+      top : -.25em;
+      left : -.5em;
+      font-size: 1.5em;
+      color : var(--t3);
+      opacity: .35;
+    }
+    .edit-bowl {
+      width : 100%;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .edit-bowl a {
+      transition: .25s;
+      font-size: 1em;
+      color : var(--base-text-mid);
+      background :var(--base-bg-dark);
+      border : .1em solid var(--base-bg-dark);
+      border-radius: 10em;
+      padding : .4em .6em;
+    }
+    .edit-bowl a:hover {
+      color : var(--base-text-dark);
+    }
+    .message-bowl {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items : center;
+      grid-gap: .5em;
+    }
+    .message-terrace {
+        width : 100%;
+        background : var(--black);
+        border-radius: 10em;
+        padding: .5em;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        place-items: center;
+        grid-gap: .5em;
+    }
+    .message-terrace input{
+        border : none;
+        outline : none ;
+        border-radius: inherit;
+        width : 100%;
+        padding : .5em;
+        font-family: inherit;
+        font-size: 1em;
+        color: var(--t2);
+        background: transparent;
+    }
+    .message-terrace .terrace-btn-active {
+        background : var(--t4);
+    }
+    .message-upper {
+      width : 100%;
+      background : var(--base-bg-dark);
+      border-radius: 1em;
+      padding : 1em;
+      margin-top : .5em;
+
+      display: grid;
+      grid-template-columns: 1fr ;
+      place-items: center ;
+    }
+    .message-upper textarea {
+      border : none;
+      outline : none;
+      font-family: inherit;
+      font-size: 1em;
+      width : 100%;
+      min-height: 5em;
+      border-radius: .5em;
+      background : var(--base-bg-dark);
+      color : var(--base-text-dark);
+    }
+    .message-upper textarea::placeholder {
+      color : var(--base-text-light);
+    }
+    .message-upper .msg-img {
+        border-radius: .5em;
+    }
+    .message-upper #msg-img-input{
+        position: relative;
+        width :100%;
+        font-size : 1em;
+    }
+    .message-upper #msg-img-input::after{
+        content: 'Select an image';
+        position: absolute;
+        top : 0;
+        left : 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background: var(--base-bg-dark);
+        font-family: "Nunito",sans-serif;
+        font-weight: 600;
+        color : var(--base-text-mid);
+        text-decoration: underline;
+    }
+    .message-center {
+        width :100%;
+        padding: .5em;
+
+        display: flex;
+        justify-content: center start;
+        align-items: center;
+        gap : .5em;
+    }
+    .message-lower {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center end;
+      grid-gap: .5em;
+    }
+    .message-lower p, .message-center p {
+      color : var(--base-text-light);
+      font-size: .8em;
+    }
+    .message-lower button {
+        font-family: inherit;
+        border: none;
+        outline: none;
+        font-size: 1.25em;
+        color: var(--base-bg-mid);
+        background: var(--black);
+        font-weight: 1000;
+        padding: .5em 1.25em ;
+        border-radius: 10em;
+        place-self: center end;
+        transition: .25s;
+    }
+    .message-lower button:hover {
+        animation : .2s btnClick;
+    }
+    .replies-bowl  {
+        width : 100%;
+        padding : 1em 0;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center start;
+        grid-gap: 1em;
+    }
+    .replies-bowl h3 {
+        padding: 0 .5em ;
+        color : var(--base-text-mid);
+        font-weight: 1000;
+    }
+    .replies-cont{
+      width : 100% ;
+
+      display: grid;
+      grid-template-columns: 1fr 3em;
+      place-items: center ;
+      grid-row-gap: .2rem;
+    }
+    .replies-box {
+      width : 100%;
+      height: 100%;
+      background: var(--base-bg-dark);
+      border-radius: .75em;
+      padding: 1em 1.25em;
+      color : var(--base-text-dark);
+      z-index: 3;
+      transition: .25s;
+
+      position: relative;
+
+      grid-column : 1/3;
+      grid-row: 1/2;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center start;
+      grid-gap: .5em;
+    }
+    .replies-box .options-icon {
+      position: absolute;
+      top : .75em;
+      right : .75em;
+      font-size: 1em;
+      color : var(--base-text-mid);
+      z-index: 4;
+    }
+    .replies-box b, .replies-box p {
+      line-height: 1.5em;
+    }
+    .replies-box .replies-reply {
+      color : var(--base-text-light);
+      font-weight: 400 !important;
+      padding : .25em .75em;
+      border-left : .2em solid var(--base-bg-light);
+    }
+    .replies-reply img {
+        border-radius: .5em;
+        margin-top: .5em;
+        opacity: .9;
+    }
+    .edit-reply-bowl {
+      width : 100%;
+      height: 100%;
+      padding : .75em;
+      background: var(--base-text-light);
+      color : var(--base-bg-dark);
+      border-radius: 1em;
+      z-index: 2;
+
+      grid-column: 2/3;
+      grid-row: 1/2;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1em;
+    }
+    .edit-reply-bowl a {
+      color : inherit;
+      text-decoration: none;
+    }
+    {% if request.user == user %}
+        .replies-cont:hover > .replies-box {
+            transform : translateX(-3.5em);
+        }
+    {% endif %}
+  </style>
+  <div class="bowl stiff">
+    {% if user_profile %}
+      <div class="edit-bowl">
+        <a href="/edit-profile/"><i class="bi-pencil-fill"></i></a>
+        <a href="/settings/"><i class="bi-gear-fill"></i></a>
+      </div>
+    {% else %}
+      <br>
+    {% endif %}
+    <div class="profile-bowl">
+      <div class="profile-img">
+        <div class="profile-img-cont">
+          <h1>{{ user.profile.veil }}</h1>
+        </div>
+      </div>
+      <div class="profile-info">
+        <div class="profile-upper-info">
+          <div class="profile-name">
+            <p>
+                {{ user.first_name }}
+                {% if user.profile.tier == 3 %}
+                    <i class="bi-patch-check-fill tier-3"></i>
+                {% elif user.profile.tier == 2 %}
+                    <i class="bi-patch-check-fill tier-2"></i>
+                {% endif %}
+             </p>
+          </div>
+          <div class="dms-count" onclick="alertDm(`{{ user.first_name }}'s  veil-score is {{ user.profile.dms_count }}`)">
+            <i class="bi bi-stars"></i>
+            <p>{{ user.profile.dms_count }}</p>
+          </div>
+        </div>
+        <div class="profile-mid-info">
+          <p>@{{ user.username }}</p>
+        </div>
+        <div class="profile-lower-info">
+          <p>{{ user.profile.bio }}</p>
+        </div>
+      </div>
+    </div>
+
+    {% if not user_profile %}
+        <form class="message-bowl" method="POST" action=""> {% csrf_token %}
+            <div class="message-terrace">
+                <input type="button" class="terrace-btn-text terrace-btn-active" onclick="activateBtn(1)" value="Text">
+                <input type="button" class="terrace-btn-img" onclick="activateBtn(2)" value="Image">
+            </div>
+            <div class="message-upper">
+                <textarea name="message" id="message" class="message" rows="1" cols="40" placeholder="Type your message here... " required></textarea>
+                <input type="hidden" name="msgImg" class="msgImg">
+                <div class="message-img-cont hide">
+                    <img src="" class="msg-img">
+                    <input type="file" id="msg-img-input" accept="image/*" >
+                </div>
+            </div>
+            <div class="message-center">
+                <input type="checkbox" onclick="viewOnceAlert(this)" name="viewonce" id="viewonce-input">
+                <p>instant auto burst</p>
+            </div>
+            <div class="message-lower">
+                <button type="submit">Send</button>
+                <p>you are anonymous*</p>
+            </div>
+        </form>
+    {% endif %}
+    <div class="replies-bowl">
+        <h3>replies</h3>
+        {% for reply in replies %}
+            <div class="replies-cont">
+              <div class="replies-box">
+                {% if reply.pinned == True %}
+                    <i class="bi-pin-angle-fill options-icon"></i>
+                {% else %}
+                    <i class="bi-three-dots-vertical options-icon"></i>
+                {% endif %}
+                <div class="replies-reply">
+                    {% if not reply.replyTo.img %}
+                      <p>{{ reply.replyTo.message }}</p>
+                    {% else %}
+                      <img src="{{ reply.replyTo.img }}" alt="">
+                    {% endif %}
+                </div>
+                <p>{{ reply.reply }}</p>
+              </div>
+              <div class="edit-reply-bowl">
+                <a href="{% url 'editReplyView' reply.id %}?pin=true"><i class="bi-pin-fill"></i></a>
+                <a href="{% url 'editReplyView' reply.id %}?delete=true" onclick="confirmDm('Do you really want to delete this reply ?',event); return false;"><i class="bi-trash-fill"></i></a>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+  </div>
+  <script>
+
+    var msg = document.querySelector('.message');
+    var msgImg = document.querySelector('.msgImg');
+    var msg_img_cont = document.querySelector('.message-img-cont')
+    var terrace_btn_img = document.querySelector('.terrace-btn-img');
+    var terrace_btn_text = document.querySelector('.terrace-btn-text');
+
+    function activateBtn(id){
+        if(id == 2){
+            msg_img_cont.classList.remove('hide')
+            msg.classList.add('hide')
+            terrace_btn_img.classList.add('terrace-btn-active');
+            terrace_btn_text.classList.remove('terrace-btn-active');
+            msg.disabled = 'disabled';
+            msgImg.removeAttribute("disabled");
+        }else{
+            msg_img_cont.classList.add('hide')
+            msg.classList.remove('hide')
+            terrace_btn_img.classList.remove('terrace-btn-active');
+            terrace_btn_text.classList.add('terrace-btn-active');
+            msgImg.disabled = 'disabled';
+            document.querySelector('.msg-img').src = ''
+            msg.removeAttribute("disabled");
+        }
+
+    }
+
+    function viewOnceAlert(inp){
+        if (inp.checked){
+            alertDm("This DM will be deleted automatically once seen by {{user.first_name}}");
+        }
+    }
+
+    // textarea
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+      tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+      tx[i].addEventListener("input", OnInput, false);
+    }
+    function OnInput() {
+      this.style.height = 0;
+      this.style.height = (this.scrollHeight) + "px";
+    }
+
+    document.getElementById("msg-img-input").addEventListener("change", function(event) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+
+        // Set desired width and height for resized image
+        var newWidth = 500;
+        var newHeight = 500;
+
+        // Calculate aspect ratio of original image
+        var aspectRatio = img.width / img.height;
+
+        // Calculate new width and height while maintaining aspect ratio
+        if (img.width > img.height) {
+        newHeight = Math.round(newWidth / aspectRatio);
+        } else {
+        newWidth = Math.round(newHeight * aspectRatio);
+        }
+
+        // Set canvas size to new width and height
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        // Draw the image onto the canvas
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+        // Get the resized image data as a base64-encoded string
+        var resizedImageData = canvas.toDataURL("image/jpeg", 0.8); // 0.8 is the quality
+
+        // Handle the resized image data as needed, e.g. upload to server, display preview, etc.
+        // Here you can use methods such as FileReader or FormData to handle the image data.
+        document.querySelector(".msgImg").value = resizedImageData;
+        document.querySelector(".msg-img").src = resizedImageData;
+      };
+      img.src = URL.createObjectURL(event.target.files[0]);
+    });
+  </script>
+
+{% endblock %}

@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block base_content %}
+    <style>
+        h2 {
+            color : var(--base-text-dark);
+            font-size: 1.3em;
+            text-transform: capitalize;
+            font-weight: 1000;
+        }
+        br {
+            height : .1em;
+        }
+        .landing-bowl {
+            width : 100%; 
+            padding-bottom : 3em;
+
+            display : grid;
+            grid-template-columns: 1fr;
+            place-items : center;
+        } 
+        .landing-cont {
+            width : 100%;
+            max-width : 800px; 
+            padding : 0 1.5em;
+
+            display : grid;
+            grid-template-columns: 1fr;
+            place-items : center; 
+            grid-gap : 3em;
+        }
+        .header {
+            width : 100%; 
+
+            display : flex;
+            justify-content : space-between;
+            align-items: center;
+        }
+        .header .logo {
+            width : 4em;
+        } 
+        .header .header-login-btn {
+            padding : .5em 1.5em; 
+            color : var(--base-text-dark);
+            background : var(--base-bg-dark);
+            border-radius: 10em;
+            font-weight : bold;
+        }
+        .atf {
+            width : 100%; 
+
+            display : grid;
+            grid-template-columns: 1fr;
+            place-items: center start;
+            grid-gap: 1.5em;
+        }
+        .atf h1 {
+            font-weight: 1000;
+            font-size: min(max(32px, 4vw), 47px);
+            color : var(--base-blue);
+        }
+        .atf p {
+            font-size: 1.15em;
+            color : var(--base-text-light);
+        }
+        .guest-form {
+            width : 100%; 
+            background : var(--base-blue);  
+            padding : 2em 1em;
+            border-radius: 1em;
+            margin: 1em 0;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            place-items : center start;
+            grid-gap : 1.75em;
+        }
+        .guest-form h2 {
+            color : var(--base-bg-light);
+        }
+        .guest-form-cont {
+            width : 100%;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            place-items : center;
+            grid-gap : .5em;
+        }
+        .guest-form input, .guest-form button {
+            width : 100%;
+            font-size : 1.15em;
+            font-family: inherit;
+            padding : 1em 1.25em;
+            border : none;
+            outline  : none; 
+            border-radius: .5em;
+            background : var(--base-bg-dark);
+        } 
+        .guest-form button {
+            background : var(--black);
+            color : var(--base-bg-dark);
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+        .guest-form a{
+            width : 100%;
+            color : var(--base-bg-light);
+            text-align : right;
+        }
+        .guest-form p {
+            font-size: .8em;
+            text-transform: capitalize;
+        }
+        .cards-bowl {
+            width : 100%;
+
+            display : grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            place-items: center start;
+            grid-gap : 1em;
+        }
+        .cards-bowl .card {
+            background : var(--base-bg-dark);
+            padding : 2em 1em; 
+
+            display : grid;
+            grid-template-columns: .3fr 1fr;
+            place-items: center ;
+            grid-gap : .5em;
+        }
+        .card i {
+            font-size: 2em;
+            text-decoration: none;
+            color : var(--base-blue);
+        }
+        .card p {
+            color : var(--base-text-mid);
+            font-size: 1.15em;
+        }
+        .card a, .content-bowl a {
+            color : var(--base-blue);
+        }
+        .content-bowl {
+            width : 100%; 
+
+            display: grid;
+            grid-template-columns: 1fr;
+            place-items: center start;
+            grid-gap: 1em;
+        }
+        .content-bowl p {
+            color : var(--base-text-light);
+            line-height: 1.5em;
+            font-size: 1.15em;
+        }
+        .content-bowl img {
+            border : .2em solid var(--base-bg-dark);
+            border-radius: .5em;
+            opacity : .9;
+        }
+    </style>
+    <div class="landing-bowl">
+        <div class="landing-cont">
+            <div class="header">
+                <a href="/" class="logo"><img src="/static/veil-logo.svg" alt="veil logo"></a>
+                <a class="header-login-btn" href="/login/">Login</a>
+            </div>
+            <div class="atf">
+                <h1>Secret Message Link</h1> 
+                <p>Let your friends share their secret messages, questions with you <b>anonymously</b>.</p>
+                <div class="guest-form">
+                    <h2>Create your secret message link now !</h2>
+                    <form class="guest-form-cont" method="post" action="/guest/"> {% csrf_token %}     
+                        <input type="text" name="name" id="name" value="" placeholder="Enter Your Name" autocapitalize="off" required="">
+                        <button type="submit">Create Your Secret Link</button>
+                    </form>
+                    <a href="/login/">Already have an account ?</a> 
+                </div>
+            </div> 
+            <div class="cards-bowl"> 
+                <h2>How to create a secret message link ?</h2>
+                <div class="card">
+                    <i>1</i>
+                    <p>Enter your name and generate your secret message link.</p>
+                </div>
+                <div class="card">
+                    <i>2</i>
+                    <p>Share it with your whatsapp, twitter, facebook followers.</p>
+                </div>
+                <div class="card">
+                    <i>3</i>
+                    <p>Have fun replying to all your anonymous messages</p>
+                </div>
+            </div>
+            <div class="cards-bowl">
+                <h2>Unique features by veil msg</h2>
+                <div class="card">
+                    <i class='bi-clock-history'></i>
+                    <p>Viewed messages are destroyed after 24 hours</p>
+                </div>
+                <div class="card">
+                    <i class="bi-shield-fill"></i>
+                    <p>You can even block people and keep spammers at bay</p>
+                </div>
+                <div class="card">
+                    <i class="bi-image"></i>
+                    <p>Not just text, you can now share images too</p>
+                </div>
+                <div class="card">
+                    <i class="bi-github"></i>
+                    <p>Veil msg is open source, anyone can view our code at our <a href="https://github.com/kryshhzz/VeilMsg">github repo</a> and contribute to its development.</p>
+                </div>
+            </div>
+            <div class="content-bowl">
+                <h2>What is a secret message link ?</h2>
+                <p>VeilMsg allows you to share a unique URL called secret message link with your friends that they can use to send you anonymous questions or confessions.</p>
+                <p>This means that you can receive honest feedback and insights from your friends without knowing who sent them. You can use secret message links to have fun answering anonymous questions.</p>
+            </div> 
+            <div class="content-bowl">
+                <h2>how to create secret message link for whatsapp</h2>
+                <p>After creating your secret message link from veil, you can post it on your whatsapp status by clicking the share icon on your dashboard.</p>
+                <img src="/static/veil-step-2.png" alt="veil share link to whatsapp">
+            </div>
+            <div class="content-bowl">
+                <h2>Secret message link whatsapp status game</h2>
+                <p>After you have posted your secret link on your whatsapp, wait for your friends to send anonymous messages and have fun replying to them.</p>
+            </div>
+            <div class="content-bowl">
+                <h2>Secret message link fro facebook story</h2>
+                <p>After creating your secret message link, you can add it to your facebook story by clicking on the facebook icon on your veil msg dashboard.</p>
+                <img src="/static/veil-step-2.png" alt="veil share link to facebook">
+            </div>
+            <div class="content-bowl">
+                <h2>More detailed blogs on veil msg</h2>
+                <a href='https://zynger-entertainment.jimdosite.com/blog/secret-message-link-twitter/'>by Zynger</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bowl">
+        <div class="footer-cont veil-container landing-stiff">
+            <div class="footer-top">
+                <a href="/privacy-policy">Privacy Policy</a>
+                <a href="/blog/">Blog</a>
+                <a href="/user/admin/">Contact Us</a>
+            </div>
+            <div class="footer-bottom">
+                <a href="https://instagram.com/veil.msg" target="_blank"><i class="bi-instagram"></i></a>
+                <a href="https://twitter.com/veil_msg" target="_blank"><i class="bi-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

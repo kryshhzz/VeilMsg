@@ -1,0 +1,379 @@
+{% extends "base.html" %}
+{% block base_content %}
+    <style>
+      .landing-bowl {
+        z-index: 1;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center ;
+      }
+      .landing-cont {
+        width : 100%;
+        height : 100%;
+        background: var(--base-blue);
+        z-index: 2;
+
+        grid-row: 1/2;
+        grid-column: 1/2;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center;
+      }
+      .floating-cta {
+        position: fixed;
+        bottom : 1em;
+        left : 50%;
+        transform: translateX(-50%);
+        z-index: 102;
+        font-size: 1.5em !important;
+        border: .1em solid white;
+        background: black !important;
+      }
+      .header {
+        width : 100%;
+        padding : 1em 1.5em;
+
+        display: flex;
+        justify-content: space-between;
+        align-items : center;
+        grid-gap: 1em;
+      }
+      .logo {
+        margin: .25em 0 0 0 ;
+        width : 4em;
+      }
+      .header-login-btn {
+        padding : .4em 1em;
+        text-decoration: none;
+        border : .15em solid var(--black);
+        color : var(--black);
+        border-radius: 10em;
+        font-weight: 600;
+      }
+      .header-login-btn:hover {
+        animation: .2s btnClick;
+      }
+      .atf {
+        width: 100%;
+        height: calc(100vh - 4em);
+        padding : 1em 2em ;
+        color : var(--black);
+
+        display: grid;
+        grid-template-columns: 1fr ;
+        place-items: center;
+        grid-gap: 2em;
+      }
+      .atf-left {
+        width: 100%;
+        max-width: 700px;
+        text-align: center;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center ;
+        grid-gap: 2em;
+      }
+      .atf-left h1 {
+        font-weight: 1000;
+        font-size: min(max(32px, 4vw), 47px);
+        line-height: 1.25em;
+      }
+      .atf-left p {
+        font-size: 1em;
+        line-height: 1.75em;
+      }
+      .veil-cta {
+        font-size: 1.15em;
+        color : var(--base-bg-light);
+        background: var(--black);
+        border-radius: 10em;
+        padding: .5em 2em;
+        text-decoration: none;
+        font-weight: 400;
+        transition: .25s;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap : .75em;
+      }
+      .veil-cta i {
+        margin-top : .15em;
+      }
+      .veil-cta:hover{
+        gap : 1.5em;
+      }
+      .atf-right {
+        width : 100%;
+        padding : 1em;
+
+        position: relative;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center ;
+        grid-gap: 2em;
+      }
+      .atf-right img {
+        width : 100%;
+        max-width: 300px;
+      }
+      .atf-right .hero-img-msg{
+        position: absolute;
+        top : 47%;
+        left :50%;
+        transform: translate(-50%,-50%);
+        color: var(--base-bg-light);
+        font-size: 1em;
+        font-weight: 600;
+        z-index: 100;
+        transition: .2s;
+        text-align: center;
+      }
+      .veil-container {
+        width : 100%;
+        padding : 5em 1em;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        place-items: center;
+        grid-gap: 1em;
+      }
+      .veil-img-container {
+        padding: 1em;
+        max-width: 300px;
+      }
+      .veil-img-container img {
+        border-radius: 1em;
+        width: 100%;
+      }
+      .veil-text-container {
+        width : 100%;
+        padding: 2em ;
+
+        display: grid;
+        grid-template-columns: 1fr ;
+        place-items: center start;
+        grid-gap: 1em;
+      }
+      .veil-text-container h2 {
+        font-weight: 1000;
+        font-size: 1.5em;
+        color : inherit;
+        position: relative;
+      }
+      .veil-text-container h2::before {
+        content: '';
+        position: absolute;
+        top : -1em;
+        left : 0;
+        width : 5em;
+        height: .1em;
+        border-radius: 1em;
+        border-bottom : .1em solid var(--black);
+      }
+      .veil-text-container p {
+        line-height: 1.75em;
+      }
+      .safety-bowl {
+        background: #6cf27a;
+        background: var(--base-bg-light);
+        width: 100%;
+      }
+      .safety-bowl img {
+        border : .15em solid var(--black);
+      }
+      .privacy-anonimity-bowl {
+        width: 100%;
+        background: var(--black);
+        color :var(--base-bg-light);
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center;
+      }
+      .privacy-anonimity-bowl * {
+        color : inherit !important;
+      }
+      .privacy-anonimity-cont {
+        width : 100%;
+      }
+      .privacy-anonimity-cont h2::before {
+        content: '';
+        position: absolute;
+        top : -1em;
+        left : 0;
+        width : 5em;
+        height: .1em;
+        border-radius: 1em;
+        border-bottom : .1em solid var(--base-bg-light);
+      }
+      .privacy-anonimity-img {
+        position: relative;
+      }
+      .privacy-anonimity-img::after{
+        content:"";
+        background-image : url('/static/veil-burst.png');
+        background-size: 100% 100%;
+        display: block;
+        position: absolute;
+        top : 50%;
+        left :50%;
+        transform: translate(-50%,-60%);
+        width : 8em;
+        height: 6.5em;
+        z-index: 50;
+      }
+      .stories-bowl {
+        width : 100%;
+        background: linear-gradient(to top, rgba(255,115,0,1), #fb0a4a);
+        background : var(--base-bg-mid);
+        color :var(--black);
+      }
+      .stories-cont h2::before {
+        content: '';
+        position: absolute;
+        top : -1em;
+        left : 0;
+        width : 5em;
+        height: .1em;
+        border-radius: 1em;
+        border-bottom : .1em solid var(--black);
+      }
+      .stories-img {
+        max-width : 100%;
+      }
+      @media(max-width : 768px){
+        .veil-container {
+            width : 100%;
+
+            display: grid;
+            grid-template-columns: 1fr ;
+            place-items: center;
+            grid-gap: 1em;
+        }
+      }
+    </style>
+    <div class="landing-bowl">
+      <div class="landing-cont">
+
+        <a href="/signup/" class="veil-cta floating-cta hide">Signup</i></a>
+
+        <div class="header landing-stiff">
+          <a href="/" class="logo"><img src="/static/veil-logo.svg" alt="veil logo"></a>
+          <a class="header-login-btn" href="/login/">Login</a>
+        </div>
+
+        <div class="atf landing-stiff">
+          <div class="atf-left">
+            <h1>Secret Message Link</h1>
+            <p>Veil is a safe and private platform for anonymous communication. Join now for free and open conversation without revealing your identity. </p>
+            <a href="/signup/" class="veil-cta">Signup <i class="bi-arrow-right"></i></a>
+          </div>
+          <div class="atf-right">
+            <img src="/static/veil-hero.png" alt="veil logo">
+            <h3 class="hero-img-msg">Helllooo !!!</h3>
+          </div>
+        </div>
+
+        <div class="stories-bowl">
+            <div class="stories-cont landing-stiff veil-container">
+                <div class="veil-text-container">
+                    <h2>Enhance your social media engagement</h2>
+                    <p>
+                       Veil lets you share a link to your Twitter and other social media accounts, allowing your friends and followers to ask you questions anonymously while keeping their identities hidden.
+                       It's the perfect way to spark candid conversations and connect with your followers in a whole new way.
+                    </p>
+                    </div>
+                <div class="veil-img-container stories-img">
+                    <img src="/static/veil-tweet.png" alt="tweet about veil">
+                </div>
+            </div>
+        </div>
+
+        <div class="privacy-anonimity-bowl">
+            <div class="privacy-anonimity-cont landing-stiff veil-container">
+                <div class="veil-text-container">
+                    <h2>24-hr auto bursting DMs</h2>
+                    <p>We offer a unique 24-hour auto-bursting message feature, as well as 100% anonymity and privacy protection. With this feature, your opened messages will be automatically deleted after 24 hours, ensuring that your conversations remain private and secure.
+                </div>
+                <div class="veil-img-container privacy-anonimity-img">
+                    <img src="/static/veil-burst-ss.png" alt="24-hr bursting pic of dms on veil">
+                </div>
+            </div>
+        </div>
+
+        <div class="safety-bowl">
+            <div class="safety-cont veil-container landing-stiff">
+                <div class="veil-text-container">
+                    <h2>Your safety is our top priority.</h2>
+                    <p>Veil provides a secure platform for you to communicate with others without revealing your personal information. <br> <br>
+                        With features to block and report inappropriate messages and users, you have control over who can communicate with you. <br> <br>
+                        You can use veil with confidence, knowing that your safety and privacy are our top priorities.</p>
+                </div>
+                <div class="veil-img-container">
+                    <img src="/static/veil-safety-ss.png" alt="safety in veil">
+                </div>
+            </div>
+        </div>
+
+        <div class='blog-bowl'>
+            <div class='blog-cont veil-container landing-stiff'>
+                <div class="veil-text-container">
+                    <h2>Helpful Blogs about Veil</h2>
+                    <p>
+                        <a href='/blog/how-to-create-secret-message-link-twitter'>by Veil Blogs</a>
+                        <br>
+                        <a href='https://ivon-entertainment.blogspot.com/2023/10/how-to-create-secret-message-link-on.html'>by Ivon Entertainment</a>
+                        <br>
+                        <a href='https://zynger-entertainment.jimdosite.com/blog/secret-message-link-twitter/'>by Zynger</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bowl">
+            <div class="footer-cont veil-container landing-stiff">
+                <div class="footer-top">
+                    <a href="/privacy-policy">Privacy policy</a>
+                </div>
+                <div class="footer-bottom">
+                    <a href="https://instagram.com/veil.msg" target="_blank"><i class="bi-instagram"></i></a>
+                    <a href="https://twitter.com/veil_msg" target="_blank"><i class="bi-twitter"></i></a>
+                    <a href="mailto:veil.msg@proton.me" target="_blank"><i class="bi-envelope-fill"></i></a>
+                </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+    <script>
+        var hero_img_msg = document.querySelector('.hero-img-msg')
+        var floating_cta = document.querySelector('.floating-cta')
+
+        const texts = ['How was your day ?', "You're cute", "RCB or CSK" ,"I've crush on you", "Veil is sooo cool !", 'Join veil nowww !!!'];
+        let counter = 0;
+        setInterval(() => {
+            const newText = texts[counter];
+            hero_img_msg.style.opacity = 0;
+            setTimeout(() => {
+                hero_img_msg.innerText = newText;
+                hero_img_msg.style.opacity = 1;
+            }, 500);
+            counter = (counter + 1) % texts.length;
+        }, 2000);
+
+        window.addEventListener("scroll", function() {
+            if (window.scrollY >= 600) {
+                floating_cta.classList.remove("hide")
+            } else {
+                floating_cta.classList.add('hide')
+            }
+        });
+
+    </script>
+
+{% endblock %}

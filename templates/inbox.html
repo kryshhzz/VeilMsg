@@ -1,0 +1,55 @@
+{% extends "base_index.html" %}
+{% block content %}
+  
+  <style>
+    .inbox-bowl {
+      width : 100%;
+      padding : 1.5em ;
+      
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(125px,1fr));
+      place-items: start;
+      grid-gap: 1em;
+    }
+    .msg-cont {
+      width : 100%;
+      border-radius: 1em;
+      padding : 1em;
+      font-weight: 1000;
+      font-size: 1.5rem;
+      background : var(--base-bg-dark);
+      color : var(--base-text-light);
+      text-decoration: none;
+      
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      gap : .5em;
+    }
+    .msg-cont:hover {
+      animation: .2s btnClick;
+    }
+    .msg-active {
+      background :  var(--black);
+      color : var(--base-text-light);
+    }
+
+  </style>
+  <div class="inbox-bowl stiff">
+    {% for dm in dms %}
+      {% if dm.opened %}
+        <a href="{% url 'dmView' dm.pk %}" class="msg-cont">opened</a>
+      {% else %}
+        <a href="{% url 'dmView' dm.pk %}" class="msg-cont msg-active ">
+            {% if dm.viewOnce %}
+                open 🔥
+            {% else %}
+                open
+            {% endif %}
+        </a> 
+      {% endif %}
+    {% endfor %}
+    
+  </div>
+
+{% endblock %}

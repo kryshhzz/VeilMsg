@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block base_content %}
+  {% include "base_header.html" %}
+  <style>
+    .main-bowl {
+      width : 100%;
+      padding : 3.5em 2em;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1.25em;
+    }
+    .main-bowl h2 {
+      font-size: 1.5em;
+      font-weight: 1000;
+      color : var(--base-text-dark);
+      width : 100%;
+    }
+    .login-bowl {
+      width: 100%;
+      max-width: 350px;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: .65em;
+    }
+    .password-cont {
+      width : 100%;
+      
+      display: grid;
+      grid-template-columns: 1fr 2em;
+      place-items: center;
+    }
+    .password-cont button {
+      width : 100%;
+      height : 100%;
+      font-size: 1.25em;
+      border : none;
+      outline : none;
+      background: none;
+      color : var(--base-text-mid);
+    }
+  </style>
+  <div class="main-bowl stiff">
+    <h2>Signup</h2>
+    <form class="login-bowl" id="signupForm" action="" method="post" autocomplete="nope"> {% csrf_token %}
+      <input type="email" class="veil-input" name="email" id="email" value="" placeholder="Email" autocapitalize="off" required />
+      <input type="text" class="veil-input" name="name" id="name" value="" placeholder="Name" autocapitalize="off" required />
+      <div class="password-cont">
+        <input type="password" class="veil-input" name="password" id="password" value="" placeholder="Password" required/>
+        <button class="password-toggle-button" onclick="togglePassword()"><i class="bi-eye-slash-fill password-toggle-icon"></i></button>
+      </div>
+      <div class="register-cont">
+        <p class="error">{{ error }}</p>
+      </div>
+      <input type="button" class="veil-button" name="button" id="button" value="Submit" onclick="checkPwd()" />
+      <div class="register-cont">
+        <a href="/login/">Already have an account ?</a>
+      </div>
+      <input type="button" class="veil-button" value="Login as guest" onclick="window.location = '/guest/'" />
+    <form>
+  </div>
+  <script>
+    var errp = document.querySelector(".error")
+    var pwd = document.getElementById("password")
+    var sbtn = document.getElementById("button")
+    
+    function checkPwd(){
+      if ( pwd.value.length <= 7 ) {
+        errp.innerHTML = "Password should atleast have 7 characters !"
+      }else {
+        sbtn.value = "Submitting ...";
+        sbtn.disabled = true;
+        document.querySelector("#signupForm").submit();
+      }
+    }
+    
+    function togglePassword(){
+      if (pwd.type == "text" ) {
+        pwd.type = "password"
+      }else {
+        pwd.type = "text"
+      }
+      document.querySelector(".password-toggle-icon").classList.toggle("bi-eye-fill")
+      document.querySelector(".password-toggle-icon").classList.toggle("bi-eye-slash-fill")
+    }
+    
+  </script>
+
+{% endblock %}
