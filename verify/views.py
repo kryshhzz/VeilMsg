@@ -34,7 +34,7 @@ def guest_view(request):
         username = generate_username('guest')
         password = random.randrange(10000,999999,1)
 
-        user = User.objects.create_user(username=username, password=str(password), last_name=str(password), first_name=name)
+        user = User.objects.create_user(username=username, password=str(password), first_name=name)
         user.save()
 
         usr = authenticate(username=username, password=password)
@@ -83,7 +83,7 @@ def signup_view(request):
     if len(unqemail) > 0 :
       dict = {"error" : "email already in use"}
     else :
-      user = User.objects.create_user(username=username,email=email, password=password, last_name=password, first_name=name)
+      user = User.objects.create_user(username=username,email=email, password=password, first_name=name)
       user.profile.tier = 2
       user.save()
 
