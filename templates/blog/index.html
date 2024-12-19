@@ -1,0 +1,8 @@
+{% extends "blog/base_blog.html" %}
+{% block blog_content %}
+
+    {% for b in blogs %}
+    <a href="{% url 'blogView' b.slug%}">{{ b.title }}</a>
+    {% endfor %}
+
+{% endblock %}

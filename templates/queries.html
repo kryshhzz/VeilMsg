@@ -1,0 +1,75 @@
+{% extends "base_index.html" %}
+{% block content %}
+
+  <style>
+    .inbox-bowl {
+      width : 100%;
+      padding : 1.5em ;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start center;
+      grid-gap: 1em;
+    }
+    .inbox-bowl h2 {
+        color : var(--base-text-light);
+        font-size : 2em;
+        margin : 5em 0;
+    }
+    .msg-cont {
+      width : 100%;
+      border-radius: 1em;
+      padding : 1em;
+      font-weight: 400;
+      font-size: 1rem;
+      background : var(--base-bg-dark);
+      color : var(--base-text-light);
+      text-decoration: none;
+
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap : 1em;
+    } 
+    .msg-cont p, .msg-cont b { 
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap : .5em; 
+    } 
+    .msg-cont p i {
+        color : red; 
+    } 
+    .msg-cont b i {
+        color : green;
+    }
+  </style>
+  <div class="inbox-bowl stiff">
+  {% if dms_list %}
+    {% for dm_cont in dms_list %} 
+      <div class='msg-cont'>
+        <p> <i class="bi-arrow-right"></i> {{ dm_cont.dm.message }} {% if dm_cont.dm.opened %} <i class="bi-eye-fill" style="color:inherit"></i> {% endif %}</p>
+        <b> <i class="bi-arrow-left"></i> {{ dm_cont.reply }}</b>
+    </div>
+    {% endfor %}
+  {% else %}
+    <h2>No Queries Sent</h2> 
+    <br>
+    <a class='veil-button' style='text-decoration:none; text-align:center' href='/user/admin/'>Submit a query</a>
+  {% endif %}
+  </div>
+  <br><br>
+  <div class="ad">
+      <script type="text/javascript">
+	atOptions = {
+		'key' : 'acbfb0d70caf0bed678ee4f8530f66ca',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/acbfb0d70caf0bed678ee4f8530f66ca/invoke.js"></scr' + 'ipt>');
+</script>
+  </div>
+{% endblock %}

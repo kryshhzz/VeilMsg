@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="oevM4pLBZYtVbL3C19lM9d9XNbPJ2T0FEmSF88sBrv0" />
+    <meta name="google-adsense-account" content="ca-pub-2048058446252128">
+    <meta property="snapchat:app_id" content="ea45481c-92de-4693-ab17-3e324f5e87b9"/>
+    <meta name="theme-color" content="#00ee6e">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link crossorigin='anonymous' href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100;9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap" rel="stylesheet">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F6SFLKM3E0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-F6SFLKM3E0');
+    </script>
+
+    <link rel="icon" type="image/png" href="/static/veil-logo.svg">
+
+    <meta property="og:site_name" content="veil msg">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@veil_msg">
+
+    {% if title %}
+        {% firstof title as title_act %}
+    {% else %}
+        {% firstof 'Secret Message Link | VeilMsg' as title_act %}
+    {% endif %}
+
+    <title>{{ title_act }}</title>
+    <meta name="og:title" content="{{ title_act }}">
+    <meta name="twitter:title" content="{{ title_act }}">
+
+    <meta name="description" content="With veil, you can communicate anonymously with your friends. You don't need to reveal your identity to send messages. Have fun !!">
+    <meta name="og:description" content="With veil, you can communicate anonymously with your friends. You don't need to reveal your identity to send messages. Have fun !!">
+    <meta name="twitter:description" content="Let your friends share their questions anonymouslyy. Have fun !!">
+
+    {% if not userdp %}
+    <meta name="og:image" content="https://veilmsg.pythonanywhere.com/static/veil-ask-anon-5.jpg"/>
+    <meta name="twitter:image" content="https://veilmsg.pythonanywhere.com/static/veil-ask-anon-5.jpg"/>
+    {% else %}
+    <meta name="og:image" content="https://veilmsg.pythonanywhere.com{{ userdp}}">
+    <meta name="twitter:image" content="https://veilmsg.pythonanywhere.com{{userdp}}" >
+    {%endif%}
+    <meta property="snapchat:sticker" content="https://veilmsg.pythonanywhere.com/static/sticker.png"/>
+
+    <script type="application/ld+json">
+    {
+         "@context": "https://schema.org/",
+         "@type": "WebSite",
+         "name": "VeilMsg",
+         "alternateName" : ["Veil Msg","Veil Message"],
+         "url": "https://veilmsg.pythonanywhere.com"
+    }
+    </script>
+
+    {% block head_content %}
+    {% endblock %}
+      <style type="text/css" media="all">
+      :root {
+         --t1 : rgba(255,255,255,.85);
+         --t2 : rgba(255,255,255,.65);
+         --t3 : rgba(255,255,255,.35);
+         --t4 : rgba(255,255,255,.10);
+
+         --black : #202020;
+
+         --base-blue: #00ee6e;
+         --base-blue : orangered;
+         --base-blue-dark : #fbdc04;
+         --base-grad : linear-gradient(to right, orangered, var(--base-blue-dark));
+         --base-red : #f62a44;
+
+         --base-bg-dark : #efefef;
+         --base-bg-mid : #f8f8f8;
+         --base-bg-light : #ffffff;
+
+         --base-text-mid : #606060;
+         --base-text-light : #808080;
+         --base-text-dark : #404040;
+
+         --gray-light : #eee;
+         --gray-dark : #bbb;
+       }
+      * {
+        box-sizing: border-box;
+        margin : 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      img {
+        width : 100%;
+      }
+      body {
+        width : 100vw;
+        font-family: "DM Sans",Sans-Serif;
+        font-size: 16px;
+        z-index: 0;
+      }
+      @media (min-width: 768px) {
+        body {
+            font-size: 18px;
+        }
+      }
+      .ad {
+          width : 100%;
+          overflow-x : auto;
+          background : #eee;
+          border-radius : .25em;
+          padding : .25em;
+
+         display : grid;
+         grid-template-columns : 1fr ;
+         place-items : center;
+      }
+      .ad *{
+          border-radius : .25em;
+      }
+      .stiff {
+        max-width: 500px;
+        margin : 0 auto !important;
+      }
+      .landing-stiff {
+        max-width: 1000px;
+        margin : 0 auto !important;
+      }
+      .alert-bowl {
+        width : 100%;
+        height : 100%;
+        background : rgba(0,0,0,.75);
+        padding : 1em 1.5em;
+        overflow-y : scroll;
+
+        position: fixed;
+        top : 0;
+        left : 0;
+        z-index: 155;
+
+        display: none;
+        grid-template-columns: 1fr;
+        place-items: center;
+      }
+      .alert-cont {
+        background : var(--base-bg-light);
+        border-radius: 1em;
+        padding : .75em ;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center;
+        grid-gap: .75em;
+      }
+      .alert-box {
+        min-width: 200px;
+        padding : 1em;
+        background : var(--base-bg-mid);
+        color : var(--base-text-mid);
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: .65em;
+        text-align: center;
+      }
+      .alert-box p {
+        width : 100%;
+      }
+      .alert-cont #alert-btn {
+        padding : .35em 1em;
+        font-family : inherit;
+        font-weight: 1000;
+        color : var(--base-text-dark);
+        font-size: 1.25rem;
+        background : none;
+        outline: none;
+        border : none;
+      }
+      .veil-input {
+        width : 100%;
+        background : var(--base-bg-dark);
+        font-family: inherit;
+        font-size: 1em;
+        color : var(--base-text-dark);
+        padding : .75em 1em;
+        border-radius: .5em;
+        border: none;
+        outline: none;
+      }
+      .veil-input::placeholder {
+        color : var(--base-text-light);
+      }
+      .veil-button {
+        width : 100%;
+        padding : .7em 1em;
+        border-radius: 100em;
+        border :none;
+        background : var(--black);
+        color : var(--t1);
+/*
+background : var(--base-blue);
+color : #fff;
+border : .1em solid var(--black);
+*/
+
+
+        font-weight: 1000;
+        font-size: 1rem;
+        font-family: inherit;
+        transition : .25s;
+      }
+      .veil-button:hover {
+        animation: .2s btnClick;
+      }
+      .register-cont {
+        width : 100%;
+        padding : .5em ;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center end;
+        grid-gap : .5em;
+      }
+      .register-cont a {
+        color : var(--base-text-dark);
+        transition : .5s;
+        font-size: .85em;
+      }
+      .register-cont p {
+        color : var(--base-red);
+        font-size: .85em;
+      }
+      .register-cont a:hover {
+        text-decoration: none;
+      }
+
+      @keyframes btnClick {
+        0% {
+          transform : scale(1);
+        }
+        50% {
+          transform : scale(.9);
+        }
+        100% {
+          transform : scale(1);
+        }
+      }
+      .gap {
+        height : 3em;
+      }
+      #wrap {
+        width : 100%;
+        z-index: 2;
+      }
+      .hide {
+        display : none !important;
+      }
+      .highlight {
+          color : var(--base-blue) !important;
+      }
+      .veil-dp {
+          background : var(--black);
+          border-radius: 50%;
+          width : 4.65rem;
+          height : 4.65rem;
+          padding : .5em;
+
+          display: grid;
+          grid-template-columns: 1fr;
+          place-items: center;
+    }
+    .veil-dp img {
+        width : 100%;
+        aspect-ratio : 1/1;
+        object-fit: cover;
+        border-radius : inherit;
+    }
+    input[type="radio"], input[type='checkbox'] {
+      position: relative;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      appearance : none;
+    }
+
+    input[type="radio"]::before ,  input[type='checkbox']::before{
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #fff;
+      border : .1em solid var(--gray-dark);
+    }
+    input[type="radio"]:checked::before,  input[type='checkbox']:checked::before {
+      background-color: var(--base-text-dark); 
+      background: radial-gradient(circle closest-side at center, var(--base-text-mid) 0%, var(--base-text-mid) 75%, #fff 75%);
+    }
+
+    </style>
+
+  </head>
+  <body>
+
+
+    <div class="alert-bowl">
+      <div class="alert-cont">
+        <div class="alert-box">
+          <p id="alert-msg">this is a random message</p>
+        </div>
+        <button onclick="closeAlert()" id="alert-btn">okay</button>
+        <button class="veil-button hide" id="alert-btn-guest">join us</button>
+      </div>
+    </div>
+    <script>
+      var alertBowl = document.querySelector(".alert-bowl")
+      var alertMsg = document.querySelector("#alert-msg")
+      var alertBtn = document.querySelector("#alert-btn")
+      var alertBtn2 = document.querySelector("#alert-btn-guest");
+
+      function alertDm(text){
+        alertBowl.style.display = "grid";
+        alertMsg.innerHTML = text;
+      }
+      function alertDm2(text,cta,cta_link){
+        alertBowl.style.display = "grid";
+        alertMsg.innerHTML = text;
+        alertBtn.style.display = "none";
+        alertBtn2.classList.remove("hide")
+
+        alertBtn2.innerHTML = cta;
+        alertBtn2.onclick = function(){
+            window.location = cta_link;
+        }
+      }
+      function closeAlert(){
+        alertBowl.style.display = "none";
+      }
+      function closeAlertImg(){
+          document.querySelector('.img-alert-bowl').style.display = "none";
+      }
+      function confirmDm(text,e){
+        var x = confirm(text)
+        if ( x == true ){
+          window.location = e.target.closest("a").href
+        }
+        e.preventDefault();
+      }
+
+      async function shareImage(kurl,fname) {
+
+        if (! navigator.canShare ) {
+          alertDm("Your browser doesn't support sharing !");
+          return
+        }
+        try {
+          const response = await fetch(kurl);
+          const blob = await response.blob();
+          const filesArray = [
+            new File(
+              [blob],
+              fname,
+              {
+                type: blob.type,
+                lastModified: new Date().getTime()
+              }
+           )
+          ];
+          const shareData = {
+            files: filesArray,
+          };
+
+          await navigator.share(shareData);
+
+        }catch (error){
+          alertDm(`error : ${error.message}`);
+        }
+      }
+    </script>
+
+    <div id="wrap">
+      {% block base_content %}
+      {% endblock %}
+    </div>
+
+    {% include 'footer.html' %}
+
+    {% if status %}
+        <script>alertDm("{{ status }}");</script>
+        {% if not request.user.is_authenticated %}
+            <script>
+                setTimeout(function() {
+                    alertDm2("Let your friends ask you anonymous questions too !", "Join now", '/')
+                }, 1000);
+            </script>
+        {% endif %}
+    {% endif %}
+
+    <script>
+    </script>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block base_content %}
+    {% if request.user.is_authenticated %}
+        <div class="gap"></div>
+        {% include "second_header.html" %}
+        <script>
+            secondHeader("veil blog","/home/")
+        </script>
+    {% else %}
+        {% include "base_header.html" %}
+    {% endif %}
+
+    <style>
+        .blog-wrapper {
+            width: 100%;
+            padding: 3em 0em 1em 0em ;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center start;
+            grid-gap: 2em;
+        }
+        /*
+        .blog-hero {
+            width : 100%;
+            background: #d2fc01;
+            background : var(--base-blue);
+            padding : 3em 2em ;
+            border-radius: 1em;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center;
+            grid-gap: 1.5em;
+        } */
+        .blog-hero {
+            padding : 0 2em;
+        }
+        .bread-crumbs {
+            width: 100%;
+            color : var(--base-bg-dark);
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 1em;
+        }
+        .bread-crumbs .crumb {
+            font-size: .9em;
+        }
+        .bread-crumbs a {
+            color : inherit ;
+        }
+        h1 {
+            font-weight: 1000;
+            font-size: min(max(32px, 4vw), 47px);
+            line-height: 1.25em;
+            color : var(--base-text-dark);
+        }
+        .blog-bowl {
+            width : 100%;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center ;
+            grid-gap: 1.5em;
+        }
+        .blog-cont {
+            width : 100%;
+            padding : 2em;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center start;
+            grid-gap: 1.5em;
+        }
+        .blog-cont p {
+            color : var(--base-text-mid);
+            line-height : 1.75em;
+        }
+        .blog-cont h2 {
+            font-weight: 900;
+            color : var(--base-text-dark);
+        }
+        .blog-cont h3 {
+            font-weight: 500;
+            color : var(--base-text-dark);
+        }
+        .blog-cont a {
+            color : var(--base-blue);
+            text-decoration : none;
+            border-bottom :.1em dashed var(--base-text-light);
+        }
+        .guest-form-bowl {
+            background : var(--black);
+            padding : 2em;
+        }
+        .guest-form-bowl h2 {
+            width : 100%;
+            color : var(--base-bg-light);
+            font-size : 1.3em;
+        }
+        .guest-form {
+            width : 100%;
+
+            display : grid;
+            grid-template-columns: 1fr;
+            place-items : center;
+            grid-gap: .5em;
+        }
+        .guest-form *{
+            width : 100%;
+            font-size: .9em;
+            font-family : inherit;
+            padding : 1em 1.5em;
+            border-radius: 15em;
+            border : none;
+            outline : none;
+            background : var(--base-bg-light);
+        }
+        .guest-form button {
+            color : var(--base-bg-light);
+            background : var(--base-text-dark);
+            text-align : center;
+            text-decoration: none;
+        }
+        .guest-form button:hover {
+            background: var(--base-text-dark);
+        }
+        .toggle-cont {
+            background : var(--base-bg-dark);
+            padding : 1em;
+            border-radius : .5em;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center start;
+            grid-gap : 1em;
+        }
+
+    </style>
+    <div class="blog-wrapper">
+        {% block blog_content %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

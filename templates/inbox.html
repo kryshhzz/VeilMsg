@@ -1,0 +1,92 @@
+{% extends "base_index.html" %}
+{% block content %}
+
+  <style>
+    .inbox-bowl {
+      width : 100%;
+      padding : 1.5em ;
+
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(125px,1fr));
+      place-items: start center;
+      grid-gap: 1em;
+    }
+    .inbox-bowl h2 {
+        color : var(--base-text-light);
+        font-size : 2em;
+        margin : 5em 0;
+    }
+    .msg-cont {
+      width : 100%;
+      border-radius: 1em;
+      padding : 1em;
+      font-weight: 1000;
+      font-size: 1.5rem;
+      background : var(--base-bg-dark);
+      color : var(--base-text-light);
+      text-decoration: none;
+
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      gap : .5em;
+    }
+    .msg-cont:hover {
+      animation: .2s btnClick;
+    }
+    .msg-active {
+      background :  var(--black);
+      color : var(--base-text-light);
+    }
+    .msg-notif {
+        position: relative;
+    }
+    .msg-active.msg-notif {
+        background : var(--base-blue);
+        color : var(--base-bg-light);
+        position : relative;
+    }
+    .msg-notif:after {
+        content : "by Veil Admin";
+        position : absolute;
+        bottom : .5rem;
+        right : 50%;
+        transform : translateX(50%);
+        font-size :.5rem;
+        color : inherit;
+    }
+
+  </style>
+  <div class="inbox-bowl stiff">
+  {% if dms %}
+    {% for dm in dms %}
+      {% if dm.opened %}
+        <a href="{% url 'dmView' dm.id %}" class="msg-cont {% if dm.isNotif == True %} msg-notif {% endif %}">opened</a>
+      {% else %}
+        <a href="{% url 'dmView' dm.id %}" class="msg-cont msg-active {% if dm.isNotif == True %} msg-notif {% endif %} ">
+            {% if dm.viewOnce %}
+                open 🔥
+            {% else %}
+                open
+            {% endif %}
+        </a>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <h2>No Messages Yet</h2>
+  {% endif %}
+  </div>
+  <br><br>
+  <div class="ad">
+      <script type="text/javascript">
+	atOptions = {
+		'key' : 'acbfb0d70caf0bed678ee4f8530f66ca',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/acbfb0d70caf0bed678ee4f8530f66ca/invoke.js"></scr' + 'ipt>');
+</script>
+  </div>
+{% endblock %}

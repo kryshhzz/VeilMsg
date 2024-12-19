@@ -1,0 +1,301 @@
+{% extends "base_index.html" %}
+{% block content %}
+  {% include "second_header.html" %}
+
+  <style>
+    .dm-bowl {
+      position : absolute ;
+      margin-top: -4em;
+
+      width : 100%;
+      height:  100%;
+      padding : 3em 2.5em;
+      background : var(--base-bg-light);
+      opacity : 1;
+      z-index : 5;
+
+      display:  flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .dm-options {
+      width : 100%;
+      padding : 5em 1em 1em 1em;
+
+      position: fixed;
+      top: 0;
+      left : 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+
+      display : flex;
+      justify-content : space-between;
+      align-items: center;
+      gap : 1em;
+    }
+    .viewonce-text {
+        font-size: .9em;
+        color : var(--base-text-light);
+    }
+    .viewonce-text i {
+        padding-right: .5em;
+    }
+    .dm-options-icon {
+      background: var(--base-bg-dark);
+      color : var(--base-text-mid);
+      padding : .5em .65em;
+      border-radius: 10em;
+    }
+    .dm-options-icon:hover {
+      animation: .2s btnClick;
+    }
+    .dm-options-cont {
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: .5em;
+
+      position: fixed;
+      top : 100%;
+      right : 1.5em;
+
+      min-width: 12rem;
+      padding : 1em .5em;
+      background :#404040cc;
+      border-radius: .5em;
+      box-shadow: 0 .5em .5em #20202050;
+      backdrop-filter: blur(1em);
+    }
+    .dm-options-cont a {
+      width : 100%;
+      text-decoration : none;
+      padding : .25em .5em;
+      color : var(--base-bg-light);
+    }
+    .dm-cont {
+      position : relative;
+    }
+
+    .dm-cont .profile-img-cont {
+      position: absolute;
+      top : -2em;
+      left : 50%;
+      transform: translateX(-50%);
+    }
+    .dm-cont {
+      background : var(--black);
+      border-radius: 1.5em;
+      padding : 3em 1em .75em 1em;
+      min-width : 16rem;
+      max-width: 21rem;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items : center;
+      grid-gap: .75em;
+    }
+    .dm-box {
+      width : 100%;
+      border-radius: 1em;
+
+      display : flex;
+      flex-direction : column;
+      justify-content: center;
+      align-items: center;
+    }
+    .dm-box h3 {
+      font-size: 1em;
+      padding: .5em;
+      line-height: 1.5em;
+      font-weight: 500;
+      letter-spacing : .025em;
+      color : var(--base-bg-dark);
+    }
+    .dm-box .vibe-large {
+        font-size: 2.75em;
+        padding : 0;
+    }
+    .dm-box img {
+        border-radius: .75em;
+        opacity: .9;
+        box-shadow: 0 0 0.5em #202020aa;
+    }
+    .dm-cont button{
+      font-size: 1.25em;
+      font-family : inherit;
+      font-weight: 1000;
+      padding : .5em;
+      border : none;
+      outline : none;
+      background : none;
+      color : var(--t2);
+    }
+    #dm-story-btn{
+      background: var(--t4);
+      padding: .2em 1em;
+      margin-bottom : .5em;
+      font-size: 1.1em;
+      border-radius: 4em;
+    }
+    .dms-bowl {
+        background : #060606;
+        padding : 3.3em 2em 2em 2em;
+        display : inline-block;
+    }
+    .dms-bowl button{
+        font-size : .7em;
+        color : var(--base-text-light);
+    }
+    .reply-cont {
+        width  : 95%;
+        padding:  .4em .5em;
+        background : var(--base-bg-dark);
+        border-radius: 2em;
+
+        position: fixed;
+        bottom: .5em;
+        left : 50%;
+        transform: translateX(-50%);
+        z-index: 103;
+
+        display : grid;
+        grid-template-columns: 1fr 2.5em;
+        place-items: center;
+        grid-gap: .25em;
+    }
+    .reply-cont *{
+        font-family: inherit;
+        font-size: 1em;
+        outline: none;
+        border : none;
+    }
+    .reply-cont textarea{
+        width : 100%;
+        background : var(--base-bg-mid);
+        border-radius: 1.75em;
+        padding: .75em 1.25em;
+        max-height: 7rem;
+        color : var(--black);
+    }
+    .reply-cont textarea::placeholder {
+      color : inherit;
+      opacity: .5;
+    }
+    .reply-cont button{
+        font-size: 2em;
+        color: var(--black);
+        background: none;
+        font-weight: 1000;
+        padding: .1em .1em 0 .1em ;
+        border-radius: 1em;
+        transition: .25s;
+    }
+    .reply-cont button:hover {
+        color : var(--base-text-light);
+    }
+  </style>
+  <div class="dm-bowl " id="dm-bowl">
+    <div class="dm-options stiff">
+      <p class="viewonce-text" onclick="alertDm('This DM will be automatically deleted after you view it !')">
+        {% if dm.viewOnce %}
+            <i class="bi-info-circle-fill"></i> instant auto burst
+        {% endif %}
+      </p>
+      <i class="bi-three-dots-vertical dm-options-icon" onclick="toggleDmOptions()"></i>
+      <div class="dm-options-cont hide">
+        <a href="{% url 'blockView' dm.sentBy.pk %}">Block this user</a>
+        <a href="/user/admin/?pretext=[ report : {{ dm.pk }} ]">Report this DM</a>
+      </div>
+    </div>
+    <div class="dm-cont">
+      <div class="dm-box">
+        {% if dm.dmType == 1 %}
+            <h3>{{ dm.message }}</h3>
+        {% elif dm.dmType == 2 %}
+            <img src="{{ dm.img }}" alt="">
+        {% elif dm.dmType == 3 %}
+        <h3> Someone rated you !</h3>
+        <br>
+        <h3 > <span class='vibe-large'>{{ dm.message }} </span> / 10</h3>
+        {% endif %}
+      </div>
+      <button id="dm-story-btn"><i class="bi-share-fill"></i></button>
+      <div class="profile-img-cont veil-dp">
+        {% if dm.sentTo.profile.dp == "" %}
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIOwIePvlZCteninGWvsSIJ64QcrEtxMce8A&usqp=CAU">
+        {% else %}
+          <img src="{{userdp}}">
+        {% endif %}
+      </div>
+    </div>
+    <form action="" method="POST" class="reply-cont stiff">{% csrf_token %}
+      <textarea name="dm-reply" id="dm-reply" class="dm-reply" cols="30" rows="1" placeholder="enter your reply..." required></textarea>
+      <button type="submit"><i class="bi-arrow-right-circle-fill"></i></button>
+    </form>
+  </div>
+
+  <div class="dms-bowl" >
+    <div class="dm-cont">
+      <div class="dm-box">
+        {% if dm.dmType == 1 %}
+            <h3>{{ dm.message }}</h3>
+        {% elif dm.dmType == 2 %}
+            <img src="{{ dm.img }}" alt="">
+        {% elif dm.dmType == 3 %}
+            <h3> Someone rated you !</h3>
+            <br>
+            <h3 > <span class='vibe-large'>{{ dm.message }} </span> / 10</h3>
+        {% endif %}
+      </div>
+      <button>{{ dm.sentTo.first_name }} on VeilMsg</button>
+      <div class="profile-img-cont veil-dp">
+        {% if dm.sentTo.profile.dp == "" %}
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIOwIePvlZCteninGWvsSIJ64QcrEtxMce8A&usqp=CAU">
+        {% else %}
+          <img src="{{userdp}}">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+
+  <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
+  <script>
+    secondHeader("dm","/inbox/")
+
+    var dm_options_cont = document.querySelector(".dm-options-cont")
+    function toggleDmOptions(){
+      dm_options_cont.classList.toggle("hide")
+    }
+
+    var elem = document.querySelector(".dms-bowl");
+
+    html2canvas(elem,{backgroundColor:"#060606"}).then(canvas => {
+        var myImage = canvas.toDataURL("image/png");
+        var img = new Image();
+        img.src = myImage;
+        img.style.display = "none";
+        img.id = "shareableImg";
+        document.body.appendChild(img);
+        elem.style.display = 'none'
+    })
+
+    document.getElementById("dm-story-btn").addEventListener("click", function (){
+      var simg = document.getElementById("shareableImg")
+      shareImage(simg.src,"dm.png");
+    });
+
+    // textarea
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+      tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+      tx[i].addEventListener("input", OnInput, false);
+    }
+    function OnInput() {
+      this.style.height = 0;
+      this.style.height = (this.scrollHeight) + "px";
+    }
+
+  </script>
+{% endblock %}

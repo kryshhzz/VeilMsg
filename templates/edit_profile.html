@@ -1,0 +1,144 @@
+{% extends "base_index.html" %}
+{% block content %}
+  {% include "second_header.html" %}
+
+  <style>
+    .edit-bowl {
+      width : 100%;
+      padding : 2em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: .75em;
+    }
+    .edit-cont {
+      width : 100%;
+      padding : 1em 0 ;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: 1.25em;
+    }
+    .edit-box {
+      width : 100%;
+    }
+    .edit-box p {
+      font-size: .9rem;
+      margin-bottom: .2rem;
+      color : var(--base-text-light);
+    }
+    .register-cont {
+      width : 100%;
+      padding : 0 .5em ;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center end;
+    }
+    .register-cont p {
+      color : var(--base-red);
+      font-size: .85em;
+    }
+    .quick-dp-bowl {
+        width : 100%;
+        padding : 1em 0 0 0;
+
+        display : flex;
+        justify-content : flex-left;
+        align-items : center;
+        gap : .2em;
+    }
+    .quick-dp {
+        background : var(--base-bg-dark);
+        padding : .15em .3em;
+        font-size : 1.25em;
+        border-radius : 50%;
+    }
+  </style>
+  <div class="edit-bowl stiff">
+    <form class="edit-cont" action="" method="POST"> {% csrf_token %}
+      <div class='veil-dp'>
+        {% if user.profile.dp == "" %}
+           <img class="veil-picture-preview" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIOwIePvlZCteninGWvsSIJ64QcrEtxMce8A&usqp=CAU">
+        {% else %}
+           <img class="veil-picture-preview" src="{{ userdp }}">
+        {% endif %}
+      </div>
+      <div class="edit-box">
+        <p>veil-picture</p>
+        <input type="file" class="veil-input veil-picture-input">
+        <input type="hidden" class="veil-picture-send" name="veil" id="veil"/>
+        <div class='quick-dp-bowl'>
+            {% for emoji in emojis %}
+                <div class='quick-dp' onclick='document.querySelector(".veil-picture-send").value = "{{ emoji.data }}"; document.querySelector(".veil-picture-preview").src = "{{ emoji.data }}";'>{{ emoji.name }}</div>
+            {% endfor %}
+        </div>
+      </div>
+      <div class="edit-box">
+          <p>username</p>
+          <input type="text" class="veil-input" name="username" id="username" value="{{ user.username }}" max_length='25' minlength='4' onkeypress="return event.charCode != 32" required/>
+      </div>
+      <div class="edit-box">
+        <p>name</p>
+        <input type="text" class="veil-input" name="name" id="name" value="{{ user.first_name }}" max_length='25' minlength='2' required/>
+      </div>
+      <div class="edit-box">
+        <p>bio</p>
+        <textarea name="bio" class="veil-input" id="bio" rows="2" cols="40" placeholder="Type your bio here... " required>{{ user.profile.bio }}</textarea>
+      </div>
+      <div class="register-cont">
+        <p class="error">{{ error }}</p>
+      </div>
+      <button type="submit" class="save-edit-btn veil-button">Save</button>
+    </form>
+  </div>
+  <script>
+    secondHeader("edit profile","/user/");
+
+    let usrname = document.querySelector('#username')
+    usrname.addEventListener('input',function(e){
+        usrname.value = usrname.value.replaceAll(" ", "_");
+        usrname.value = usrname.value.toLowerCase()
+    })
+
+    document.querySelector(".veil-picture-input").addEventListener("change", function(event) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+
+        // Set desired width and height for resized image
+        var newWidth = 200;
+        var newHeight = 200;
+
+        // Calculate aspect ratio of original image
+        var aspectRatio = img.width / img.height;
+
+        // Calculate new width and height while maintaining aspect ratio
+        if (img.width > img.height) {
+        newHeight = Math.round(newWidth / aspectRatio);
+        } else {
+        newWidth = Math.round(newHeight * aspectRatio);
+        }
+
+        // Set canvas size to new width and height
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        // Draw the image onto the canvas
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+        // Get the resized image data as a base64-encoded string
+        var resizedImageData = canvas.toDataURL("image/png", 0.8); // 0.8 is the quality
+
+        // Handle the resized image data as needed, e.g. upload to server, display preview, etc.
+        // Here you can use methods such as FileReader or FormData to handle the image data.
+        document.querySelector(".veil-picture-send").value = resizedImageData;
+        document.querySelector(".veil-picture-preview").src = resizedImageData;
+      };
+      img.src = URL.createObjectURL(event.target.files[0]);
+    });
+  </script>
+{% endblock %}

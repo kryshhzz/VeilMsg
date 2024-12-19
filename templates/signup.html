@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block base_content %}
+  {% include "base_header.html" %}
+  <style>
+    .main-bowl {
+      width : 100%;
+      padding : 3.5em 2em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1.25em;
+    }
+    .main-bowl h2 {
+      font-size: 1.5em;
+      font-weight: 1000;
+      color : var(--base-text-dark);
+      width : 100%;
+    }
+    .login-bowl {
+      width: 100%;
+      max-width: 350px;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center start;
+      grid-gap: .65em;
+    }
+    .password-cont {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr 2em;
+      place-items: center;
+    }
+    .password-cont button {
+      width : 100%;
+      height : 100%;
+      font-size: 1.25em;
+      border : none;
+      outline : none;
+      background: none;
+      color : var(--base-text-mid);
+    }
+    .login-bowl label {
+        color : var(--base-text-dark);
+        font-size : .9em;
+        margin-top : .75em;
+    }
+  </style>
+  <div class="main-bowl stiff">
+    <h2>Signup</h2>
+    <form class="login-bowl" id="signupForm" action="" method="post" autocomplete="nope"> {% csrf_token %}
+      <input type="email" class="veil-input" name="email" id="email" value="" placeholder="Email" autocapitalize="off" required />
+      <input type="text" class="veil-input" name="name" id="name" value="" placeholder="Name" autocapitalize="off" maxlength="25" required />
+      <div class="password-cont">
+        <input type="password" class="veil-input" name="password" id="password" value="" placeholder="Password" minlength="6" required/>
+        <button type="button" class="password-toggle-button" onclick="togglePassword()"><i class="bi-eye-slash-fill password-toggle-icon"></i></button>
+      </div>
+      <label>Who is your childhood crush ?</label>
+      <input type="text" class="veil-input" name="secque" id="secque" value="" placeholder="Secret one word answer" autocapitalize="off" onkeypress="return event.charCode != 32" required />
+      <div class="register-cont">
+        <p class="error">{{ error }}</p>
+      </div>
+      <input type="submit" class="veil-button" name="button" id="button" value="Submit" />
+      <div class="register-cont">
+        <a href="/login/">Already have an account ?</a>
+      </div>
+      <input type="button" class="veil-button" value="Login as guest" onclick="window.location = '/'" />
+    <form>
+  </div>
+  <script>
+    var errp = document.querySelector(".error")
+    var pwd = document.getElementById("password")
+    var sbtn = document.getElementById("button")
+    var secque = document.getElementById('secque')
+
+    secque.addEventListener('input',function(e){
+      secque.value = secque.value.replaceAll(" ", "_");
+      secque.value = secque.value.toLowerCase()
+    })
+
+
+    document.querySelector("#signupForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+        sbtn.value = "Submitting ...";
+        sbtn.disabled = true;
+        document.querySelector("#signupForm").submit();
+    });
+
+    function togglePassword(){
+      if (pwd.type == "text" ) {
+        pwd.type = "password"
+      }else {
+        pwd.type = "text"
+      }
+      document.querySelector(".password-toggle-icon").classList.toggle("bi-eye-fill")
+      document.querySelector(".password-toggle-icon").classList.toggle("bi-eye-slash-fill")
+    }
+
+  </script>
+
+{% endblock %}

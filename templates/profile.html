@@ -1,0 +1,767 @@
+{% extends "base.html" %}
+{% block base_content %}
+
+  {% if request.user.is_authenticated and request.user == user %}
+    {% include "header.html" %}
+  {% elif request.user.is_authenticated %}
+    <div class="gap"></div>
+    {% include "second_header.html" %}
+    <script>
+        secondHeader("profile","/home/")
+    </script>
+  {% else %}
+    {% include "base_header.html" %}
+  {% endif %}
+
+  <style>
+    .bowl {
+      width : 100%;
+      padding : 1.5em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1em;
+    }
+    .profile-bowl {
+      background :  var(--black);
+      border-radius: 1.5em;
+      width : 100%;
+      padding : 3em 2em 2em 2em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start center;
+
+      position: relative;
+    }
+    .profile-img {
+      width : 100%;
+
+      position: absolute;
+      top : 0;
+      left : 50%;
+      transform: translate(-50%,-50%);
+      z-index: 5;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+    }
+    .profile-info {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 1em;
+      place-items: center;
+    }
+    .profile-upper-info {
+      width : 100%;
+      overflow-x: scroll;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap : 1em;
+    }
+    .profile-upper-info::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profile-name {
+      padding : 0 .25em;
+      color : var(--base-bg-light);
+      text-transform: lowercase;
+      text-align: left;
+      font-weight: 900;
+      font-size: 1.25rem;
+      white-space:nowrap;
+
+      display : flex;
+      justify-content : center;
+      align-items : center;
+      gap : .5em;
+    }
+    .profile-name i {
+        font-size: .8em;
+        margin : 0 0 0 .5em;
+    }
+    .profile-name .tier-3 {
+        color : var(--base-blue-dark);
+    }
+    .profile-name .tier-2 {
+        color : var(--t2);
+    }
+    .level-show {
+        font-size : 1rem;
+        padding : .35em 0 0 0 ;
+    }
+    .level-show img{
+        font-size : 1rem;
+        width : 1.5rem;
+    }
+    .dms-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .3em;
+
+      background : var(--base-text-dark);
+      padding : .25em .65em;
+      border-radius: 10em;
+      color : var(--t1);
+      letter-spacing :.1em;
+      font-size : .9em;
+    }
+    .dms-count:hover {
+      animation : .2s btnClick;
+    }
+    .profile-mid-info {
+      width : 100%;
+      color : var(--t2);
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .profile-lower-info {
+      width : 100%;
+      padding : .25em 0 ;
+    }
+    .profile-lower-info p {
+      width : 100%;
+      color : var(--t1);
+      font-size: 1em;
+      line-height: 1.5em;
+      font-weight: 500;
+    }
+    .bi-quote {
+      position: absolute;
+      top : -.25em;
+      left : -.5em;
+      font-size: 1.5em;
+      color : var(--t3);
+      opacity: .35;
+    }
+    .edit-bowl {
+      width : 100%;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .edit-bowl a {
+      transition: .25s;
+      font-size: 1.25em;
+      color : var(--base-text-mid);
+      background :var(--base-bg-dark);
+      border-radius: 10em;
+      padding : .4em .6em;
+      z-index : 6;
+      text-decoration : none;
+    }
+    .edit-bowl a:hover {
+      color : var(--base-text-dark);
+    }
+    .message-bowl {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items : center;
+      grid-gap: .5em;
+    }
+    .message-terrace {
+        width : 100%;
+        padding : .5em 0;
+
+        display: flex;
+        justify-content : flex-start;
+        align-items : center;
+        gap: 1em;
+    }
+    .message-terrace input {
+        border : .1em solid var(--gray-dark);
+        outline : none ;
+        font-family: inherit;
+        font-size: .9em;
+        color: var(--base-text-mid);
+        padding : .25em 1em ;
+        border-radius  : 10em;
+        background: var(--base-bg-light);
+
+        display: flex;
+        justify-content : flex-start;
+        align-items : center;
+        gap: .5em;
+    }
+    .message-terrace .terrace-btn-active {
+        border : .125em solid var(--base-text-mid);
+        background : var(--base-bg-light);
+    }
+    .message-upper {
+      width : 100%;
+      background : var(--base-bg-mid);
+      border-radius: 1em;
+      padding : 1em;
+      margin-top : .5em;
+      border : .05em dotted var(--base-text-light);
+
+      display: grid;
+      grid-template-columns: 1fr ;
+      place-items: center ;
+    }
+    .message-upper textarea {
+      border : none;
+      outline : none;
+      font-family: inherit;
+      font-size: 1em;
+      width : 100%;
+      min-height: 5em;
+      border-radius: .5em;
+      background : inherit;
+      color : var(--base-text-dark); 
+    }
+    .message-upper textarea::placeholder {
+      color : var(--black);
+      opacity : .5;
+    }
+    .message-upper .message-img-cont {
+        border-radius : .75em;
+        padding : 1em;
+        border : .1em dashed var(--gray-dark);
+        color : var(--base-text-mid);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap : 1em;
+    }
+    .message-upper .message-img-cont  .paste-input {
+        border : none;
+        outline : none;
+        background: transparent;
+        font-size: inherit;
+        font-family: inherit;
+        text-align: center;
+    }
+    .message-upper .msg-img {
+        border-radius: .5em;
+    }
+    .message-upper #msg-img-input{
+        position: relative;
+        width :100%;
+        font-size : 1em;
+    }
+    .message-upper #msg-img-input::after{
+        content: 'Select an image';
+        position: absolute;
+        top : 0;
+        left : 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        background: var(--base-bg-mid);
+        font-family : 'DM Sans';
+        font-weight: 600;
+        color : var(--base-text-mid);
+        text-decoration: underline;
+    }
+    .vibe-cont {
+        width : 100%;
+
+        display : grid;
+        grid-template-columns: 1fr;
+        place-items : center;
+        grid-gap : 1em;
+    }
+    .vibe-emoji-cont {
+        color : var(--base-text-dark);
+        display : flex;
+        justify-content: center;
+        align-items: center;
+        gap : .25em;
+    }
+    .vibe-emoji {
+        font-size : 2em;
+    }
+    #msg-vibe-input {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+        width: 100%;
+        max-width : 300px;
+    }
+    #msg-vibe-input::-webkit-slider-runnable-track{
+        background: #bbb;
+        background : var(--base-grad);
+        opacity: 1;
+        height: 0.5rem;
+        border-radius: 10em;
+    }
+    #msg-vibe-input::-moz-range-track {
+        background: var(--base-text-light);
+        opacity: 1;
+        height: 0.5rem;
+        border-radius: 10em;
+    }
+    #msg-vibe-input::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        margin-top: -.25rem; /* Centers thumb on the track */
+        background : var(--base-bg-light);
+        height: 1rem;
+        width: 1rem;
+        border-radius : 50%;
+        border : .2em solid var(--base-red);
+        transition: .3s ease-in-out;
+    }
+    #msg-vibe-input::-webkit-slider-thumb:active {
+        transform: scale(1.3);
+    }
+    .message-center {
+        width :100%;
+        padding: .5em 0;
+
+        display: flex;
+        justify-content: center start;
+        align-items: center;
+        gap : .5em;
+    }
+    .message-lower {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center end;
+      grid-gap: .5em;
+    }
+    .message-lower p, .message-center p {
+      color : var(--base-text-light);
+      font-size: .8em;
+    }
+    .message-lower button {
+        font-family: inherit;
+        border: none;
+        outline: none;
+        font-size: 1.1em;
+        color: var(--base-bg-mid);
+        background: var(--black);
+        font-weight: 1000;
+        padding: .75em 1.5em ;
+        border-radius: 10em;
+        place-self: center end;
+        transition: .25s;
+    }
+    .message-lower button:hover {
+        animation : .2s btnClick;
+    }
+    .replies-bowl  {
+        width : 100%;
+        padding : 1em 0;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center start;
+        grid-gap: 1em;
+    }
+    .replies-bowl h3 {
+        padding: 0 .5em ;
+        color : var(--base-text-mid);
+        font-weight: 1000;
+    }
+    .replies-cont{
+      width : 100% ;
+
+      display: grid;
+      grid-template-columns: 1fr 3em;
+      place-items: center ;
+      grid-row-gap: .2rem;
+    }
+    .replies-box {
+      width : 100%;
+      height: 100%;
+      background: var(--base-bg-dark);
+      border-radius: .75em;
+      padding: 1em 1.25em;
+      color : var(--base-text-dark);
+      z-index: 3;
+      transition: .25s;
+
+      position: relative;
+
+      grid-column : 1/3;
+      grid-row: 1/2;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center start;
+      grid-gap: .5em;
+    }
+    .replies-box .options-icon {
+      position: absolute;
+      top : .75em;
+      right : .75em;
+      font-size: 1em;
+      color : var(--base-text-mid);
+      z-index: 4;
+    }
+    .replies-box b, .replies-box p {
+      line-height: 1.5em;
+    }
+    .replies-box .replies-reply {
+      color : var(--base-text-light);
+      background : var(--base-bg-light);
+      border-radius : 0 .5em .5em 0;
+      font-weight: 400 !important;
+      padding : .25em .75em;
+      border-left : .2em solid var(--gray-dark);
+    }
+    .replies-reply img {
+        border-radius: .5em;
+        margin-top: .5em;
+        opacity: .9;
+    }
+    .edit-reply-bowl {
+      width : 100%;
+      height: 100%;
+      padding : .75em;
+      background: var(--base-text-light);
+      color : var(--base-bg-dark);
+      border-radius: 1em;
+      z-index: 2;
+
+      grid-column: 2/3;
+      grid-row: 1/2;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1em;
+    }
+    .edit-reply-bowl a {
+      color : inherit;
+      text-decoration: none;
+    }
+    {% if request.user == user %}
+        .replies-cont:hover > .replies-box {
+            transform : translateX(-3.5em);
+        }
+    {% endif %}
+  </style>
+  <div class="bowl stiff">
+    {% if user_profile %}
+      <div class="edit-bowl">
+        <a href="/settings/"><i class="bi-gear"></i></a>
+        <a href="/edit-profile/"><i class="bi-pencil"></i></a>
+      </div>
+    {% else %}
+      <br>
+    {% endif %}
+    <div class="profile-bowl">
+      <div class="profile-img">
+        <div class="profile-img-cont veil-dp" onclick='window.location="/edit-profile/"'>
+          {% if user.profile.dp == "" %}
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIOwIePvlZCteninGWvsSIJ64QcrEtxMce8A&usqp=CAU">
+          {% else %}
+          <img src="{{userdp}}">
+          {% endif %}
+        </div>
+      </div>
+      <div class="profile-info">
+        <div class="profile-upper-info">
+          <div class="profile-name">
+            <p>
+                {{ user.first_name }}
+                {% if user.profile.tier == 3 %}
+                    <i class="bi-patch-check-fill tier-3"></i>
+                {% elif user.profile.tier == 2 %}
+                    <i class="bi-person-check tier-2"></i>
+                {% endif %}
+            </p>
+            {% if user.profile.dms_count >= 1000 %}
+            <div class="level-show" onclick="alertDm('{{ user.first_name}} is now a Veil-SuperNova️')">
+                <p><img src="/static/supernova.png"></p>
+            </div>
+            {% elif user.profile.dms_count >= 500 %}
+            <div class="level-show" onclick="alertDm('{{ user.first_name}} is now a Veil-Comet ☄️')">
+                <p><img src="/static/comet.png"></p>
+            </div>
+            {% elif user.profile.dms_count >= 100 %}
+            <div class="level-show" onclick="alertDm('{{ user.first_name }} is now a Veil-Rocket 🚀️')">
+                <p><img src="/static/rocket-emoji.svg"></p>
+            </div>
+            {% elif user.profile.dms_count >= 10 %}
+            <div class="level-show" onclick="alertDm('{{ user.first_name }} is now a Veil-Spark ✨')"  >
+                <p><img src="/static/heart-on-fire.svg"></p>
+            </div>
+           {% endif %}
+          </div>
+          <div class="dms-count" onclick="alertDm(`{{ user.first_name }} has earned {{ user.profile.dms_count }} veil-points`)">
+            <p>⚡{{ user.profile.dms_count }}</p>
+          </div>
+        </div>
+        <div class="profile-mid-info">
+          <p>@{{ user.username }}</p>
+        </div>
+        <div class="profile-lower-info">
+          <p>{{ user.profile.bio }}</p>
+        </div>
+      </div>
+    </div>
+
+    {% if not user_profile %}
+        <form class="message-bowl" method="POST" action="" onsubmit="ask(event)"> {% csrf_token %}
+            <div class="message-terrace">
+                <input type="button" class="terrace-btn-text terrace-btn-active" onclick="activateBtn(1)" value='Text'>
+                <input type="button" class="terrace-btn-img" onclick="activateBtn(2)" value='Image'>
+                <input type="button" class="terrace-btn-vibe" onclick="activateBtn(3)" value='❤️‍🔥Rating'>
+            </div>
+            <div class="message-upper">
+                <input type="hidden" name="msgType" class="msgType" value=1>
+                <textarea name="message" id="message" class="message " rows="1" cols="40" placeholder="Type your message | Use emojis 😉 ... " maxlength="500" required></textarea>
+                <div class="message-img-cont hide">
+                    <input type="hidden" name="msgImg" class="msgImg">
+                    <img src="" class="msg-img">
+                    <input type="file" id="msg-img-input" accept="image/*" >
+                    <input type='text' maxlength="0" class='paste-input' placeholder='or paste here'>
+                </div>
+                <div class="vibe-cont hide">
+                    <p class='vibe-emoji-cont'><span class="vibe-emoji">1</span> <span>/</span> 10</p>
+                    <input type="hidden" name="vibe" class="vibe-char" value="1">
+                    <input type="range" id="msg-vibe-input" value="1" min="1" max="10" step="1" >
+                </div>
+            </div>
+            <div class="message-center">
+                <input type="checkbox" onclick="viewOnceAlert(this)" name="viewonce" id="viewonce-input">
+                <p>instant auto burst</p>
+            </div>
+            <div class="message-lower">
+                <button type="submit">Send Anonymously</button>
+                <br>
+            </div>
+        </form>
+        <div class="ad">
+        <script type="text/javascript">
+	atOptions = {
+		'key' : 'acbfb0d70caf0bed678ee4f8530f66ca',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/acbfb0d70caf0bed678ee4f8530f66ca/invoke.js"></scr' + 'ipt>');
+</script>
+        </div>
+    {% endif %}
+    <div class="replies-bowl">
+        <h3>replies</h3>
+        {% for reply in replies %}
+            <div class="replies-cont">
+              <div class="replies-box">
+                {% if reply.pinned == True %}
+                    <i class="bi-pin-angle-fill options-icon"></i>
+                {% else %}
+                    <i class="bi-three-dots-vertical options-icon"></i>
+                {% endif %}
+                <div class="replies-reply">
+                    {% if reply.replyTo.dmType == 3 %}
+                        <p>Rating ❤️‍🔥 : <b>{{ reply.replyTo.message }}</b> </p>
+                    {% elif not reply.replyTo.img %}
+                      <p>{{ reply.replyTo.message }} {% if reply.replyTo.isNotif == True %} - <a href="/user/admin" class="highlight">Veil Admin</a> {% endif %}</p>
+                    {% else %}
+                      <img src="{{ reply.replyTo.img }}" alt="">
+                    {% endif %}
+                </div>
+                <p>{{ reply.reply }}</p>
+              </div>
+              <div class="edit-reply-bowl">
+                <a href="{% url 'editReplyView' reply.id %}?pin=true"><i class="bi-pin-fill"></i></a>
+                <a href="{% url 'editReplyView' reply.id %}?delete=true" onclick="confirmDm('Do you really want to delete this reply ?',event); return false;"><i class="bi-trash-fill"></i></a>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+  </div>
+  <script>
+
+    var msg = document.querySelector('.message');
+    var msgImg = document.querySelector('.msgImg');
+    var msgType = document.querySelector('.msgType');
+    var msg_img_cont = document.querySelector('.message-img-cont')
+
+    var msg_vibe_input = document.querySelector('#msg-vibe-input')
+    var vibe_cont = document.querySelector('.vibe-cont')
+    var vibe_emoji = document.querySelector('.vibe-emoji')
+
+    var terrace_btn_img = document.querySelector('.terrace-btn-img');
+    var terrace_btn_text = document.querySelector('.terrace-btn-text');
+    var terrace_btn_vibe = document.querySelector('.terrace-btn-vibe');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const param = urlParams.get('pretext');
+
+    msg.innerText = param
+
+    function ask(e) {
+        e.preventDefault();
+        var a = Math.floor(Math.random() * 10) + 1;
+        var b = Math.floor(Math.random() * 10) + 1;
+        var op = ["*", "+", "+", "-"][Math.floor(Math.random()*4)];
+        let ans = prompt("How much is " + a + " " + op + " " + b + "?") == eval( a + op + b);
+        if ( ans == false ) {
+            alertDm("That was basic math 🙄");
+        }else if ( ans == true ){
+            alertDm("🎉")
+            document.querySelector(".message-bowl").submit()
+        }
+    }
+
+    function activateBtn(id){
+        if(id == 2){
+            msg_img_cont.classList.remove('hide')
+            msg.classList.add('hide')
+            vibe_cont.classList.add('hide')
+
+            terrace_btn_img.classList.add('terrace-btn-active');
+            terrace_btn_text.classList.remove('terrace-btn-active');
+            terrace_btn_vibe.classList.remove('terrace-btn-active');
+
+            msg.disabled = 'disabled';
+            msgImg.removeAttribute("disabled");
+            msgType.value = '2'
+
+        }else if (id == 3){
+            vibe_cont.classList.remove('hide')
+            msg.classList.add('hide')
+            msg_img_cont.classList.add('hide')
+
+            terrace_btn_img.classList.remove('terrace-btn-active');
+            terrace_btn_text.classList.remove('terrace-btn-active');
+            terrace_btn_vibe.classList.add('terrace-btn-active');
+
+            msg.disabled = 'disabled';
+            msgImg.removeAttribute("disabled");
+            msgType.value = '3'
+
+        }else{
+            msg_img_cont.classList.add('hide')
+            msg.classList.remove('hide')
+            vibe_cont.classList.add('hide')
+
+            terrace_btn_img.classList.remove('terrace-btn-active');
+            terrace_btn_text.classList.add('terrace-btn-active');
+            terrace_btn_vibe.classList.remove('terrace-btn-active');
+
+            msgImg.disabled = 'disabled';
+            document.querySelector('.msg-img').src = ''
+            msg.removeAttribute("disabled");
+            msgType.value = '1'
+        }
+
+    }
+
+    function viewOnceAlert(inp){
+        if (inp.checked){
+            alertDm("This DM will be deleted automatically once seen by {{user.first_name}}");
+        }
+    }
+
+    // textarea
+    const tx = document.getElementsByTagName("textarea");
+    for (let i = 0; i < tx.length; i++) {
+      tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+      tx[i].addEventListener("input", OnInput, false);
+    }
+    function OnInput() {
+      this.style.height = 0;
+      this.style.height = (this.scrollHeight) + "px";
+    }
+
+    msg_vibe_input.addEventListener('input',function(e){
+        vibe_emoji.innerHTML = e.target.value
+        document.querySelector('.vibe-char').value = e.target.value
+    })
+
+    document.getElementById("msg-img-input").addEventListener("change", function(event) {
+      compressImg(URL.createObjectURL(event.target.files[0]))
+    });
+
+    function handlePaste(event) {
+        let items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (index in items) {
+            let item = items[index];
+            if (item.kind === 'file') {
+            let blob = item.getAsFile();
+            let reader = new FileReader();
+            reader.onload = function(event) {
+                compressImg(event.target.result);
+            };
+            reader.readAsDataURL(blob);
+            }
+        }
+    }
+    document.addEventListener('paste', handlePaste);
+
+
+    function compressImg(link){
+      var img = new Image();
+      img.src = link;
+      img.onload = function() {
+        var canvas = document.createElement("canvas");
+        var ctx = canvas.getContext("2d");
+
+        // Set desired width and height for resized image
+        var newWidth =  0.7 * img.width;
+        var newHeight = 0.7 * img.height;
+
+        if ( newWidth > 1500 || newHeight > 1500 ){
+            newWidth = 1500;
+            newHeight = 1500;
+        }else if (newWidth < 500 || newHeight < 500 ) {
+            newWidth = Math.max(img.width, img.height);
+            newHeight = Math.max(img.width, img.height);
+        }
+
+        // Calculate aspect ratio of original image
+        var aspectRatio = img.width / img.height;
+
+        // Calculate new width and height while maintaining aspect ratio
+        if (img.width > img.height) {
+        newHeight = Math.round(newWidth / aspectRatio);
+        } else {
+        newWidth = Math.round(newHeight * aspectRatio);
+        }
+
+        // Set canvas size to new width and height
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        // Draw the image onto the canvas
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+        // Get the resized image data as a base64-encoded string
+        var resizedImageData = canvas.toDataURL("image/jpeg", 0.8); // 0.8 is the quality
+
+        // Handle the resized image data as needed, e.g. upload to server, display preview, etc.
+        // Here you can use methods such as FileReader or FormData to handle the image data.
+        document.querySelector(".msgImg").value = resizedImageData;
+        document.querySelector(".msg-img").src = resizedImageData;
+      };
+    }
+
+    const status = urlParams.get('status');
+    if (status == 'S'){
+        alertDm('Message sent succesfully')
+    }else if (status == 'B'){
+        alertDm('You are blocked from messaging this user !')
+    }else if (status == 'E'){
+        alertDm('An error occured while sending your message !')
+    }
+
+  </script>
+
+{% endblock %}
