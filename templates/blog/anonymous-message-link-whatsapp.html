@@ -1,0 +1,128 @@
+{% extends "blog/base_blog.html" %}
+{% block head_content %}
+        <script type="application/ld+json">
+        {
+             "@context": "https://schema.org/",
+             "@type": "HowTo",
+             "name": "how to share anonymous message link to whatsapp",
+             "step": [
+                  {
+                       "@type": "HowToStep",
+                       "text":  "Create your anonymous question link by entering your name in the input field",
+                       "image" : "https://veilmsg.pythonanywhere.com/static/veil-step-1.png",
+                       "name": "Enter your name in the input feild"
+                  },
+                  {
+                       "@type": "HowToStep",
+                       "text": "share your unique anonymous question link to whatsapp by clicking on the whatsapp icon",
+                       "image": "https://veilmsg.pythonanywhere.com/static/veil-step-2.png",
+                       "name": "Share your anonymous questions link to whatsapp"
+                  },
+                  {
+                       "@type": "HowToStep",
+                       "text": "Go to your inbox page and see your anonymous questions",
+                       "image": "https://veilmsg.pythonanywhere.com/static/veil-step-3.png",
+                       "name": "Go to your inbox page and see your anonymous messages"
+                  }
+             ],
+             "description": "In this blog post, we'll show you how to add an anonymous questions link on whatsapp status so that you can receive crazy questions from your folowers keeping their identity hidden & have fun."
+        }
+        </script>
+{% endblock %}
+{% block blog_content %}
+
+    <style>
+        h1 {
+            color : var(--base-text-dark);
+        }
+        .hide {
+            display : none;
+        }
+        .steps-cont {
+            width :100%;
+
+            display : grid;
+            grid-template-columns : 1fr;
+            place-items : center start;
+            grid-gap: 1em;
+        }
+        .steps-cont img {
+            width : 100%;
+            border-radius: 1em;
+        }
+        h3 img {
+            height : 1em;
+        }
+    </style>
+    <div class="blog-bowl stiff">
+        <div class="blog-hero">
+            <h1>{{ blog.title }}</h1>
+        </div>
+        <div class="blog-cont guest-form-bowl">
+            <h2>Create Your Anonymous Messages Link</h2>
+            <form class="guest-form" method="post" action="/guest/"> {% csrf_token %}
+                <input type="text" name="name" id="name" value="" placeholder="Enter Your Name" autocapitalize="off" required="">
+                <button type="submit">Create Your Anonymous Message Link</button>
+            </form>
+        </div>
+        <div class="blog-cont">
+            <h2>Steps to add Anonymous Message Link to Whatsapp</h2>
+            <div class="steps-cont">
+                <h3>Step 1 : Create your Anonymous Message Link</h3>
+                <div class='toggle-cont'>
+                    <p>To create an Anonymous Message Link on VeilMsg, just enter your name in the above <a href="#">input field</a> and click the "Create Your Anonymous Message Link" button. Your guest account will be created and an anonymous message link will be generated.</p>
+                </div>
+            </div>
+            <div class="steps-cont">
+                <h3 >Step 2 : Click on the WhatsApp icon </h3>
+                <div class='toggle-cont'>
+                    <p>You'll be redirected to your homepage. Now that you have an Anonymous Message Link, <b>click on the Whatsapp icon </b> <span class='mini-code'><i class='bi-whatsapp'></i></span> to share the link to it.</p>
+                </div>
+            </div>
+            <div class="steps-cont">
+                <h3>Step 3 : Position your Anonymous Message Link and Post the status </h3>
+                <div class='toggle-cont'>
+                    <p>Positon your link and post the status and get ready to receive some juicy anonymous messages.</p>
+                </div>
+            </div>
+        </div>
+        <div class="blog-cont">
+            <h2>Receiving Anonymous Messages</h2>
+            <p>After posting your Anonymous Message Link on your whatsapp status, open your veilmsg <a href="/inbox/">inbox page</a> and wait for your friends to send their anonymous messages.</p>
+        </div>
+        <div class="blog-cont">
+            <h2>Conclusion</h2>
+            <p>With VeilMsg, a simple click unlocks a world of whispers, confessions, and connections you never knew existed.<br> <br>
+            Ready to step behind the veil? In Conclusion Here's how it works : <br>
+            <b>Create your link</b> <br>
+            <b>Share it on WhatsApp</b> <br>
+            <b>Unveil the messages</b> <br>
+            <br>
+            Remember, the veil isn't just for whispers; it's for unearthing truths, igniting laughter, and bridging the gap between you and those around you.
+            <br><br>
+            So, what are you waiting for? Step up, embrace the unknown, and let the anonymous message link guide you to unexpected surprises. ✨</p>
+        </div>
+        <div class="blog-cont">
+            <h2>FAQs</h2>
+            <div class="faq-cont">
+                <p><b>What is an Anonymous Message Link ?</b></p>
+                <p>An Anonymous Messages Link is a link that lets you receive anonymous messages / questions on social media. Share the link on instagram, and your followers can connect with you without revealing their identity.</p>
+            </div>
+            <div class="faq-cont">
+                <p><b>How do create an Anonymous Questions Link ?</b></p>
+                <p>You can create an Anonymous Questions Link by entering your name in the above <a href="#">input field</a>. It hardly takes a minute.</p>
+            </div>
+            <div class="faq-cont">
+                <p><b>Are my messages anonymous ?</b></p>
+                <p>Yes, your messages are anonymous with us. When you send a message using VeilMsg, your identity is kept anonymous, and your message is sent through an encrypted channel, which ensures privacy and security. <br><br> Similarly, when you receive a message through VeilMsg, the sender's identity remains anonymous, providing an extra layer of security and privacy. So, if you're looking for a safe and anonymous way to send and receive secret messages, Veil is a great option to consider.</p>
+            </div>
+            <div class="faq-cont">
+                <p><b>Where can I submit my feedback ?</b></p>
+                <p>You can send your feedback or suggestions to the <a href="/user/admin/">admin</a> directly.</p>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

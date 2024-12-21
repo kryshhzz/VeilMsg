@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% block base_content %}
+
+    <style>
+        .highlight {
+            color : var(--base-blue);
+        }
+        .stiff-landing {
+            max-width : 900px;
+            margin : 0 auto;
+        }
+        .landing-bowl {
+            font-family: 'DM Sans','Nunito',sans-serif;
+
+            display : grid;
+            grid-template-columns: 1fr;
+            place-items: center;
+            grid-gap: 2em;
+        }
+        header {
+            width : 100%;
+            padding : .5em 1em ;
+
+            display : flex;
+            justify-content: space-between;
+            align-items: center;
+            gap : 1em;
+        }
+        header .logo {
+            width : 3em;
+
+            display : flex;
+            justify-content: center;
+            align-items: center;
+        }
+        header .links a {
+            color : var(--base-text-dark);
+            padding : .25em 1em;
+            transition: .2s;
+            font-size: .9em;
+            font-weight: 500;
+        }
+        header .links a:hover {
+            color : var(--base-blue);
+        }
+        .atf-bowl {
+            width : 100%;
+            height : calc( 100vh - 8em );
+
+            display : grid;
+            grid-template-columns: 1fr;
+            place-items : center;
+        }
+        .atf {
+            width : 100%;
+            padding : 3em 1.5em;
+
+            position : relative;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            place-items : center;
+            grid-gap : 1em;
+        }
+        .atf::before {
+            content : '';
+            position: absolute;
+            top : 0em;
+            left : -4em;
+            background-image: url('/static/spring.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            width : 7em;
+            height : 3em;
+            transform: rotate(325deg);
+        }
+        .atf::after {
+            content : '';
+            position: absolute;
+            bottom : -2em;
+            right : -4em;
+            background-image: url('/static/spring.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100%;
+            width : 7em;
+            height : 3em;
+            transform: rotate(30deg);
+        }
+
+        @media(max-width : 1045px){
+            .atf::before {
+                position: absolute;
+                top : -5em;
+                left : 1em;
+            }
+            .atf::after {
+                position: absolute;
+                bottom : -5em;
+                right : 1em;
+            }
+        }
+        .atf h1 {
+            font-weight:1000;
+            font-size: min(max(32px, 4vw), 55px);
+        }
+        .atf p {
+            font-size : 1.2em;
+            text-align : center;
+            line-height : 1.5em;
+            color : var(--base-text-dark);
+        }
+        .atf .form-bowl {
+            width : 100%;
+            padding : 2.5em 0;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap : 1em;
+        }
+        .atf form {
+            width : 100%;
+            background : var(--black);
+            border-radius : 100em;
+            padding : .5em;
+
+            display : grid;
+            grid-template-columns: 1fr auto ;
+            place-items: center;
+        }
+        .atf form input, .atf form button {
+            width : 100%;
+            font-family: inherit;
+            font-size: 1em;
+            border : none;
+            outline : none;
+            color : var(--base-bg-light);
+        }
+        .atf form input {
+            background : transparent;
+            padding : .5em 1.5em;
+        }
+        .atf form button {
+            background: var(--base-bg-mid);
+            color : var(--black);
+            border-radius : 100em;
+            padding : .65em 2em;
+            transition: .2s;
+        }
+        form button:hover {
+            background : var(--base-text-dark);
+            color : var(--base-bg-dark);
+        }
+        .atf .form-bowl a {
+            color : var(--base-text-dark);
+        }
+        .content-block {
+            width : 100%;
+            padding : 1.5em;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            place-items: center start;
+            grid-gap : 1em;
+        }
+        .content-block .mini-code {
+            background: var(--base-bg-dark);
+            border-radius: .5em;
+            padding : .5em;
+            font-size: .8em;
+        }
+        .content-block .content-img {
+            width : 100%;
+            background : var(--base-bg-dark);
+            padding : 1em;
+            border-radius: .25em;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            place-items: center ;
+        }
+        .content-img img {
+            width : 100%;
+            max-width : 300px;
+            border-radius: inherit;
+        }
+        .content-block p {
+            line-height: 1.75em;
+        }
+        .content-block a {
+            color : inherit;
+        }
+        .two-columns {
+            width : 100%;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+            place-items: start center;
+            grid-gap: 1em ;
+        }
+        .card-holder {
+            width : 100%;
+            padding : 1em 0;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            place-items: center;
+            grid-gap : 1em;
+        }
+        .card {
+            background: var(--base-bg-mid);
+            padding : 2em;
+            color : var(--black);
+            border-radius : .25em;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            place-items: center start;
+            grid-gap : 1em;
+        }
+        .card .step-no {
+            text-transform : uppercase;
+            font-size : .8em;
+            letter-spacing : .15em;
+        }
+        .steps {
+
+        }
+    </style>
+    <div class="landing-bowl">
+        <header class="stiff-landing">
+            <div class="logo"><img src="https://veilmsg.pythonanywhere.com/static/veil-logo.svg" alt="VeilMsg logo"></div>
+            <div class="links">
+                <a href="/signup/">Signup</a>
+                <a href="/login/">Login</a>
+            </div>
+        </header>
+        <div class="atf-bowl">
+            <div class="atf stiff-landing">
+                <h1>Secret Message Link</h1>
+                <p>Let your friends share their secret messages, questions with you <b>anonymously</b>.</p>
+                <div class="form-bowl">
+                    <form method="post" action="/guest/"> {% csrf_token %}
+                        <input type="text" name="name" id="name" value="" placeholder="Enter Your Name" autocapitalize="off" required="">
+                        <button type="submit">Get Your Link</button>
+                    </form>
+                    <a href="/login/">Already have an account ?</a>
+                </div>
+            </div>
+        </div>
+        <div class="content-block stiff-landing">
+            <h2>How to create a Secret Message Link on VeilMsg</h2>
+            <div class="card-holder steps">
+                <div class="card">
+                    <b class="step-no">step 1</b>
+                    <h3>Generate your Secret Message Link</h3>
+                    <p>Enter your name into the <a href="#">above input box</a> and click on ‘Get Your Link’. VeilMsg will create your guest account and a secret message link in less than a minute.</p>
+                </div>
+                <div class="card">
+                    <b class="step-no">step 2</b>
+                    <h3>Share it on Twitter / WhatsApp / etc </h3>
+                    <p>Click the share icon on the <a href="/home/">home page</a> to share your Secret Message Link on social media platforms like Twitter, WhatsApp, and more.</p>
+                </div>
+                <div class="card">
+                    <b class="step-no">step 3</b>
+                    <h3>Wait for Secret Messages in your Inbox</h3>
+                    <p>Once you've shared your secret message link with your friends, watch for their quirky questions and confessions to show up in your <a href="/inbox/">inbox</a>.</p>
+                </div>
+            </div>
+        </div>
+        <!-- FAQS -->
+        <div class="content-block stiff-landing">
+            <h2>How to share your Secret Message Link on Twitter <span class="highlight">?</span></h2>
+            <p>Once you have created your secret message link, just click on the Twitter icon <span class="mini-code"><i class="bi-twitter"></i></span>  on your <a href="/home/">home page</a>, it will automatically share your secret message link with your Twitter account.</p>
+            <div class="content-img">
+                <img src="/static/veil-step-2.png" alt="secret message link share to twitter">
+            </div>
+        </div>
+        <div class="content-block stiff-landing">
+            <h2>How to share your Secret Message Link on WhatsApp <span class="highlight">?</span></h2>
+            <p>After creating a secret message link, click the share icon <span class="mini-code"><i class="bi-share-fill"></i></span> on the <a href="/home/">home page</a> and then on WhatsApp to share  with your friends through personal messages or via WhatsApp status.</p>
+            <div class="content-img">
+                <img src="/static/veil-step-2.png" alt="secret message link share to twitter">
+            </div>
+        </div>
+        <div class="content-block stiff-landing">
+            <h2>What is a Secret Message Link <span class="highlight">?</span></h2>
+            <p>A secret message link is a link that allows you to receive anonymous messages on social media. Sharing the link allows your friends, followers to connect with you without revealing their identity.</p>
+        </div>
+        <div class="content-block stiff-landing">
+            <h2>How to see your Secret Message Link <span class="highlight">?</span></h2>
+            <p>If you already have a veil account, you can see the secret message link in the home page itself, else <a href="#">create a guest account</a>. You can now copy or share that secret message link to whatsapp, facebook, twitter by clicking the share icon <span class="mini-code"><i class="bi-share-fill"></i></span> .</p>
+        </div>
+        <div class="content-block stiff-landing">
+            <h2>Is VeilMsg free <span class="highlight">?</span></h2>
+            <p>Yes, VeilMsg is free for everyone forever. It is <a href="https://github.com/kryshhzz/VeilMsg">open source</a>. Join now as a guest or <a href="/signup/">create a standard veil account</a> and have fun.</p>
+        </div>
+        <div class="content-block stiff-landing">
+            <h2>How do I submit my queries and suggestions <span class="highlight">?</span></h2>
+            <p>You can post any questions or suggestions <a href="/user/admin/">here</a>.</p>
+        </div>
+    </div>
+
+{% endblock %}

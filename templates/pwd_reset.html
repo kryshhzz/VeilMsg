@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block base_content %}
+  {% include "base_header.html" %}
+  <style>
+    .main-bowl {
+      width : 100%;
+      padding : 3.5em 2em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1.25em;
+    }
+    .main-bowl h2 {
+      font-size: 1.5em;
+      font-weight: 1000;
+      color : var(--base-text-dark);
+      width : 100%;
+    }
+    .login-bowl {
+      width: 100%;
+      max-width: 350px;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center start;
+      grid-gap: .65em;
+    }
+    .password-cont {
+      width : 100%;
+
+      display: grid;
+      grid-template-columns: 1fr 2em;
+      place-items: center;
+    }
+    .password-cont button {
+      width : 100%;
+      height : 100%;
+      font-size: 1.25em;
+      border : none;
+      outline : none;
+      background: none;
+      color : var(--base-text-mid);
+    }
+    .login-bowl label {
+        color : var(--base-text-dark);
+        font-size : .9em;
+        margin-top : .75em;
+    }
+  </style>
+  <div class="main-bowl stiff">
+    <h2>Login with Security Question</h2>
+    <form class="login-bowl" id="loginForm" action="" method="post" autocomplete="nope"> {% csrf_token %}
+      <label>Username or Email</label>
+      <input type="text" class="veil-input" name="username" id="username" value="{{ username }}" placeholder="me@mail.com" autocapitalize="off" required />
+      <label>Who is your childhood crush ?</label>
+      <input type="text" class="veil-input" name="secque" id="secque" value="" placeholder="Secret one word answer" autocapitalize="off" onkeypress="return event.charCode != 32" required />
+
+      <div class="register-cont">
+        <p class="error">{{ error }}</p>
+      </div>
+      <input type="submit" class="veil-button" name="button" id="button" value="Login"/>
+      <div class="register-cont">
+        <a href="/signup/">Create an account ?</a>
+        <a href="/login/">Never mind. Back to login.</a>
+      </div>
+    <form>
+  </div>
+  <script>
+    var errp = document.querySelector(".error")
+    var sbtn = document.getElementById("button")
+    var secque = document.getElementById('secque')
+    var pwd = document.getElementById("password")
+
+    secque.addEventListener('input',function(e){
+      secque.value = secque.value.replaceAll(" ", "_");
+      secque.value = secque.value.toLowerCase()
+    })
+
+
+    document.querySelector("#loginForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      if ( secque.value.includes(' ') ) {
+        errp.innerHTML = "Please enter a single word secret answer only."
+        secque.innerHTML = ''
+      }else {
+        sbtn.value = "Submitting ...";
+        sbtn.disabled = true;
+        document.querySelector("#loginForm").submit();
+      }
+    });
+
+  </script>
+
+{% endblock %}

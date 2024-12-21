@@ -1,0 +1,35 @@
+<style>
+  header {
+    width : 100%;
+    padding : .25em 1.25em;
+    background: var(--base-bg-light);
+    border-bottom: .1em solid var(--base-bg-dark);
+
+    position: fixed;
+    top : 0;
+    left : 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+
+    display: flex;
+    justify-content : space-between;
+    align-items: center;
+    gap : 2em;
+  }
+  .logo {
+    margin: .25em 0 0 0 ;
+    width : 3em;
+  }
+  .signup-link {
+      text-decoration : none;
+    color : var(--base-blue);
+    border-bottom : .1em dashed var(--base-text-light);
+    font-weight: 600;
+  }
+
+</style>
+<header class="stiff">
+  <a href="/" class="logo"><img src="/static/veil-logo.svg" alt="veil logo"></a>
+  <a href="/" class="signup-link"> Create your veil link</a>
+</header>
+<div class="gap"></div>

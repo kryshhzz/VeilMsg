@@ -1,0 +1,77 @@
+<style>
+    .footer-bowl {
+        width: 100%;
+        margin-top : 5em;
+        background: #000000;
+        padding : 5em 2em 5em 2em;
+        border-top: 0.5em solid rgba(255,255,255,.65);
+      }
+      .footer-msg {
+         width : 100%;
+         color : var(--base-text-light);
+         padding : .5em;
+         text-align : center;
+      }
+      .footer-cont {
+        width :100%;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center;
+        grid-gap: 2em;
+      }
+      .footer-cont img {
+        width: 5em;
+      }
+      .footer-cont div {
+        width: 100%;
+
+        display: flex;
+        justify-content: center;
+        place-items: center;
+        gap: 1em;
+      }
+      .footer-cont a {
+        font-size: 1em;
+        text-decoration: none;
+        text-align: center;
+        color: var(--base-bg-dark);
+      }
+      .footer-bottom a {
+        background: var(--base-text-dark);
+        border-radius: 10em;
+        padding: .75em 1em;
+        transition: .2s;
+      }
+      .footer-bottom a:hover {
+        background: var(--base-text-mid);
+      }
+      .donatebtn {
+          background : var(--gray-light);
+          color : var(--base-tedxt-dark) !important;
+          padding: .75em 1em;
+          border-radius: 102em;
+          font-weight : bold;
+      }
+    .donatebtn:hover {
+        animation : .2s btnClick;
+    }
+</style>
+<div class="footer-bowl">
+    <div class="footer-msg">70,000+ Secrets Sent, 0 Faces Revealed 🤫</div>
+    <div class="footer-cont landing-stiff">
+        <img src="/static/veil-logo.svg" alt="veil logo">
+        <div class="footer-top">
+            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/blog/">Blog</a>
+            <a href="/user/admin/">Contact Us</a>
+            <a href="https://bento.me/veilmsg">Other Links</a>
+        </div>
+        <div class="footer-bottom">
+            <a href="https://instagram.com/veil.msg" target="_blank"><i class="bi-instagram"></i></a>
+            <a href="https://twitter.com/veil_msg" target="_blank"><i class="bi-twitter"></i></a>
+            <a rel="me" href="https://mastodon.social/@veilmsg"><i class="bi-mastodon"></i></a>
+        </div>
+        <a class='donatebtn' href='https://buymeacoffee.com/veilmsg' target='_blank'>🔥 Fuel Us: Donate Now !</a>
+    </div>
+</div>

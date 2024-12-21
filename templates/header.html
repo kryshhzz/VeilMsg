@@ -1,0 +1,84 @@
+<style>
+  header {
+    width : 100%;
+    padding : .25em 1.5em;
+    color : var(--base-text-light);
+    background : var(--base-bg-light);
+    border-bottom : .1em solid var(--base-bg-dark);
+
+    position: fixed;
+    top : 0;
+    left : 50%;
+    transform: translateX(-50%);
+    z-index: 110;
+
+    display: flex;
+    justify-content: space-between;
+    gap : 1em;
+    align-items: center;
+  }
+  .logo {
+    margin: .25em 0 0 0 ;
+    width : 3em;
+  }
+  .nav-in {
+    text-decoration: none;
+    color : inherit;
+    position : relative;
+  }
+  .nav-in i {
+    font-size: 1.25em;
+  }
+  .active{
+    color : var(--black);
+  }
+  .gap {
+    height : 3.5em;
+  }
+  .nav-dot::before {
+    content : "";
+    position: absolute;
+    top : -.35em;
+    right : -.15em;
+    width : .35em;
+    height : .35em;
+    border-radius: 100%;
+    background : var(--base-text-mid);
+    border : .05em solid var(--base-text-dark);
+  }
+</style>
+<header class="stiff">
+  <a href="/" class="logo nav-in"><img src="/static/veil-logo.svg" alt="veil logo"></a>
+  <a href="/home/" id="home-nav" class="nav-in"><i class="bi-house"></i></a>
+  {% if unseenMsgs %}
+    <a href="/inbox/" id="inbox-nav" class="nav-in nav-dot"><i class="bi-chat"></i></a>
+  {% else %}
+    <a href="/inbox/" id="inbox-nav" class="nav-in"><i class="bi-chat"></i></a>
+  {% endif %}
+  {% if unseenQResps %}
+    <a href="/queries/" id="queries-nav" class='nav-in nav-dot'><i class="bi-question-circle"></i></a>
+  {% else %}
+    <a href="/queries/" id="queries-nav" class='nav-in'><i class="bi-question-circle"></i></a>
+  {% endif %}
+
+  <a href="/user/" id="profile-nav" class="nav-in"><i class="bi-person"></i></a>
+</header>
+<div class="gap"></div>
+<script>
+  var dict = {
+    "/home/" : "home-nav",
+    "/" : "home-nav",
+    "/inbox/" : "inbox-nav",
+    "/user/" : "profile-nav",
+    "/queries/" : "queries-nav",
+  }
+
+  for (const [key, value] of Object.entries(dict)){
+    if ( window.location.pathname == key ){
+      var x = document.getElementById(value);
+      x.classList.add("active");
+    }
+  }
+
+
+</script>

@@ -1,0 +1,101 @@
+{% extends "base_index.html" %}
+{% block content %}
+  {% include "second_header.html" %}
+
+  <style>
+    .settings-bowl {
+      width : 100%;
+      padding : 1em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1.25em;
+    }
+    .settings-cont {
+      width : 100%;
+      background : var(--base-bg-dark);
+      padding : 1.25em;
+      border-radius: 1em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: 1em;
+    }
+    .settings-cont h3 {
+      width : 100%;
+      text-transform: lowercase;
+      font-weight: 1000;
+      color : var(--base-text-mid);
+    }
+    .settings-box {
+      width : 100%;
+      padding : 0 .5em;
+      text-decoration: none;
+      color : var(--base-text-mid);
+      /*background: var(--base-bg-dark); */
+
+      display : flex;
+      justify-content: space-between;
+      align-items: center;
+      gap : .5em;
+    }
+    #id_is_open {
+        width : 1.25em;
+        height: 1.25em;
+    }
+  </style>
+  <div class="settings-bowl stiff">
+    <div class="settings-cont">
+      <h3>blocked</h3>
+      {% for blocked_ip in user.profile.blocked_ips.all %}
+        <a href="{% url 'blockView' blocked_ip.pk %}?unblock=true" onclick="confirmDm('Do you really want to unblock user {{ blocked_ip.id }}',event)" class="settings-box">
+          <p>blocked user {{ blocked_ip.id }}</p>
+          <i class="bi-three-dots"></i>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="settings-cont">
+      <h3>account</h3>
+      <form action = "" method = "post" class="settings-box open-status-form">
+        {% csrf_token %}
+        {{ form }}
+      </form>
+
+      <a href="/logout/" onclick="confirmDm('Do you really want to logout ?',event)" class="settings-box">
+        <p>logout</p>
+        <b>⛔️</b>
+      </a>
+    </div>
+    <div class="settings-cont">
+      <h3>veil</h3>
+      <a href="/user/admin/" class="settings-box">
+        <p>contact</p>
+        <b>💬</b>
+      </a>
+      <a href="#" class="settings-box">
+        <p>version</p>
+        <b>2.1</b>
+      </a>
+    </div>
+  </div>
+  <script>
+    secondHeader("settings","/user/")
+
+    var opform = document.querySelector('.open-status-form')
+    var opinput = document.querySelector('#id_is_open')
+
+    opinput.addEventListener('click',function(event){
+        var agreed = true
+        if (! opinput.checked){
+            var agreed = confirm('By clicking OK you will not receive any dms')
+        }
+        if (agreed){
+            opform.submit()
+        }
+        event.preventDefault()
+    })
+
+  </script>
+{% endblock %}

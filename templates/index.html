@@ -1,0 +1,420 @@
+{% extends "base_index.html" %}
+{% block content %}
+
+  <style>
+    .index-bowl {
+      width : 100%;
+      padding : 3em 1.5em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center ;
+      grid-gap: 1em;
+    }
+    .index-greeting {
+      width : 100%;
+      color : var(--base-text-dark);
+
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap : 1em;
+    }
+    .index-greeting h3 {
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+    .index-greeting img {
+        width : 2rem;
+    }
+    .index-link-bowl {
+      width : 100%;
+      background : var(--black);
+      border-radius: 1em;
+      padding : 1.75em;
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: 1.75em;
+    }
+    .index-link-bowl p {
+      width : 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .index-link-info {
+      width : 100%;
+      color : var(--t2);
+
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: start;
+      grid-gap: 1em;
+    }
+    .index-link-info h3 {
+      width : 100%;
+      font-weight: 1000;
+      color : var(--base-bg-light);
+    }
+    .index-link-info .index-link-box {
+        width : 100%;
+        border-radius : .5em;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap : 1em;
+    }
+
+    .index-link-box input {
+        width : 100%;
+        border : none;
+        outline : none;
+        background : none;
+        color : var(--base-text-light);
+        padding : .5em 0;
+        font-size :.9em;
+        font-family : inherit;
+        border-bottom : .1em dashed var(--t4);
+        border-top : .1em dashed var(--t4);
+    }
+    .index-link-box button {
+        border : none;
+        outline : none;
+        background : var(--base-text-dark);
+        color : var(--base-bg-dark);
+        padding : .5em;
+        border-radius : .5em;
+        font-size :.9em;
+    }
+    .index-link-share {
+      width : 100%;
+
+     display : grid;
+     grid-template-columns : 1fr ;
+     place-items : center;
+     grid-gap : 1em;
+
+    }
+    .index-link-share div {
+        width : 100%;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .25em;
+    } 
+    .index-link-share button{
+        width : 100%;
+      background: var(--t4);
+      border-radius: 10em;
+      font-size: 1rem;
+      padding : .5em .75em;
+      font-family: inherit;
+      border : none;
+      outline: none;
+      color : var(--t1);
+      font-weight: 800;
+
+      display : flex;
+      justify-content : center;
+      align-items : center;
+      gap : .5em;
+    }
+    .index-link-share button:hover {
+      animation: .2s btnClick;
+    }
+    .insta {
+        border-radius: 100em;
+    }
+    .insta button{
+        border-radius: inherit;
+        background: var(--t4);
+        color : var(--t1);
+    }   
+    .img-alert-bowl img{
+        border-radius : 1em;
+    } 
+
+
+    .index-notifs-bowl{
+        width : 100%;
+        background : var(--base-bg-light);
+        padding : 2em 0 0 0;
+
+        display : grid;
+        grid-template-columns : 1fr;
+        place-items : center;
+        grid-gap : 1em;
+    } 
+    .index-notifs-double-bowl { 
+        width : 100%; 
+
+        display : grid;
+        grid-template-columns : 1fr 1fr;
+        place-items : center;
+        grid-gap : 1em;
+    } 
+    .index-notifs-double-bowl-unequal{
+        width : 100%; 
+
+        display : grid;
+        grid-template-columns : .4fr 1fr;
+        place-items : center;
+        grid-gap : 1em;
+    }
+    .index-notifs-cont {
+        width : 100%; 
+        height : 100%;
+        background : var(--base-bg-dark);
+        padding : 1em;
+        border-radius : 1em;
+        color : var(--base-text-dark);
+        line-height : 1.5em; 
+
+        display: flex; 
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start; 
+        gap : 1.5em;
+    }
+    .index-notifs-cont p {
+        width :100%;
+    } 
+    .progress-bar {
+        width : 100%;
+        height : .25em;
+        background: var(--gray-dark);
+        border-radius: 50em; 
+    }
+    .bar {
+        width : 10%;
+        height : 100%;
+        background: linear-gradient(to right,var(--base-text-light),var(--black));
+        border-radius: inherit; 
+
+        position: relative;
+    } 
+
+ 
+    .msgs-count { 
+        width : 100%;
+        height : 100%; 
+
+        display: flex; 
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start; 
+        gap : 1em;
+    }
+    .msgs-count b{
+        font-size : 2em; 
+        font-weight: 800; 
+    }
+    .veil-button-2 {
+      border : none;
+      outline : none;
+      font-family : inherit;
+      color: var(--black);
+      font-weight : 800;
+      font-size : 1em;
+      float : middle;
+      padding-bottom : .25em;
+      border-bottom : .1em solid var(--gray-dark);
+    }
+    .veil-button-2:hover {
+        border-bottom :.1em solid var(--base-text-light);
+    }
+    #credential-form {
+        width : 100%;
+        height : 100%;  
+        line-height: 1.75em;
+
+        display: flex; 
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    } 
+    .warning {
+        color : var(--base-red);
+    }
+  </style>
+    <div class="alert-bowl img-alert-bowl">
+      <div class="alert-cont">
+        <div class="alert-box">
+          <h3>Steps to add your anonymous link to insta story :</h3>
+          <br>
+          <img src='/static/ig/2.jpg'>
+          <img src='/static/ig/3.jpg'>
+          <img src='/static/ig/4.jpg'>
+          <img src='/static/ig/5.jpg'>
+        </div>
+        <button onclick="closeAlertImg(); shareStory()" id="alert-btn">Got it, continue !</button>
+      </div>
+    </div>
+  <div class="index-bowl stiff">
+    <div class="index-greeting">
+      <h3>Hello {{ user.first_name }}</h3>
+        {% if user.profile.dms_count >= 1000 %}
+            <div class="level-show" onclick="alertDm('You are now a Veil-SuperNova️')">
+                <p><img src="/static/supernova.png"></p>
+            </div>
+        {% elif user.profile.dms_count >= 500 %}
+            <div class="level-show" onclick="alertDm('You are now a Veil-Comet ☄️')">
+                <p><img src="/static/comet.png"></p>
+            </div>
+        {% elif user.profile.dms_count >= 100 %}
+            <div class="level-show" onclick="alertDm('You are now a Veil-Rocket 🚀️')">
+                <p><img src="/static/rocket-emoji.svg"></p>
+            </div>
+        {% elif user.profile.dms_count >= 10 %}
+            <div class="level-show" onclick="alertDm('You are now a Veil-Spark ✨')"  >
+                <p><img src="/static/heart-on-fire.svg"></p>
+            </div>
+        {% endif %}
+    </div>
+    <div class="index-link-bowl">
+      <div class="index-link-info">
+        <h3>Share on your fav social media.</h3>
+        <div class="index-link-box">
+            <input type="text" value="https://veilmsg.pythonanywhere.com/user/{{ user.username }}/" readonly>
+            <button onclick="copyLink()"><i class="bi-clipboard"></i></button>
+        </div>
+      </div>
+      <div class="index-link-share">
+        <div>
+        <button onclick="twitterShare()"><i class="bi-twitter"></i></i></button>
+        <button class="snapchat-share-button"
+          data-share-url="https://veilmsg.pythonanywhere.com/user/{{user.username}}/">
+          <i class="bi-snapchat"></i>
+        </button>
+        <button onclick="fbShare()" ><i class="bi-facebook"></i></button>
+        <button onclick="wtspShare()"><i class="bi-whatsapp"></i></button>
+        <button onclick="shareLink()"><i class="bi-share-fill"></i></i></button>
+        <!-- <button onclick="copyLink()"><i class="bi-clipboard"></i></button> -->
+        </div >
+        <div class="insta" >
+            <button onclick="shareInstaStory()"><i class="bi-instagram"></i> Add to Instagram Story</button>
+        </div>
+      </div>
+    </div>
+    <div class='index-notifs-bowl stiff'> 
+        <div class="index-notifs-double-bowl-unequal"> 
+            <div class="index-notifs-cont msgs-count">
+                <b>{{ user.profile.dms_count }}</b>
+                <p>messages recieved </p>
+            </div>
+            <div class='index-notifs-cont'>
+                <p class="remMsgs">hi</p>
+                <div class="progress-bar">
+                    <div class="bar"></div>
+                </div>
+            </div> 
+        </div>
+        {% if user.profile.tier == 1 %} 
+          <div class="index-notifs-double-bowl">
+            <div class='index-notifs-cont'>
+                <p>
+                    This guest account expires in <b class="warning">{{ time_diff }}</b> !
+                </p>
+                <button class="veil-button-2" onclick='window.location="/signup/"'>Get Permanent</button>
+            </div>
+            <div class='index-notifs-cont'> 
+                <form id="credential-form" onsubmit="saveCreds(event)">
+                   <p><b>Username</b> : <br>  {{ user.username }} 
+                    <br>
+                   <b>Password</b> : <br> {{ user.last_name }}</p>
+                   <label class="hide">login: <input type="text" name="username" required autocomplete="username" value="{{user.username}}"></label>
+                   <label class="hide">password: <input type="password" name="password" required autocomplete="current-password" value="{{user.last_name}}"></label>
+                  <br>
+                  <button class="veil-button-2" type="submit">Save Password</button>
+                </form>
+            </div>
+          </div>
+        {% endif %}
+    </div>
+  </div>
+  <script>
+    var pageUrl = "https://"+window.location.hostname+"{% url 'profileView' user.username %}";
+    var shareTitle = "Share your questions, confessions with me secretly. Click now 👇";
+
+    function myUrl(){
+        return pageUrl+"?ref=dashboard_"+Math.floor(Math.random() * 900 + 100).toString()+"%23"+Math.floor(Math.random() * 900 + 100).toString();
+    }
+
+    function saveCreds(event){
+        event.preventDefault();
+       let credentialForm = document.getElementById('credential-form');
+       let credential = new PasswordCredential(credentialForm);
+       navigator.credentials.store(credential)
+          .then(() => log('Storing credential for ' + credential.id + ' (result cannot be checked by the website).'))
+          .catch((err) => log('Error storing credentials: ' + err));
+    }
+    function copyLink(){
+      navigator.clipboard.writeText(myUrl());
+      alertDm("Your URL is copied !");
+    }
+    function wtspShare(){
+        window.open(
+           "whatsapp://send?text="+shareTitle+myUrl()
+        )
+    }
+    function twitterShare(){
+        window.open(
+            "https://twitter.com/intent/tweet?url="+myUrl()+"&text="+shareTitle+"&hashtags=VeilMsg,Anonymous", "_blank"
+        );
+    }
+
+    function fbShare(){
+        window.open(
+            "http://www.facebook.com/sharer.php?s=100&p[title]="+shareTitle+"&p[url]="+myUrl()+"&p[summary]="+shareTitle, "_blank"
+        );
+
+    }
+
+    function shareLink(){
+      navigator.share({
+        title: shareTitle,
+        text: shareTitle,
+        url: myUrl(),
+      })
+      .then(() => console.log('Successful share! 🎉'))
+      .catch(err => console.error(err));
+    }
+
+    function shareInstaStory(){
+        document.querySelector('.img-alert-bowl').style.display = "grid";
+    }
+
+    function shareStory(){
+      var storyMainUrl ="/static/insta-bg.jpg"
+      copyLink();
+      shareImage(storyMainUrl,"veilmsg.jpg");
+    }
+
+    target_msgs = {% if user.profile.dms_count < 10 %} 10 {% elif user.profile.dms_count < 100 %} 100 {% elif user.profile.dms_count < 500 %} 500 {% elif user.profile.dms_count < 1000 %} 1000 {% elif user.profile.dms_count < 5000 %} 5000  {% endif %}
+    remmsgs_count = target_msgs - {{ user.profile.dms_count }}
+    document.querySelector('.remMsgs').innerHTML = "Receive <b>"+remmsgs_count+"</b> more messages to level up 🎉"
+    document.querySelector('.bar').style.width = (({{ user.profile.dms_count }}/target_msgs)*100)+'%'
+  </script>
+  <script>
+      // Load the SDK asynchronously
+      (function (d, s, id) {
+        var js,
+          sjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://sdk.snapkit.com/js/v1/create.js";
+        sjs.parentNode.insertBefore(js, sjs);
+      })(document, "script", "snapkit-creative-kit-sdk");
+
+      window.snapKitInit = function () {
+        snap.creativekit.initalizeShareButtons(
+          document.getElementsByClassName("snapchat-share-button")
+        );
+      };
+  </script>
+{% endblock %}

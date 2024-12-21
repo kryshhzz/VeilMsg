@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block base_content %}
+  {% include "base_header.html" %}
+  <style>
+    .main-bowl {
+      width : 100%;
+      padding : 3.5em 2em;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: 1.25em;
+    }
+    .main-bowl h2 {
+      font-size: 1.5em;
+      font-weight: 1000;
+      color : var(--base-text-dark);
+      width : 100%;
+    }
+    .login-bowl {
+      width: 100%;
+      max-width: 350px;
+      
+      display: grid;
+      grid-template-columns: 1fr;
+      place-items: center;
+      grid-gap: .65em;
+    }
+    .password-cont {
+      width : 100%;
+      
+      display: grid;
+      grid-template-columns: 1fr 2em;
+      place-items: center;
+    }
+    .password-cont button {
+      width : 100%;
+      height : 100%;
+      font-size: 1.25em;
+      border : none;
+      outline : none;
+      background: none;
+      color : var(--base-text-mid);
+    }
+  </style>
+  <div class="main-bowl stiff">
+    <h2>Login as Guest</h2>
+    <form class="login-bowl" id="signupForm" action="" method="post" autocomplete="nope"> {% csrf_token %}
+      <input type="text" class="veil-input" name="name" id="name" value="" placeholder="Name" autocapitalize="off" required />
+      <div class="register-cont">
+        <p class="error">{{ error }}</p>
+      </div>
+      <input type="button" class="veil-button" name="button" id="button" value="Submit" onclick="checkPwd()" />
+      <div class="register-cont">
+        <a href="/login/">Have an account ?</a>
+      </div>
+    <form>
+  </div>
+  <script>
+    var errp = document.querySelector(".error")
+    var sbtn = document.getElementById("button")
+    
+    function checkPwd(){
+      sbtn.value = "Submitting ...";
+      sbtn.disabled = true;
+      document.querySelector("#signupForm").submit();
+    }
+    
+  </script>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+<style>
+  .second-header {
+    width : 100%;
+    margin : 0 auto;
+    background : var(--base-bg-light);
+    border-bottom : .15em solid var(--base-bg-dark);
+    color : var(--base-text-dark);
+    
+    position: fixed;
+    top : 0;
+    left : 50%;
+    transform: translateX(-50%);
+    z-index: 102;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5em;
+  }
+  .second-header a {
+    padding : .75em 1em;
+    color : var(--base-text-mid);
+  }
+  .second-header i {
+    font-size: 1.5em;
+  }
+  .second-header h3 {
+    font-weight: 1000;
+  }
+  header {
+    display: none;
+  }
+</style>
+<div class="second-header stiff">
+  <a id="head-back" href="javascript:history.back()">
+    <i class="bi-arrow-left"></i>
+  </a>
+  <h3 id="head-msg">veil</h3>
+    <a href="#">
+    <i class="bi-arrow-rkyxhh"></i>
+  </a>
+</div>
+<script>
+  function secondHeader(hmsg,hhref){
+    var headMsg = document.getElementById("head-msg")
+    var headBack = document.getElementById("head-back")
+    
+    headMsg.innerHTML = hmsg;
+    headBack.href = hhref;
+  }
+ </script>
