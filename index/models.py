@@ -29,6 +29,7 @@ class profile(models.Model):
   user = models.OneToOneField(User,on_delete=models.CASCADE)
   bio = models.TextField(default="Send anonymous messages to me !")
   dp = models.ImageField(default="", blank= True, upload_to="veil/static/profile_pics/")
+  bg_color = models.CharField(default="", blank=True, null=True, max_length=7)
   dms_count = models.IntegerField(default=0)
   blocked_ips = models.ManyToManyField(IP,blank=True)
   is_open = models.BooleanField(default=True)

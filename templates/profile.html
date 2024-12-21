@@ -14,158 +14,147 @@
   {% endif %}
 
   <style>
-    .bowl {
-      width : 100%;
-      padding : 1.5em;
-
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center;
-      grid-gap: 1em;
-    }
     .profile-bowl {
-      background :  var(--black);
-      border-radius: 1.5em;
       width : 100%;
-      padding : 3em 2em 2em 2em;
-
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: start center;
-
-      position: relative;
+      /* background : var(--base-bg-mid); */
     }
-    .profile-img {
+    .profile-cont {
       width : 100%;
+      background : var(--base-bg-light); 
+      box-shadow: 0 0 1em var(--gray-dark);
+      padding-bottom: 2rem;
 
-      position: absolute;
-      top : 0;
-      left : 50%;
-      transform: translate(-50%,-50%);
-      z-index: 5;
-
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center;
+      display : flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: start;
+      gap: 1.5rem;
     }
-    .profile-info {
+    .profile-bg {
       width : 100%;
-
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-gap: 1em;
-      place-items: center;
+      height : 6rem;
+      background : var(--base-bg-dark);
     }
-    .profile-upper-info {
+    .profile-top {
       width : 100%;
-      overflow-x: scroll;
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-
-      display: flex;
+      padding : 0 1.5rem 0 1.25rem;
+      margin-top : -4em;
+      
+      display : flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: end;
       gap : 1em;
     }
-    .profile-upper-info::-webkit-scrollbar {
-        display: none;
-    }
+    .profile-img {
+      width : 5.5em;
+      aspect-ratio: 1/1;
+      background : var(--base-bg-light);
+      padding: .25em; 
+      border-radius: 50%; 
 
-    .profile-name {
-      padding : 0 .25em;
-      color : var(--base-bg-light);
-      text-transform: lowercase;
-      text-align: left;
-      font-weight: 900;
-      font-size: 1.25rem;
-      white-space:nowrap;
+      display : flex;
+      justify-content:center;
+      align-items: end;
+
+      position : relative;
+    }
+    .profile-img img {
+      width : 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: inherit;
+    }
+    .profile-img i {
+      color : var(--base);
+      font-size : 1.25rem;
+      position : absolute;
+      bottom : .1em;
+      right : 0.1em;
+    }
+    .bi-check-circle-fill {
+      color : var(--base-text-dark) !important;
+    }
+    .achievements-bowl { 
+      padding : .5em 0 0 0 ;
+      display : flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap : .5em;
+    }
+    .achievement {
+      font-size : .9em;
+      background : var(--base-bg-dark); 
+      color : var(--base-text-mid);
+      padding: .5em .75em;
+      border-radius: 10em;
 
       display : flex;
       justify-content : center;
-      align-items : center;
+      align-items: center;
       gap : .5em;
+    } 
+    .achievement img {
+      width : 1.25rem;
     }
-    .profile-name i {
-        font-size: .8em;
-        margin : 0 0 0 .5em;
+    .profile-bottom {
+      width : 100%;
+      padding : 0 1.5rem;
+
+      display : flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: start;
+      gap : .75em;
     }
-    .profile-name .tier-3 {
-        color : var(--base-blue-dark);
+    .profile-bottom h2 {
+      text-transform: lowercase;
+      color : var(--black);
+      font-weight: 1000;
     }
-    .profile-name .tier-2 {
-        color : var(--t2);
+    .profile-bottom p {
+      color : var(--base-text-light);
+      line-height: 1.5em;
     }
-    .level-show {
-        font-size : 1rem;
-        padding : .35em 0 0 0 ;
+
+    .profile-actions {
+      width : 100%;
+      padding : 0 1.5rem;
+
+      display : flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap : 1.75em;
     }
-    .level-show img{
-        font-size : 1rem;
-        width : 1.5rem;
-    }
-    .dms-count {
-      display: flex;
+    .profile-actions a {
+      border : none;
+      outline : none;
+      border-bottom: .2em solid var(--gray-light);
+      background : transparent;
+      padding : .5em 0;
+      text-transform: uppercase;
+      font-size: .8em;
+      color : var(--base-text-dark);
+      text-decoration: none;
+
+      display : flex;
       justify-content: center;
       align-items: center;
-      gap: .3em;
+      gap : .75em;
+    }
+    .profile-actions a span {
+      font-size : 1em;
+      font-family: inherit;
+      font-weight: 600;
+      letter-spacing: .05em;
+    }
+    .profile-actions a:hover {
+      border-color : var(--base);
+    }
 
-      background : var(--base-text-dark);
-      padding : .25em .65em;
-      border-radius: 10em;
-      color : var(--t1);
-      letter-spacing :.1em;
-      font-size : .9em;
-    }
-    .dms-count:hover {
-      animation : .2s btnClick;
-    }
-    .profile-mid-info {
-      width : 100%;
-      color : var(--t2);
-      font-size: 1em;
-      font-weight: 500;
-    }
-    .profile-lower-info {
-      width : 100%;
-      padding : .25em 0 ;
-    }
-    .profile-lower-info p {
-      width : 100%;
-      color : var(--t1);
-      font-size: 1em;
-      line-height: 1.5em;
-      font-weight: 500;
-    }
-    .bi-quote {
-      position: absolute;
-      top : -.25em;
-      left : -.5em;
-      font-size: 1.5em;
-      color : var(--t3);
-      opacity: .35;
-    }
-    .edit-bowl {
-      width : 100%;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .edit-bowl a {
-      transition: .25s;
-      font-size: 1.25em;
-      color : var(--base-text-mid);
-      background :var(--base-bg-dark);
-      border-radius: 10em;
-      padding : .4em .6em;
-      z-index : 6;
-      text-decoration : none;
-    }
-    .edit-bowl a:hover {
-      color : var(--base-text-dark);
-    }
     .message-bowl {
       width : 100%;
+      padding : 1.5rem;
 
       display: grid;
       grid-template-columns: 1fr;
@@ -202,11 +191,11 @@
     }
     .message-upper {
       width : 100%;
-      background : var(--base-bg-mid);
+      background : var(--base-bg-light);
       border-radius: 1em;
       padding : 1em;
       margin-top : .5em;
-      border : .05em dotted var(--base-text-light);
+      border : .05em solid var(--gray-dark);
 
       display: grid;
       grid-template-columns: 1fr ;
@@ -347,9 +336,9 @@
         font-family: inherit;
         border: none;
         outline: none;
-        font-size: 1.1em;
+        font-size: 1em;
         color: var(--base-bg-mid);
-        background: var(--black);
+        background: var(--base);
         font-weight: 1000;
         padding: .75em 1.5em ;
         border-radius: 10em;
@@ -359,231 +348,260 @@
     .message-lower button:hover {
         animation : .2s btnClick;
     }
-    .replies-bowl  {
-        width : 100%;
-        padding : 1em 0;
 
-        display: grid;
-        grid-template-columns: 1fr;
-        place-items: center start;
-        grid-gap: 1em;
-    }
-    .replies-bowl h3 {
-        padding: 0 .5em ;
-        color : var(--base-text-mid);
-        font-weight: 1000;
-    }
-    .replies-cont{
-      width : 100% ;
-
-      display: grid;
-      grid-template-columns: 1fr 3em;
-      place-items: center ;
-      grid-row-gap: .2rem;
-    }
-    .replies-box {
+    .replies-bowl {
       width : 100%;
-      height: 100%;
-      background: var(--base-bg-dark);
-      border-radius: .75em;
-      padding: 1em 1.25em;
-      color : var(--base-text-dark);
-      z-index: 3;
-      transition: .25s;
+      padding : 3em 1.5rem;
+      background : var(--base-bg-light);
 
-      position: relative;
+      display : flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap : 1em;
+    }
+    .reply-cont { 
+      width : 100%;
+      border-radius: .5em;  
+
+      display : grid;
+      grid-template-columns: 1fr 2em;
+      place-items: center end;
+    }
+    .reply-wrap { 
+      width : 100%;
 
       grid-column : 1/3;
-      grid-row: 1/2;
+      grid-row : 1/2;
+      z-index: 5; 
+      
+      background : var(--base-bg-mid);
+      padding: 1em;
+      border-radius: .5em;
+      transition : .3s;
+      
+      position : relative;
 
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center start;
-      grid-gap: .5em;
+      display : flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap : .75em;
     }
-    .replies-box .options-icon {
-      position: absolute;
-      top : .75em;
-      right : .75em;
-      font-size: 1em;
+    .reply-wrap > i {
+      position : absolute;
+      top : .5em;
+      right : .5em;
+      font-size : 1em;
       color : var(--base-text-mid);
-      z-index: 4;
     }
-    .replies-box b, .replies-box p {
-      line-height: 1.5em;
+    .reply-wrap *{
+      line-height : 1.5em;
     }
-    .replies-box .replies-reply {
-      color : var(--base-text-light);
-      background : var(--base-bg-light);
-      border-radius : 0 .5em .5em 0;
-      font-weight: 400 !important;
-      padding : .25em .75em;
-      border-left : .2em solid var(--gray-dark);
-    }
-    .replies-reply img {
-        border-radius: .5em;
-        margin-top: .5em;
-        opacity: .9;
-    }
-    .edit-reply-bowl {
-      width : 100%;
-      height: 100%;
-      padding : .75em;
-      background: var(--base-text-light);
-      color : var(--base-bg-dark);
-      border-radius: 1em;
-      z-index: 2;
 
-      grid-column: 2/3;
-      grid-row: 1/2;
-
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center;
-      grid-gap: 1em;
+    .reply-q {
+      color : var(--base-text-mid); 
+      padding : 0 1em 0 1.5em;
     }
-    .edit-reply-bowl a {
-      color : inherit;
-      text-decoration: none;
+    .reply-a {
+      color : var(--base-text-dark);
+      padding : 0 1em 0 3em;
+    } 
+
+    .reply-q, .reply-a {
+      position: relative;
+    }
+    .reply-q::before, .reply-a::before {
+      content : "";
+      position : absolute; 
+      top : .5em;
+      left : 0em;
+      width : .5em;
+      aspect-ratio: 1/1;
+      border-radius : 50%;
+      background: var(--gray-dark);
+    }  
+    .reply-a::before {
+      left : 1.25em;
+    }
+    .reply-q::after {
+      content : "";
+      position : absolute;
+      top : .65em;
+      left : .15em;
+      width : 1.5em;
+      height : calc(100% + .8em);
+      border-left : .1em solid var(--gray-dark);
+      border-bottom : .1em solid var(--gray-dark);
+      border-radius: 0 0 0 1em;
+    }
+    .reply-q b {
+      color : var(--base);
     }
     {% if request.user == user %}
-        .replies-cont:hover > .replies-box {
-            transform : translateX(-3.5em);
-        }
+      .reply-cont:hover > .reply-wrap{
+        transform : translateX(-3em);
+      }
     {% endif %}
+    
+    .reply-actions {
+      grid-column : 1/3;
+      grid-row : 1/2;
+      z-index: 4;
+
+      height : 100%;
+
+      display : flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap : .25em;
+    }
+    .reply-actions a {
+      height : 100%;
+      background : var(--base-bg-dark);
+      color : #0066ff;
+      border-radius: .5em; 
+      padding : .5em;
+
+      transition: .2s;
+
+      display : flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .reply-actions a:hover {
+      color : var(--base-text-dark);
+    }
+
+
   </style>
-  <div class="bowl stiff">
-    {% if user_profile %}
-      <div class="edit-bowl">
-        <a href="/settings/"><i class="bi-gear"></i></a>
-        <a href="/edit-profile/"><i class="bi-pencil"></i></a>
-      </div>
-    {% else %}
-      <br>
-    {% endif %}
-    <div class="profile-bowl">
-      <div class="profile-img">
-        <div class="profile-img-cont veil-dp" onclick='window.location="/edit-profile/"'>
-          {% if user.profile.dp == "" %}
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIOwIePvlZCteninGWvsSIJ64QcrEtxMce8A&usqp=CAU">
+
+  <div class="profile-bowl">
+    <div class="profile-cont stiff">
+      <div class="profile-bg" style="background:{{ user.profile.bg_color }}"></div>
+      <div class="profile-top">
+        <div class="profile-img"> 
+          {% if user.profile.dp == "" %}          
+          <img src="https://as2.ftcdn.net/v2/jpg/00/64/67/63/500_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="">
           {% else %}
           <img src="{{userdp}}">
           {% endif %}
+          {% if user.profile.tier == 3 %}
+              <i class="bi-patch-check-fill tier-3"></i>
+          {% elif user.profile.tier == 2 %}
+              <i class="bi-check-circle-fill tier-2"></i>
+          {% endif %}
         </div>
-      </div>
-      <div class="profile-info">
-        <div class="profile-upper-info">
-          <div class="profile-name">
-            <p>
-                {{ user.first_name }}
-                {% if user.profile.tier == 3 %}
-                    <i class="bi-patch-check-fill tier-3"></i>
-                {% elif user.profile.tier == 2 %}
-                    <i class="bi-person-check tier-2"></i>
-                {% endif %}
-            </p>
+        <div class="achievements-bowl">
+          <div class="achievement">
             {% if user.profile.dms_count >= 1000 %}
-            <div class="level-show" onclick="alertDm('{{ user.first_name}} is now a Veil-SuperNova️')">
-                <p><img src="/static/supernova.png"></p>
-            </div>
+                <img src="/static/supernova.png">
+                <p>veil_supernova</p>
             {% elif user.profile.dms_count >= 500 %}
-            <div class="level-show" onclick="alertDm('{{ user.first_name}} is now a Veil-Comet ☄️')">
-                <p><img src="/static/comet.png"></p>
-            </div>
+                <img src="/static/comet.png">
+                <p>veil_comet</p>
             {% elif user.profile.dms_count >= 100 %}
-            <div class="level-show" onclick="alertDm('{{ user.first_name }} is now a Veil-Rocket 🚀️')">
-                <p><img src="/static/rocket-emoji.svg"></p>
-            </div>
+                <img src="/static/rocket-emoji.svg">
+                <p>veil_rocket</p>
             {% elif user.profile.dms_count >= 10 %}
-            <div class="level-show" onclick="alertDm('{{ user.first_name }} is now a Veil-Spark ✨')"  >
-                <p><img src="/static/heart-on-fire.svg"></p>
-            </div>
-           {% endif %}
+                <img src="/static/heart-on-fire.svg">
+                <p>veil_spark</p> 
+            {% endif %}
           </div>
-          <div class="dms-count" onclick="alertDm(`{{ user.first_name }} has earned {{ user.profile.dms_count }} veil-points`)">
-            <p>⚡{{ user.profile.dms_count }}</p>
+          <div class="achievement">
+            <p>🔥 {{ user.profile.dms_count }}</p>
           </div>
-        </div>
-        <div class="profile-mid-info">
-          <p>@{{ user.username }}</p>
-        </div>
-        <div class="profile-lower-info">
-          <p>{{ user.profile.bio }}</p>
         </div>
       </div>
+      <div class="profile-bottom">
+        <h2> {{ user.first_name }}</h2>
+        <p>@{{ user.username }}</p>
+        <p>{{ user.profile.bio }}</p>
+      </div>  
+      {% if user_profile %}
+        <div class="profile-actions">
+          <a href="/settings/"><i class="bi-gear-wide"></i> <span>settings</span></a>
+          <a href="/edit-profile/"><i class="bi-pen"></i> <span>edit profile</span></a>
+          <a href="#"><i class="bi-share"></i> <span>share</span></a>
+        </div>
+      {% endif %}
+    </div> 
+    
+    {% if not user_profile %}
+    <form class="message-bowl stiff" method="POST" action="" onsubmit="ask(event)"> {% csrf_token %}
+        <div class="message-terrace">
+            <input type="button" class="terrace-btn-text terrace-btn-active" onclick="activateBtn(1)" value='Text'>
+            <input type="button" class="terrace-btn-img" onclick="activateBtn(2)" value='Image'>
+            <input type="button" class="terrace-btn-vibe" onclick="activateBtn(3)" value='❤️‍🔥Rating'>
+        </div>
+        <div class="message-upper">
+            <input type="hidden" name="msgType" class="msgType" value=1>
+            <textarea name="message" id="message" class="message " rows="1" cols="40" placeholder="Type your message | Use emojis 😉 ... " maxlength="500" required></textarea>
+            <div class="message-img-cont hide">
+                <input type="hidden" name="msgImg" class="msgImg">
+                <img src="" class="msg-img">
+                <input type="file" id="msg-img-input" accept="image/*" >
+                <input type='text' maxlength="0" class='paste-input' placeholder='or paste here'>
+            </div>
+            <div class="vibe-cont hide">
+                <p class='vibe-emoji-cont'><span class="vibe-emoji">1</span> <span>/</span> 10</p>
+                <input type="hidden" name="vibe" class="vibe-char" value="1">
+                <input type="range" id="msg-vibe-input" value="1" min="1" max="10" step="1" >
+            </div>
+        </div>
+        <div class="message-center">
+            <input type="checkbox" onclick="viewOnceAlert(this)" name="viewonce" id="viewonce-input">
+            <p>instant auto burst</p>
+        </div>
+        <div class="message-lower">
+            <button type="submit">Send Anonymously</button>
+            <br>
+        </div>
+    </form>
+    {% endif %} 
+
+    <div class="ad">
+      <script type="text/javascript">
+      atOptions = {
+        'key' : 'acbfb0d70caf0bed678ee4f8530f66ca',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+      document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/acbfb0d70caf0bed678ee4f8530f66ca/invoke.js"></scr' + 'ipt>');
+      </script>
     </div>
 
-    {% if not user_profile %}
-        <form class="message-bowl" method="POST" action="" onsubmit="ask(event)"> {% csrf_token %}
-            <div class="message-terrace">
-                <input type="button" class="terrace-btn-text terrace-btn-active" onclick="activateBtn(1)" value='Text'>
-                <input type="button" class="terrace-btn-img" onclick="activateBtn(2)" value='Image'>
-                <input type="button" class="terrace-btn-vibe" onclick="activateBtn(3)" value='❤️‍🔥Rating'>
-            </div>
-            <div class="message-upper">
-                <input type="hidden" name="msgType" class="msgType" value=1>
-                <textarea name="message" id="message" class="message " rows="1" cols="40" placeholder="Type your message | Use emojis 😉 ... " maxlength="500" required></textarea>
-                <div class="message-img-cont hide">
-                    <input type="hidden" name="msgImg" class="msgImg">
-                    <img src="" class="msg-img">
-                    <input type="file" id="msg-img-input" accept="image/*" >
-                    <input type='text' maxlength="0" class='paste-input' placeholder='or paste here'>
-                </div>
-                <div class="vibe-cont hide">
-                    <p class='vibe-emoji-cont'><span class="vibe-emoji">1</span> <span>/</span> 10</p>
-                    <input type="hidden" name="vibe" class="vibe-char" value="1">
-                    <input type="range" id="msg-vibe-input" value="1" min="1" max="10" step="1" >
-                </div>
-            </div>
-            <div class="message-center">
-                <input type="checkbox" onclick="viewOnceAlert(this)" name="viewonce" id="viewonce-input">
-                <p>instant auto burst</p>
-            </div>
-            <div class="message-lower">
-                <button type="submit">Send Anonymously</button>
-                <br>
-            </div>
-        </form>
-        <div class="ad">
-        <script type="text/javascript">
-	atOptions = {
-		'key' : 'acbfb0d70caf0bed678ee4f8530f66ca',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/acbfb0d70caf0bed678ee4f8530f66ca/invoke.js"></scr' + 'ipt>');
-</script>
+    <div class="replies-bowl stiff">
+      <h2>replies</h2>
+      {% for reply in replies %}
+      <div class="reply-cont"> 
+        <div class="reply-wrap">
+          {% if reply.pinned %}  
+            <i class="bi-pin"></i>
+          {% else %}
+          <i class="bi-three-dots"></i> 
+          {% endif %}
+          <div class="reply-q">
+            {% if reply.replyTo.dmType == 3 %}
+                <p>Someone rated you <b>{{ reply.replyTo.message }}  / 10 </b></p>
+            {% elif not reply.replyTo.img %}
+              <p>{{ reply.replyTo.message }} {% if reply.replyTo.isNotif == True %} - <a href="/user/admin" class="highlight">Veil Admin</a> {% endif %}</p>
+            {% else %}
+              <img src="{{ reply.replyTo.img }}" alt="">
+            {% endif %}
+          </div>
+          <div class="reply-a">{{ reply.reply  }}</div>
         </div>
-    {% endif %}
-    <div class="replies-bowl">
-        <h3>replies</h3>
-        {% for reply in replies %}
-            <div class="replies-cont">
-              <div class="replies-box">
-                {% if reply.pinned == True %}
-                    <i class="bi-pin-angle-fill options-icon"></i>
-                {% else %}
-                    <i class="bi-three-dots-vertical options-icon"></i>
-                {% endif %}
-                <div class="replies-reply">
-                    {% if reply.replyTo.dmType == 3 %}
-                        <p>Rating ❤️‍🔥 : <b>{{ reply.replyTo.message }}</b> </p>
-                    {% elif not reply.replyTo.img %}
-                      <p>{{ reply.replyTo.message }} {% if reply.replyTo.isNotif == True %} - <a href="/user/admin" class="highlight">Veil Admin</a> {% endif %}</p>
-                    {% else %}
-                      <img src="{{ reply.replyTo.img }}" alt="">
-                    {% endif %}
-                </div>
-                <p>{{ reply.reply }}</p>
-              </div>
-              <div class="edit-reply-bowl">
-                <a href="{% url 'editReplyView' reply.id %}?pin=true"><i class="bi-pin-fill"></i></a>
-                <a href="{% url 'editReplyView' reply.id %}?delete=true" onclick="confirmDm('Do you really want to delete this reply ?',event); return false;"><i class="bi-trash-fill"></i></a>
-              </div>
-            </div>
-        {% endfor %}
+        <div class="reply-actions">
+          <a href="{% url 'editReplyView' reply.id %}?pin=true"><i class="bi-pin-fill"></i></a>
+          <a href="{% url 'editReplyView' reply.id %}?delete=true" onclick="confirmDm('Do you really want to delete this reply ?',event); return false;"><i class="bi-trash-fill"></i></a>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
   <script>
@@ -763,5 +781,6 @@
     }
 
   </script>
+
 
 {% endblock %}
