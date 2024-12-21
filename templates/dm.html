@@ -1,160 +1,176 @@
-{% extends "base_index.html" %}
-{% block content %}
-  {% include "second_header.html" %}
-
+{% extends "base.html" %}
+{% block base_content %}
+  
   <style>
-    .dm-bowl {
-      position : absolute ;
-      margin-top: -4em;
-
-      width : 100%;
-      height:  100%;
-      padding : 3em 2.5em;
-      background : var(--base-bg-light);
-      opacity : 1;
-      z-index : 5;
-
-      display:  flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    .footer-bowl {
+      display : none;
     }
-    .dm-options {
+    .dm-bowl {
+      width : 100%;  
+      min-height : 100vh;
+      background : var(--base-bg-dark); 
+    }
+    header {
       width : 100%;
-      padding : 5em 1em 1em 1em;
-
-      position: fixed;
-      top: 0;
-      left : 50%;
-      transform: translateX(-50%);
-      z-index: 100;
+      padding : .75em 1.5rem;  
+      font-size: 1.25rem;
+      color : var(--base-text-dark);  
+      background : var(--base-bg-light);
+      border-bottom : .1em solid var(--gray-light);
 
       display : flex;
-      justify-content : space-between;
+      justify-content: space-between;
       align-items: center;
       gap : 1em;
     }
-    .viewonce-text {
-        font-size: .9em;
-        color : var(--base-text-light);
+    header a {
+      color : #0066ff;
     }
-    .viewonce-text i {
-        padding-right: .5em;
+    header p {
+      font-size: .8em;
     }
-    .dm-options-icon {
-      background: var(--base-bg-dark);
-      color : var(--base-text-mid);
-      padding : .5em .65em;
-      border-radius: 10em;
-    }
-    .dm-options-icon:hover {
-      animation: .2s btnClick;
-    }
-    .dm-options-cont {
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items: center;
-      grid-gap: .5em;
 
-      position: fixed;
-      top : 100%;
-      right : 1.5em;
-
-      min-width: 12rem;
-      padding : 1em .5em;
-      background :#404040cc;
-      border-radius: .5em;
-      box-shadow: 0 .5em .5em #20202050;
-      backdrop-filter: blur(1em);
-    }
-    .dm-options-cont a {
+    .dm-actions {
       width : 100%;
-      text-decoration : none;
-      padding : .25em .5em;
-      color : var(--base-bg-light);
-    }
-    .dm-cont {
-      position : relative;
-    }
-
-    .dm-cont .profile-img-cont {
-      position: absolute;
-      top : -2em;
-      left : 50%;
-      transform: translateX(-50%);
-    }
-    .dm-cont {
-      background : var(--black);
-      border-radius: 1.5em;
-      padding : 3em 1em .75em 1em;
-      min-width : 16rem;
-      max-width: 21rem;
-
-      display: grid;
-      grid-template-columns: 1fr;
-      place-items : center;
-      grid-gap: .75em;
-    }
-    .dm-box {
-      width : 100%;
-      border-radius: 1em;
+      background : var(--base-bg-light);
+      padding : 1em 1.5rem ;
 
       display : flex;
-      flex-direction : column;
+      flex-direction: column;
       justify-content: center;
+      align-items: end;
+    }
+    .dm-actions a {
+      padding : .5em 0;
+      color : var(--base);
+      text-transform: capitalize;
+    }
+    .dm-cont {
+      width : 100%;
+      padding : 2.5em 2em 1.5em 1.5em;
+
+      display : flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap : 1em;
+    }
+    .dm-box {
+      box-shadow: 0 0 1em var(--gray-light);
+      border-radius: 1em;
+      background : var(--base-bg-light); 
+      padding : 1em; 
+
+      position: relative;
+
+      display : flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      gap : 1em;
+    }
+    .dm-box-top {
+      color : var(--base-text-dark);
+    }
+    .dm-box-top p {
+      line-height: 1.75em;
+      padding-right : 2em;
+    } 
+    .rating {
+      margin-top : .5em; 
+      width : 100%;
+
+      display : flex;
+      justify-content: flex-start;
       align-items: center;
+      gap : .5em;
     }
-    .dm-box h3 {
+    .rating span {
       font-size: 1em;
-      padding: .5em;
-      line-height: 1.5em;
       font-weight: 500;
-      letter-spacing : .025em;
-      color : var(--base-bg-dark);
+      background : var(--base-bg-dark);
+      padding : .15em .35em;
+      border-radius: 50em; 
+      
+      display : grid;
+      grid-template-columns : 1fr;
+      place-items : center center;
     }
-    .dm-box .vibe-large {
-        font-size: 2.75em;
-        padding : 0;
+    .dm-box-meta {
+      width : 100%;
+      display : flex;
+      justify-content: space-between;
+      align-items: end;
+      gap : 1.5em;
     }
-    .dm-box img {
-        border-radius: .75em;
-        opacity: .9;
-        box-shadow: 0 0 0.5em #202020aa;
+    .dm-box-meta p {
+      font-size: .9em;
+      color : var(--gray-dark);
     }
-    .dm-cont button{
-      font-size: 1.25em;
-      font-family : inherit;
-      font-weight: 1000;
-      padding : .5em;
+    .dm-box-meta img {
+      width : 1.75em;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      object-fit: cover;
+    } 
+    .viewonce-bowl {
+      background : var(--base-bg-dark);
+      padding : .3em; 
+      border-radius: 50%;
+
+      position : absolute;
+      top : -1em;
+      right : -1em;
+    }
+    .viewonce-cont {
+      background : var(--base-bg-light); 
+      border-radius: 50%; 
+      padding : .4em .6em .2em .6em;  
+
+      position : relative;
+    }
+    .viewonce-cont img {
+      width: 1em;
+    }
+    .viewonce-cont::after {
+      content : "";
+      position: absolute;
+      bottom : 0;
+      right : 0;
+      background : var(--base-bg-light);
+      width : .65em;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+    }
+
+    .dm-cont button {
+      background : #0066ff;
+      color : var(--base-bg-light);
+      padding : .5em 1em;
+      border-radius: 10em;
       border : none;
       outline : none;
-      background : none;
-      color : var(--t2);
+      font-size: .9em;
+      cursor : pointer;
+
+      display : flex;
+      justify-content: space-between;
+      align-items: center;
+      gap : 1.5em;
     }
-    #dm-story-btn{
-      background: var(--t4);
-      padding: .2em 1em;
-      margin-bottom : .5em;
-      font-size: 1.1em;
-      border-radius: 4em;
+    .dm-cont button span {
+      font-family: "DM Sans",sans-serif;
+      text-transform: uppercase;
+      font-weight: 500;
     }
-    .dms-bowl {
-        background : #060606;
-        padding : 3.3em 2em 2em 2em;
-        display : inline-block;
-    }
-    .dms-bowl button{
-        font-size : .7em;
-        color : var(--base-text-light);
-    }
+
     .reply-cont {
-        width  : 95%;
-        padding:  .4em .5em;
-        background : var(--base-bg-dark);
-        border-radius: 2em;
+        width  : 100%;
+        padding:  .75em .5em;
+        background : var(--base-bg-light);
 
         position: fixed;
-        bottom: .5em;
+        bottom: 0em;
         left : 50%;
         transform: translateX(-50%);
         z-index: 103;
@@ -172,7 +188,7 @@
     }
     .reply-cont textarea{
         width : 100%;
-        background : var(--base-bg-mid);
+        background : var(--base-bg-light);
         border-radius: 1.75em;
         padding: .75em 1.25em;
         max-height: 7rem;
@@ -195,95 +211,80 @@
         color : var(--base-text-light);
     }
   </style>
-  <div class="dm-bowl " id="dm-bowl">
-    <div class="dm-options stiff">
-      <p class="viewonce-text" onclick="alertDm('This DM will be automatically deleted after you view it !')">
-        {% if dm.viewOnce %}
-            <i class="bi-info-circle-fill"></i> instant auto burst
-        {% endif %}
-      </p>
-      <i class="bi-three-dots-vertical dm-options-icon" onclick="toggleDmOptions()"></i>
-      <div class="dm-options-cont hide">
-        <a href="{% url 'blockView' dm.sentBy.pk %}">Block this user</a>
-        <a href="/user/admin/?pretext=[ report : {{ dm.pk }} ]">Report this DM</a>
-      </div>
+
+  <div class="dm-bowl stiff">
+    <header>
+      <a href="/inbox"><i class="bi-arrow-left"></i></a> 
+      <p>@{{ dm.sentTo.username }}</p>
+      <a href="#" onclick="toggleDmOptions()"><i class="bi-three-dots"></i></a>
+    </header>  
+
+    <div class="dm-actions hide">
+      <a href="/user/admin/?pretext=[ report : {{ dm.pk }} ]">Report DM</a>
+      <a href="{% url 'blockView' dm.sentBy.pk %}">Block user</a>
     </div>
+    
     <div class="dm-cont">
       <div class="dm-box">
-        {% if dm.dmType == 1 %}
-            <h3>{{ dm.message }}</h3>
-        {% elif dm.dmType == 2 %}
-            <img src="{{ dm.img }}" alt="">
-        {% elif dm.dmType == 3 %}
-        <h3> Someone rated you !</h3>
-        <br>
-        <h3 > <span class='vibe-large'>{{ dm.message }} </span> / 10</h3>
+        <div class="dm-box-top"> 
+          {% if dm.dmType == 1 %}
+              <p>{{ dm.message }}</p>
+          {% elif dm.dmType == 2 %}
+              <img src="{{ dm.img }}" alt="">
+          {% elif dm.dmType == 3 %}
+              <p> Someone rated you !</p>
+              <p class='rating'><span>❤️‍🔥</span> {{ dm.message }} out of 10</p>
+          {% endif %}
+        </div>
+        <div class="dm-box-meta">
+          <p>@{{ dm.sentTo.username }} on veilmsg</p>
+          <img src="{{ userdp }}" alt="">
+        </div> 
+        {% if dm.viewOnce %}
+          <div class="viewonce-bowl exclude-from-screenshot">
+            <div class="viewonce-cont">
+              <img src="/static/fire.svg" alt="">
+            </div>
+          </div>
         {% endif %}
       </div>
-      <button id="dm-story-btn"><i class="bi-share-fill"></i></button>
-      <div class="profile-img-cont veil-dp">
-        {% if dm.sentTo.profile.dp == "" %}
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIOwIePvlZCteninGWvsSIJ64QcrEtxMce8A&usqp=CAU">
-        {% else %}
-          <img src="{{userdp}}">
-        {% endif %}
-      </div>
-    </div>
+      <button class="dm-share-btn exclude-from-screenshot"><i class="bi-share"></i> <span>share</span></button>
+    </div> 
+
     <form action="" method="POST" class="reply-cont stiff">{% csrf_token %}
       <textarea name="dm-reply" id="dm-reply" class="dm-reply" cols="30" rows="1" placeholder="enter your reply..." required></textarea>
       <button type="submit"><i class="bi-arrow-right-circle-fill"></i></button>
     </form>
   </div>
 
-  <div class="dms-bowl" >
-    <div class="dm-cont">
-      <div class="dm-box">
-        {% if dm.dmType == 1 %}
-            <h3>{{ dm.message }}</h3>
-        {% elif dm.dmType == 2 %}
-            <img src="{{ dm.img }}" alt="">
-        {% elif dm.dmType == 3 %}
-            <h3> Someone rated you !</h3>
-            <br>
-            <h3 > <span class='vibe-large'>{{ dm.message }} </span> / 10</h3>
-        {% endif %}
-      </div>
-      <button>{{ dm.sentTo.first_name }} on VeilMsg</button>
-      <div class="profile-img-cont veil-dp">
-        {% if dm.sentTo.profile.dp == "" %}
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIOwIePvlZCteninGWvsSIJ64QcrEtxMce8A&usqp=CAU">
-        {% else %}
-          <img src="{{userdp}}">
-        {% endif %}
-      </div>
-    </div>
-  </div>
-
-
   <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
   <script>
-    secondHeader("dm","/inbox/")
 
-    var dm_options_cont = document.querySelector(".dm-options-cont")
+    var dm_options_cont = document.querySelector(".dm-actions")
     function toggleDmOptions(){
       dm_options_cont.classList.toggle("hide")
     }
 
-    var elem = document.querySelector(".dms-bowl");
+    var elem = document.querySelector(".dm-cont");
 
-    html2canvas(elem,{backgroundColor:"#060606"}).then(canvas => {
+    html2canvas(elem,{
+      backgroundColor:"#0066ff",
+      ignoreElements: (element) => {
+        // Exclude elements with a specific class
+        return element.classList.contains('exclude-from-screenshot');
+      }
+    }).then(canvas => {
         var myImage = canvas.toDataURL("image/png");
         var img = new Image();
         img.src = myImage;
         img.style.display = "none";
         img.id = "shareableImg";
         document.body.appendChild(img);
-        elem.style.display = 'none'
     })
 
-    document.getElementById("dm-story-btn").addEventListener("click", function (){
+    document.querySelector(".dm-share-btn").addEventListener("click", function (){
       var simg = document.getElementById("shareableImg")
-      shareImage(simg.src,"dm.png");
+      shareImage(simg.src,"veilmsg.png");
     });
 
     // textarea
@@ -298,4 +299,6 @@
     }
 
   </script>
+
+
 {% endblock %}

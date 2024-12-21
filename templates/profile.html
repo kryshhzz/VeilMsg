@@ -65,7 +65,7 @@
       border-radius: inherit;
     }
     .profile-img i {
-      color : var(--base);
+      color : #0066ff;
       font-size : 1.25rem;
       position : absolute;
       bottom : .1em;
@@ -133,8 +133,9 @@
       padding : .5em 0;
       text-transform: uppercase;
       font-size: .8em;
-      color : var(--base-text-dark);
+      color : #0066ff;
       text-decoration: none;
+      transition : .2s;
 
       display : flex;
       justify-content: center;
@@ -148,7 +149,7 @@
       letter-spacing: .05em;
     }
     .profile-actions a:hover {
-      border-color : var(--base);
+      color : var(--base-text-mid);
     }
 
 
@@ -285,8 +286,7 @@
         max-width : 300px;
     }
     #msg-vibe-input::-webkit-slider-runnable-track{
-        background: #bbb;
-        background : var(--base-grad);
+        background: var(--gray-dark);
         opacity: 1;
         height: 0.5rem;
         border-radius: 10em;
@@ -305,7 +305,7 @@
         height: 1rem;
         width: 1rem;
         border-radius : 50%;
-        border : .2em solid var(--base-red);
+        border : .2em solid #0066ff;
         transition: .3s ease-in-out;
     }
     #msg-vibe-input::-webkit-slider-thumb:active {
@@ -338,7 +338,7 @@
         outline: none;
         font-size: 1em;
         color: var(--base-bg-mid);
-        background: var(--base);
+        background:  #0066ff;
         font-weight: 1000;
         padding: .75em 1.5em ;
         border-radius: 10em;
@@ -436,7 +436,7 @@
       border-radius: 0 0 0 1em;
     }
     .reply-q b {
-      color : var(--base);
+      color : #0066ff;
     }
     {% if request.user == user %}
       .reply-cont:hover > .reply-wrap{

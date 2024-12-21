@@ -4,89 +4,128 @@
   <style>
     .inbox-bowl {
       width : 100%;
-      padding : 1.5em ;
-
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(125px,1fr));
-      place-items: start center;
-      grid-gap: 1em;
-    }
-    .inbox-bowl h2 {
-        color : var(--base-text-light);
-        font-size : 2em;
-        margin : 5em 0;
-    }
-    .msg-cont {
-      width : 100%;
-      border-radius: 1em;
-      padding : 1em;
-      font-weight: 1000;
-      font-size: 1.5rem;
       background : var(--base-bg-dark);
-      color : var(--base-text-light);
+    }
+    .inbox-cont {
+      width : 100%;
+      padding : 1.5rem; 
+
+      display : grid;
+      grid-template-columns: repeat(auto-fill,minmax(130px,1fr));
+      place-items: center start;
+      grid-gap : 1.5em 1em;
+    }
+    .inbox-cont h2 {
+      grid-column : 1/-1;
+      margin : .75em 0;
+      text-transform: lowercase;
+    }
+    .inbox-box {
+      width : 100%;
+      background : #0066ff;
+      border-radius: 1em;
       text-decoration: none;
 
-      display:flex;
-      justify-content: center;
+      display : flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: start;
+      gap : 1em;
+    } 
+    .inbox-box-top {
+      width : 100%;
+      padding : .75em;
+      color : var(--base-bg-light);
+    }
+    .inbox-box-bottom {
+      width : 100%;
+      background : var(--base-bg-light);
+      padding : .75em; 
+
+      border-radius : 0 0 1em 1em;
+      color : var(--gray-dark);
+
+      display : flex;
+      justify-content: space-between;
       align-items: center;
-      gap : .5em;
+      gap : 1em;
+    } 
+
+    .opened  {
+      background : var(--base-bg-light) !important;
+      color : var(--gray-dark) ;
     }
-    .msg-cont:hover {
-      animation: .2s btnClick;
+    .opened > .inbox-box-bottom {
+      border-top : .1em solid var(--gray-light);
     }
-    .msg-active {
-      background :  var(--black);
-      color : var(--base-text-light);
+    .opened .inbox-box-top {
+      color : inherit;
     }
-    .msg-notif {
-        position: relative;
+    .notif  {
+      background : var(--base) ;
     }
-    .msg-active.msg-notif {
-        background : var(--base-blue);
-        color : var(--base-bg-light);
-        position : relative;
+    .viewonce {
+      position : relative; 
     }
-    .msg-notif:after {
-        content : "by Veil Admin";
-        position : absolute;
-        bottom : .5rem;
-        right : 50%;
-        transform : translateX(50%);
-        font-size :.5rem;
-        color : inherit;
+    .viewonce::after {
+      content : "🔥";
+      position : absolute;
+      bottom : .35em;
+      right : .3em;
+      font-size: 1.5rem;
     }
 
+
   </style>
-  <div class="inbox-bowl stiff">
-  {% if dms %}
-    {% for dm in dms %}
-      {% if dm.opened %}
-        <a href="{% url 'dmView' dm.id %}" class="msg-cont {% if dm.isNotif == True %} msg-notif {% endif %}">opened</a>
+  <div class="inbox-bowl">
+    <div class="inbox-cont stiff">
+      {% if dms %}
+        <h2>Your messages </h2>
       {% else %}
-        <a href="{% url 'dmView' dm.id %}" class="msg-cont msg-active {% if dm.isNotif == True %} msg-notif {% endif %} ">
-            {% if dm.viewOnce %}
-                open 🔥
-            {% else %}
-                open
-            {% endif %}
-        </a>
+        <h2>Your inbox is cleaner than your room 😂</h2>
       {% endif %}
-    {% endfor %}
-  {% else %}
-    <h2>No Messages Yet</h2>
-  {% endif %}
-  </div>
-  <br><br>
+      {% for dm in dms %}   
+        <a href="{% url 'dmView' dm.id %}" class="inbox-box
+        {% if dm.opened %}
+          opened 
+        {% endif %} 
+
+        {% if dm.isNotif %}
+          notif
+        {% endif %} 
+
+        {% if dm.viewOnce %}
+          viewonce
+        {% endif %}
+        ">
+          <div class="inbox-box-top">
+            <p>
+            {% if dm.isNotif %}
+              by veil_admin
+            {% else %} 
+              by anonymous
+            {% endif %}  
+            </p>
+          </div>
+          <div class="inbox-box-bottom">  
+            <p>open</p> 
+            <i class="bi-chevron-right"></i>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div> 
   <div class="ad">
-      <script type="text/javascript">
-	atOptions = {
-		'key' : 'acbfb0d70caf0bed678ee4f8530f66ca',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300,
-		'params' : {}
-	};
-	document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/acbfb0d70caf0bed678ee4f8530f66ca/invoke.js"></scr' + 'ipt>');
-</script>
+    <script type="text/javascript">
+        atOptions = {
+          'key' : 'acbfb0d70caf0bed678ee4f8530f66ca',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+        document.write('<scr' + 'ipt type="text/javascript" src="//www.topcreativeformat.com/acbfb0d70caf0bed678ee4f8530f66ca/invoke.js"></scr' + 'ipt>');
+    </script>
   </div>
+
 {% endblock %}
