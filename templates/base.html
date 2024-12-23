@@ -72,13 +72,12 @@
 
          --black : #202020;
 
-         --base-blue: #00ee6e;
-         --base-blue : orangered;
-         --base-blue-dark : #fbdc04;
-         --base-grad : linear-gradient(to right, orangered, var(--base-blue-dark));
-         --base-red : #f62a44; 
+         --red : #f62a44; 
 
-         --base : orangered;
+         --base : #0066ff; 
+         --base-light : #50c7fb;
+         --base-grad : linear-gradient(to top right, var(--base), var(--base-light)); 
+         --base-grad-orange : linear-gradient(45deg, #ff5c00, #ffba1f);
 
          --base-bg-dark : #efefef;
          --base-bg-mid : #f8f8f8;
@@ -89,6 +88,7 @@
          --base-text-dark : #404040;
 
          --gray-light : #eee;
+         --gray-mid : #cfcfcf;
          --gray-dark : #bbb;
        }
       * {
@@ -204,14 +204,9 @@
         padding : .7em 1em;
         border-radius: 100em;
         border :none;
-        background : var(--black);
-        color : var(--t1);
-/*
-background : var(--base-blue);
-color : #fff;
-border : .1em solid var(--black);
-*/
-
+        background : var(--base-grad);
+        color : var(--base-bg-light); 
+        text-transform: uppercase;
 
         font-weight: 1000;
         font-size: 1rem;
@@ -305,7 +300,6 @@ border : .1em solid var(--black);
       border : .1em solid var(--gray-dark);
     }
     input[type="radio"]:checked::before,  input[type='checkbox']:checked::before {
-      background-color: var(--base-text-dark); 
       background: radial-gradient(circle closest-side at center, var(--base-text-mid) 0%, var(--base-text-mid) 75%, #fff 75%);
     }
 

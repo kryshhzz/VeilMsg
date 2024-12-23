@@ -3,7 +3,7 @@
 
     <style>
         .highlight {
-            color : var(--base-blue);
+            color : var(--base);
         }
         .stiff-landing {
             max-width : 900px;
@@ -19,11 +19,11 @@
         }
         header {
             width : 100%;
-            padding : .5em 1em ;
+            padding : .75em 1.5em ;
 
             display : flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: end;
             gap : 1em;
         }
         header .logo {
@@ -123,7 +123,7 @@
         }
         .atf form {
             width : 100%;
-            background : var(--black);
+            background : var(--base-grad);
             border-radius : 100em;
             padding : .5em;
 
@@ -143,6 +143,9 @@
             background : transparent;
             padding : .5em 1.5em;
         }
+        .atf form input::placeholder {
+            color : var(--t3);
+        }
         .atf form button {
             background: var(--base-bg-mid);
             color : var(--black);
@@ -151,11 +154,13 @@
             transition: .2s;
         }
         form button:hover {
-            background : var(--base-text-dark);
-            color : var(--base-bg-dark);
+            color : var(--base);
         }
         .atf .form-bowl a {
             color : var(--base-text-dark);
+        }
+        .atf .form-bowl a:hover {
+            text-decoration : none;
         }
         .content-block {
             width : 100%;
@@ -191,7 +196,8 @@
             line-height: 1.75em;
         }
         .content-block a {
-            color : inherit;
+            color : var(--base);
+            text-decoration : none;
         }
         .two-columns {
             width : 100%;
@@ -225,6 +231,7 @@
             text-transform : uppercase;
             font-size : .8em;
             letter-spacing : .15em;
+            color : var(--red);
         }
         .steps {
 
@@ -232,7 +239,7 @@
     </style>
     <div class="landing-bowl">
         <header class="stiff-landing">
-            <div class="logo"><img src="https://veilmsg.pythonanywhere.com/static/veil-logo.svg" alt="VeilMsg logo"></div>
+            <div class="logo"><img src="/static/veil-logo-2.svg" alt="VeilMsg logo"></div>
             <div class="links">
                 <a href="/signup/">Signup</a>
                 <a href="/login/">Login</a>

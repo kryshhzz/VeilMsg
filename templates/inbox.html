@@ -22,7 +22,7 @@
     }
     .inbox-box {
       width : 100%;
-      background : #0066ff;
+      background : var(--base-grad);
       border-radius: 1em;
       text-decoration: none;
 
@@ -38,12 +38,12 @@
       color : var(--base-bg-light);
     }
     .inbox-box-bottom {
-      width : 100%;
-      background : var(--base-bg-light);
+      width : 100%; 
+      background : transparent;
       padding : .75em; 
-
+      border-top : .1em solid var(--t4);
       border-radius : 0 0 1em 1em;
-      color : var(--gray-dark);
+      color : var(--gray-light);
 
       display : flex;
       justify-content: space-between;
@@ -55,14 +55,14 @@
       background : var(--base-bg-light) !important;
       color : var(--gray-dark) ;
     }
-    .opened > .inbox-box-bottom {
-      border-top : .1em solid var(--gray-light);
+    .opened > .inbox-box-bottom { 
+      color : var(--gray-dark);
     }
     .opened .inbox-box-top {
       color : inherit;
     }
     .notif  {
-      background : var(--base) ;
+      background : var(--base-grad-orange) ;
     }
     .viewonce {
       position : relative; 
@@ -86,7 +86,7 @@
       {% endif %}
       {% for dm in dms %}   
         <a href="{% url 'dmView' dm.id %}" class="inbox-box
-        {% if dm.opened %}
+        {% if  dm.opened %}
           opened 
         {% endif %} 
 

@@ -29,7 +29,7 @@
     }
     .index-link-bowl {
       width : 100%;
-      background : var(--black);
+      background : var(--base-grad);
       border-radius: 1em;
       padding : 1.75em;
 
@@ -73,19 +73,19 @@
         border : none;
         outline : none;
         background : none;
-        color : var(--base-text-light);
+        color : var(--t2);
         padding : .5em 0;
         font-size :.9em;
         font-family : inherit;
-        border-bottom : .1em dashed var(--t4);
-        border-top : .1em dashed var(--t4);
+        border-bottom : .1em solid var(--t3);
+        border-top : .1em solid var(--t3);
     }
     .index-link-box button {
         border : none;
         outline : none;
-        background : var(--base-text-dark);
-        color : var(--base-bg-dark);
-        padding : .5em;
+        background : var(--t4);
+        color : var(--base-bg-light);
+        padding : .5em .6em;
         border-radius : .5em;
         font-size :.9em;
     }
@@ -168,7 +168,7 @@
     .index-notifs-cont {
         width : 100%; 
         height : 100%;
-        background : var(--base-bg-dark);
+        background : var(--base-bg-mid); 
         padding : 1em;
         border-radius : 1em;
         color : var(--base-text-dark);
@@ -186,13 +186,13 @@
     .progress-bar {
         width : 100%;
         height : .25em;
-        background: var(--gray-dark);
+        background: var(--gray-mid);
         border-radius: 50em; 
     }
     .bar {
         width : 10%;
         height : 100%;
-        background: linear-gradient(to right,var(--base-text-light),var(--black));
+        background: linear-gradient(to right,var(--base-light),var(--base));
         border-radius: inherit; 
 
         position: relative;
@@ -217,7 +217,7 @@
       border : none;
       outline : none;
       font-family : inherit;
-      color: var(--black);
+      color: var(--base);
       font-weight : 800;
       font-size : 1em;
       float : middle;

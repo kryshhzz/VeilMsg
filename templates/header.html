@@ -1,7 +1,7 @@
 <style>
   header {
     width : 100%;
-    padding : .25em 1.5em;
+    padding : .75em 1.5em;
     color : var(--base-text-light);
     background : var(--base-bg-light);
     border-bottom : .1em solid var(--base-bg-dark);
@@ -15,16 +15,22 @@
     display: flex;
     justify-content: space-between;
     gap : 1em;
-    align-items: center;
+    align-items: end;
   }
   .logo {
-    margin: .25em 0 0 0 ;
-    width : 3em;
+    /* margin: .25em 0 0 0 ; */
+    width : 2.5em;
+  } 
+  .logo img {
+    width : 100%;
   }
   .nav-in {
     text-decoration: none;
     color : inherit;
     position : relative;
+  } 
+  .nav-in:hover {
+    color : var(--base);
   }
   .nav-in i {
     font-size: 1.25em;
@@ -43,12 +49,11 @@
     width : .35em;
     height : .35em;
     border-radius: 100%;
-    background : var(--base-text-mid);
-    border : .05em solid var(--base-text-dark);
+    background : var(--base);
   }
 </style>
 <header class="stiff">
-  <a href="/" class="logo nav-in"><img src="/static/veil-logo.svg" alt="veil logo"></a>
+  <a href="/" class="logo nav-in"><img src="/static/veil-logo-2.svg" alt="veil logo"></a>
   <a href="/home/" id="home-nav" class="nav-in"><i class="bi-house"></i></a>
   {% if unseenMsgs %}
     <a href="/inbox/" id="inbox-nav" class="nav-in nav-dot"><i class="bi-chat"></i></a>

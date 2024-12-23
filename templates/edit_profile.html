@@ -29,6 +29,19 @@
       margin-bottom: .2rem;
       color : var(--base-text-light);
     }
+
+    #profile_bg {
+      height : 3em;
+      width : 5em;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+      border-radius : .35em;
+    }
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+      border-radius : .35em;
+    }
     .register-cont {
       width : 100%;
       padding : 0 .5em ;
@@ -77,17 +90,18 @@
         </div>
       </div>
       <div class="edit-box">
-          <p>username</p>
-          <input type="text" class="veil-input" name="username" id="username" value="{{ user.username }}" max_length='25' minlength='4' onkeypress="return event.charCode != 32" required/>
-      </div>
-      <div class="edit-box">
         <p>name</p>
         <input type="text" class="veil-input" name="name" id="name" value="{{ user.first_name }}" max_length='25' minlength='2' required/>
+      </div>
+      <div class="edit-box">
+        <p>profile background</p>
+        <input type="color" class="veil-input" name="profile_bg" id="profile_bg" value="{{ user.profile.bg_color }}" max_length='7' minlength='0' required/>
       </div>
       <div class="edit-box">
         <p>bio</p>
         <textarea name="bio" class="veil-input" id="bio" rows="2" cols="40" placeholder="Type your bio here... " required>{{ user.profile.bio }}</textarea>
       </div>
+
       <div class="register-cont">
         <p class="error">{{ error }}</p>
       </div>
@@ -97,11 +111,11 @@
   <script>
     secondHeader("edit profile","/user/");
 
-    let usrname = document.querySelector('#username')
-    usrname.addEventListener('input',function(e){
-        usrname.value = usrname.value.replaceAll(" ", "_");
-        usrname.value = usrname.value.toLowerCase()
-    })
+    // let usrname = document.querySelector('#username')
+    // usrname.addEventListener('input',function(e){
+    //     usrname.value = usrname.value.replaceAll(" ", "_");
+    //     usrname.value = usrname.value.toLowerCase()
+    // })
 
     document.querySelector(".veil-picture-input").addEventListener("change", function(event) {
       var img = new Image();

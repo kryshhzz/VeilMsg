@@ -24,7 +24,7 @@
       gap : 1em;
     }
     header a {
-      color : #0066ff;
+      color : var(--base);
     }
     header p {
       font-size: .8em;
@@ -38,12 +38,20 @@
       display : flex;
       flex-direction: column;
       justify-content: center;
-      align-items: end;
+      align-items: end; 
+      gap : .5em;
     }
     .dm-actions a {
-      padding : .5em 0;
-      color : var(--base);
-      text-transform: capitalize;
+      padding : .5em 1em;
+      color : var(--red);
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 600;  
+      background : var(--gray-light); 
+      border-radius : 10em;
+
+      display : flex;
+      gap : .75em;
     }
     .dm-cont {
       width : 100%;
@@ -144,7 +152,7 @@
     }
 
     .dm-cont button {
-      background : #0066ff;
+      background : var(--base-grad);
       color : var(--base-bg-light);
       padding : .5em 1em;
       border-radius: 10em;
@@ -161,7 +169,7 @@
     .dm-cont button span {
       font-family: "DM Sans",sans-serif;
       text-transform: uppercase;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .reply-cont {
@@ -210,6 +218,14 @@
     .reply-cont button:hover {
         color : var(--base-text-light);
     }
+    .dm-ss-cont {
+      padding : 2em;
+      background : var(--base-grad);  
+
+      display : flex; 
+      justify-content : center;
+      align-items : center;
+    }
   </style>
 
   <div class="dm-bowl stiff">
@@ -220,8 +236,8 @@
     </header>  
 
     <div class="dm-actions hide">
-      <a href="/user/admin/?pretext=[ report : {{ dm.pk }} ]">Report DM</a>
-      <a href="{% url 'blockView' dm.sentBy.pk %}">Block user</a>
+      <a href="/user/admin/?pretext=[ report : {{ dm.pk }} ]"><i class="bi-exclamation-circle"></i> Report DM</a>
+      <a href="{% url 'blockView' dm.sentBy.pk %}"><i class="bi-exclamation-circle-fill"></i> Block user</a>
     </div>
     
     <div class="dm-cont">
@@ -240,7 +256,7 @@
           <p>@{{ dm.sentTo.username }} on veilmsg</p>
           <img src="{{ userdp }}" alt="">
         </div> 
-        {% if dm.viewOnce %}
+        {% if not dm.viewOnce %}
           <div class="viewonce-bowl exclude-from-screenshot">
             <div class="viewonce-cont">
               <img src="/static/fire.svg" alt="">
@@ -257,6 +273,36 @@
     </form>
   </div>
 
+
+<!-- for ss  -->
+<div class="dm-ss-cont">
+  <div class="dm-box">
+    <div class="dm-box-top"> 
+      {% if dm.dmType == 1 %}
+          <p>{{ dm.message }}</p>
+      {% elif dm.dmType == 2 %}
+          <img src="{{ dm.img }}" alt="">
+      {% elif dm.dmType == 3 %}
+          <p> Someone rated you !</p>
+          <p class='rating'><span>❤️‍🔥</span> {{ dm.message }} out of 10</p>
+      {% endif %}
+    </div>
+    <div class="dm-box-meta">
+      <p>@{{ dm.sentTo.username }} on veilmsg</p>
+      <img src="{{ userdp }}" alt="">
+    </div> 
+    {% if not dm.viewOnce %}
+      <div class="viewonce-bowl exclude-from-screenshot">
+        <div class="viewonce-cont">
+          <img src="/static/fire.svg" alt="">
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div> 
+<!-- for ss -->
+
+
   <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>
   <script>
 
@@ -265,21 +311,22 @@
       dm_options_cont.classList.toggle("hide")
     }
 
-    var elem = document.querySelector(".dm-cont");
+    var elem = document.querySelector(".dm-ss-cont");
 
     html2canvas(elem,{
-      backgroundColor:"#0066ff",
+      // backgroundColor:"linear-gradient(to top right,#0066ff, #0066ffaa)",
       ignoreElements: (element) => {
         // Exclude elements with a specific class
         return element.classList.contains('exclude-from-screenshot');
       }
-    }).then(canvas => {
+    }).then(canvas => { 
         var myImage = canvas.toDataURL("image/png");
         var img = new Image();
         img.src = myImage;
         img.style.display = "none";
         img.id = "shareableImg";
-        document.body.appendChild(img);
+        document.body.appendChild(img); 
+        elem.style.display = "none";
     })
 
     document.querySelector(".dm-share-btn").addEventListener("click", function (){

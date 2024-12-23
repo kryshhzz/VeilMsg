@@ -65,7 +65,7 @@
       border-radius: inherit;
     }
     .profile-img i {
-      color : #0066ff;
+      color : var(--base);
       font-size : 1.25rem;
       position : absolute;
       bottom : .1em;
@@ -133,7 +133,7 @@
       padding : .5em 0;
       text-transform: uppercase;
       font-size: .8em;
-      color : #0066ff;
+      color : var(--base);
       text-decoration: none;
       transition : .2s;
 
@@ -286,13 +286,13 @@
         max-width : 300px;
     }
     #msg-vibe-input::-webkit-slider-runnable-track{
-        background: var(--gray-dark);
+        background: linear-gradient(to top right, var(--gray-dark), var(--gray-light)); 
         opacity: 1;
         height: 0.5rem;
         border-radius: 10em;
     }
     #msg-vibe-input::-moz-range-track {
-        background: var(--base-text-light);
+        background: var(--base-text-light); 
         opacity: 1;
         height: 0.5rem;
         border-radius: 10em;
@@ -301,11 +301,11 @@
         -webkit-appearance: none; /* Override default look */
         appearance: none;
         margin-top: -.25rem; /* Centers thumb on the track */
-        background : var(--base-bg-light);
+        background : var(--base-light);
         height: 1rem;
         width: 1rem;
         border-radius : 50%;
-        border : .2em solid #0066ff;
+        border : .2em solid var(--base);
         transition: .3s ease-in-out;
     }
     #msg-vibe-input::-webkit-slider-thumb:active {
@@ -330,7 +330,7 @@
     }
     .message-lower p, .message-center p {
       color : var(--base-text-light);
-      font-size: .8em;
+      font-size: .8em; 
     }
     .message-lower button {
         font-family: inherit;
@@ -338,7 +338,7 @@
         outline: none;
         font-size: 1em;
         color: var(--base-bg-mid);
-        background:  #0066ff;
+        background:  var(--base-grad);
         font-weight: 1000;
         padding: .75em 1.5em ;
         border-radius: 10em;
@@ -436,7 +436,7 @@
       border-radius: 0 0 0 1em;
     }
     .reply-q b {
-      color : #0066ff;
+      color : var(--base);
     }
     {% if request.user == user %}
       .reply-cont:hover > .reply-wrap{
@@ -460,7 +460,6 @@
     .reply-actions a {
       height : 100%;
       background : var(--base-bg-dark);
-      color : #0066ff;
       border-radius: .5em; 
       padding : .5em;
 
@@ -469,6 +468,12 @@
       display : flex;
       justify-content: center;
       align-items: center;
+    }
+    .pin-reply-cont {
+      color : var(--base);
+    }
+    .delete-reply-cont {
+      color : var(--red);
     }
 
     .reply-actions a:hover {
@@ -507,7 +512,9 @@
                 <p>veil_rocket</p>
             {% elif user.profile.dms_count >= 10 %}
                 <img src="/static/heart-on-fire.svg">
-                <p>veil_spark</p> 
+                <p>veil_spark</p>  
+            {% else %}
+                <p>😊 veil_noob</p>
             {% endif %}
           </div>
           <div class="achievement">
@@ -524,7 +531,7 @@
         <div class="profile-actions">
           <a href="/settings/"><i class="bi-gear-wide"></i> <span>settings</span></a>
           <a href="/edit-profile/"><i class="bi-pen"></i> <span>edit profile</span></a>
-          <a href="#"><i class="bi-share"></i> <span>share</span></a>
+          <!-- <a href="#" onclick='shareLink()'><i class="bi-share"></i> <span>share</span></a> -->
         </div>
       {% endif %}
     </div> 
@@ -553,7 +560,7 @@
         </div>
         <div class="message-center">
             <input type="checkbox" onclick="viewOnceAlert(this)" name="viewonce" id="viewonce-input">
-            <p>instant auto burst</p>
+            <p>instant auto burst 🔥</p>
         </div>
         <div class="message-lower">
             <button type="submit">Send Anonymously</button>
@@ -597,8 +604,8 @@
           <div class="reply-a">{{ reply.reply  }}</div>
         </div>
         <div class="reply-actions">
-          <a href="{% url 'editReplyView' reply.id %}?pin=true"><i class="bi-pin-fill"></i></a>
-          <a href="{% url 'editReplyView' reply.id %}?delete=true" onclick="confirmDm('Do you really want to delete this reply ?',event); return false;"><i class="bi-trash-fill"></i></a>
+          <a href="{% url 'editReplyView' reply.id %}?pin=true" class="pin-reply-cont" ><i class="bi-pin-fill"></i></a>
+          <a href="{% url 'editReplyView' reply.id %}?delete=true" class="delete-reply-cont" confirmDm('Do you really want to delete this reply ?',event); return false;"><i class="bi-trash3-fill"></i></a>
         </div>
       </div>
       {% endfor %}

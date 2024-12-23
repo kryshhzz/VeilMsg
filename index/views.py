@@ -204,19 +204,20 @@ def edit_profile_view(request):
         usr.profile.dp.delete()
         usr.profile.dp.save(file_name, data, save=True)
 
-    username = request.POST.get("username").strip()
-    if User.objects.filter(username=username).exists() :
-        if not usr.username == username :
-            dict["error"] =   "Choose a different username"
-            return render(request,"edit_profile.html",dict)
+    # username = request.POST.get("username").strip()
+    # if User.objects.filter(username=username).exists() :
+    #     if not usr.username == username :
+    #         dict["error"] =   "Choose a different username"
+    #         return render(request,"edit_profile.html",dict)
 
-    if any(c in "@#£&-+()/*':;!?.,~`|•√π÷×§∆€¥$¢^°={}\%©®™✓[]\"" for c in username) :
-        dict["error"] =  "Choose another username"
-        return render(request,"edit_profile.html",dict)
+    # if any(c in "@#£&-+()/*':;!?.,~`|•√π÷×§∆€¥$¢^°={}\%©®™✓[]\"" for c in username) :
+    #     dict["error"] =  "Choose another username"
+    #     return render(request,"edit_profile.html",dict)
 
-    usr.username = username
+    # usr.username = username
     usr.first_name = request.POST.get("name").strip()
     usr.profile.bio = request.POST.get("bio").strip()
+    usr.profile.bg_color = request.POST.get("profile_bg").strip()
     usr.save()
     return redirect("/user/")
 
@@ -255,8 +256,9 @@ def inbox_view(request):
 def queries_view(request):
     if request.user.is_authenticated == False:
         return redirect("/login/")
-    dms2 = []
-    dms = dm.objects.filter(sentBy__owner=request.user,isQuery=True).order_by("-pk")
+    dms2 = [] 
+    dms = dm.objects.filter(sentBy__owner=request.user,isQuery=True).order_by("-pk") 
+
     for dmeach in dms :
         reps = reply.objects.filter(replyTo=dmeach)
         if len(reps) > 0:
@@ -271,7 +273,7 @@ def queries_view(request):
             }
         dms2.append(temp)
     cont = {"dms_list":dms2}
-    cont = checkMessages(request.user,cont)
+    cont = checkMessages(request.user,cont) 
     return render(request,"queries.html",cont)
 
 def dm_view(request,pk):

@@ -1,7 +1,7 @@
 <style>
   header {
     width : 100%;
-    padding : .25em 1.25em;
+    padding : .75em 1.25em;
     background: var(--base-bg-light);
     border-bottom: .1em solid var(--base-bg-dark);
 
@@ -17,19 +17,23 @@
     gap : 2em;
   }
   .logo {
-    margin: .25em 0 0 0 ;
+    /* margin: .25em 0 0 0 ; */
     width : 3em;
   }
   .signup-link {
-      text-decoration : none;
-    color : var(--base-blue);
-    border-bottom : .1em dashed var(--base-text-light);
-    font-weight: 600;
+    text-decoration : none;
+    color : var(--base);
+    font-weight: 1000; 
+    text-transform : uppercase;
+    transition : .25s;
+  }
+  .signup-link:hover {
+    color : var(--base-text-dark);
   }
 
 </style>
 <header class="stiff">
-  <a href="/" class="logo"><img src="/static/veil-logo.svg" alt="veil logo"></a>
+  <a href="/" class="logo"><img src="/static/veil-logo-2.svg" alt="veil logo"></a>
   <a href="/" class="signup-link"> Create your veil link</a>
 </header>
 <div class="gap"></div>
