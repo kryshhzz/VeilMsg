@@ -2,3 +2,4 @@ db.sqlite3
 static/profile_pics/*
 templates/*_safe.html
 .theia/*
+veil/*
